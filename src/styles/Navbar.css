@@ -1,0 +1,37 @@
+:root {
+  --poporange: #F98D08;
+}
+
+.navbarclass {
+  background-color: #FCF4EB;
+}
+
+* {
+  font-family: "Potta One", system-ui;
+}
+
+.logo {
+  width: 100px;
+}
+
+.sub-text {
+  color: var(--poporange);
+  font-size: 18px;
+}
+
+.code {
+  background-color: var(--poporange);
+  padding: 8px 15px;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.nav-item-spacing li {
+  margin-bottom: 12px;
+}
+
+.no-outline:focus {
+  outline: none;
+  box-shadow: none;
+}
