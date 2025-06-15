@@ -4,6 +4,7 @@ import duck from './duck.png'
 import background from './background.png'
 import tentang_img from './tentang.png'
 import cursor from './cursor.png'
+import footer_img from './footer_img.png'
 
 export const assets = {
     crop_logo,
@@ -12,4 +13,5 @@ export const assets = {
     background,
     tentang_img,
     cursor,
+    footer_img
 }

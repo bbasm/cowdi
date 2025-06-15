@@ -57,13 +57,13 @@ const Home = () => {
 
       {/* Main Content */}
       <div
-  //       className="
-  //   relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 
-  //   min-h-[calc(100vh-180px)] 
-  //   flex flex-col md:flex-row justify-between items-center md:items-end
-  //   pt-24 sm:pt-28 md:pt-32 xl:pt-0
-  // "
-  className="
+        //       className="
+        //   relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10
+        //   min-h-[calc(100vh-180px)]
+        //   flex flex-col md:flex-row justify-between items-center md:items-end
+        //   pt-24 sm:pt-28 md:pt-32 xl:pt-0
+        // "
+        className="
     relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 
     min-h-[calc(100vh-180px)] 
     flex flex-row justify-between items-center md:items-end
@@ -84,7 +84,7 @@ const Home = () => {
             alt="Full Logo"
             className="w-64 sm:w-72 md:w-80 lg:w-96 mx-auto xl:mx-0"
           />
-          <p className="text-[#91CADB] font-bold text-lg leading-relaxed">
+          <p className="text-[#91CADB] font-bold text-lg leading-relaxed ">
             Coding bersama Didi akan menjadi petualangan baru yang seru bareng
             kamu!
           </p>
