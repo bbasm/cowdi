@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @import "tailwindcss";
+
+@media (orientation: portrait) {
+    .portrait\:flex-col {
+        flex-direction: column !important;
+    }
+}
