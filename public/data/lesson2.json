@@ -1,0 +1,71 @@
+{
+  "title": "TETETES?",
+  "blocks": [
+    {
+      "type": "image",
+      "subtitle": "👋 Halo, teman-teman!",
+      "image": "duck.png",
+      "imagePosition": "left",
+      "imageSize": "w-64",
+      "paragraphs": [
+        "Selamat datang di CowDi — Coding with Didi! 🐤 Di sini, kita akan belajar cara memberi perintah ke komputer supaya dia bisa menggambar, bermain, dan melakukan hal-hal seru lainnya!",
+        "Tapi, kita mulai dari awal dulu ya…"
+      ]
+    },
+    {
+      "type": "text",
+      "subtitle": "💻 Apa Itu Coding?",
+      "paragraphs": [
+        "Bayangin kamu punya robot. Robot itu bisa melakukan banyak hal: menggambar, bernyanyi, bahkan main game. Tapi… robot itu nggak tahu harus ngapain kalau kamu nggak ngasih perintah.",
+        "Nah, coding adalah cara kita memberi perintah ke komputer atau robot supaya dia tahu apa yang harus dilakukan.",
+        "Coding itu seperti bahasa yang dipakai manusia untuk ngobrol sama komputer!"
+      ]
+    },
+    {
+      "type": "code",
+      "subtitle": "🐍 Apa Itu Python?",
+      "paragraphs": [
+        "Python adalah salah satu bahasa coding yang paling gampang dimengerti dan banyak dipakai di seluruh dunia. Python itu seperti bahasa Indonesia-nya komputer — mudah dibaca, mudah ditulis.",
+        "Coba jalankan perintah Python dibawah:"
+      ],
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct",
+          "starterCode": "print(\"Halo Dunia!\")",
+          "mustFix": false
+        }
+      ],
+      "listItems": [
+        "Nah, yuk kita pahami artinya:",
+        "'print' artinya “tampilkan”. Ini kayak ngomong ke komputer: “Tunjukin ini di layar, ya!”",
+        "'\"Halo Dunia!\"' adalah teks yang mau ditampilkan. Harus pakai tanda kutip supaya komputer ngerti itu tulisan.",
+        "Jadi, 'print(\"Halo Dunia!\")' artinya: “Hai komputer, tampilkan tulisan ‘Halo Dunia!’ di layar!”"
+        
+      ]
+    },
+    {
+      "type": "fix_code",
+      "subtitle": "⚠️ Hati-hati Saat Menulis!",
+      "listItems": [
+        "Harus huruf kecil: 'print', bukan 'Print'",
+        "Teks harus pakai tanda kutip: '\"Halo Dunia!\"'"
+      ],
+      "paragraphs": [
+        "Kadang, kita bisa salah nulis. Contohnya kayak gini nih:"
+      ],
+      "image": "warning.png",
+      "imagePosition": "left",
+      "imageSize": "w-[300px]",
+      "codeSnippets": [
+        {
+          "id": "python-hello-error",
+          "starterCode": "print(Halo Dunia!)",
+          "mustFix": true
+        }
+      ],
+      "paragraphsAfterCode": [
+        "Kalau seperti itu, komputer tidak tahu apa maksudnya dan akan error. Coba ubahlah biar tidak error dan bisa berjalan!"
+      ]
+    }
+  ]
+}

@@ -1,34 +1,94 @@
 import React, { useEffect, useState } from "react";
 import BlockRenderer from "./BlockRenderer";
+import { useNavigate } from "react-router-dom";
 
-const LessonRenderer = () => {
+const LessonRenderer = ({ lessonNum }) => {
   const [lesson, setLesson] = useState(null);
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
+
+  const nextLesson = `/mulaicoding/${lessonNum + 1}`;
+  const prevLesson = `/mulaicoding/${lessonNum - 1}`;
 
   useEffect(() => {
-    fetch("/data/lesson1.json")
-      .then(res => {
+    window.scrollTo({ top: 0 });
+
+    fetch(`/data/lesson${lessonNum}.json`)
+      .then((res) => {
         if (!res.ok) throw new Error("Fetch failed");
         return res.json();
       })
-      .then(setLesson)
-      .catch(err => {
+      .then((data) => {
+        setLesson(data);
+        setError(false);
+      })
+      .catch((err) => {
         console.error(err);
         setError(true);
       });
-  }, []);
+  }, [lessonNum]);
 
-  if (error) return <p className="text-red-500 text-center">Gagal memuat pelajaran 😢</p>;
+  if (error)
+    return (
+      <p className="text-red-500 text-center">Gagal memuat pelajaran 😢</p>
+    );
   if (!lesson) return <p className="text-center">Loading...</p>;
 
   return (
-    // <div className="max-w-3xl mx-auto space-y-12">
-    <div className="min-h-screen bg-[#FCF4EB] pr-50 pl-50">
-      <h1 className="text-[2rem] md:text-[3rem] text-center text-[#F98D08] font-bold mb-5">{lesson.title}</h1>
-      {/* <h1 className="text-3xl font-bold text-center text-[#F98D08]">{lesson.title}</h1> */}
+    <div className="min-h-screen bg-[#FCF4EB] px-[120px] ">
+      <h1 className="text-[2rem] md:text-[3rem] text-center text-[#F98D08] font-bold mb-5">
+        {lesson.title}
+      </h1>
+
       {lesson.blocks.map((block, i) => (
         <BlockRenderer key={i} block={block} />
       ))}
+
+      <div className="flex justify-between items-center mt-10">
+        {lessonNum > 1 ? (
+          <button
+            onClick={() => navigate(prevLesson)}
+            className="flex items-center gap-3 bg-[#91CADB] text-white font-bold rounded-lg shadow-md px-6 py-3 text-lg"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="white"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            <span>Modul ke-{lessonNum - 1}</span>
+          </button>
+        ) : (
+          <div />
+        )}
+
+        <button
+          onClick={() => navigate(nextLesson)}
+          className="flex items-center gap-3 bg-[#91CADB] text-white font-bold rounded-lg shadow-md px-6 py-3 text-lg"
+        >
+          <span>Lanjut Modul ke-{lessonNum + 1}</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="26"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="white"
+            strokeWidth="2"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 };
