@@ -1,5 +1,6 @@
 import React from "react";
 import { assets } from "./../assets/assets";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -45,9 +46,14 @@ const Home = () => {
             Coding bersama Didi akan menjadi petualangan baru yang seru bareng
             kamu!
           </p>
+          <Link to="/mulaicoding">
           <button className="bg-[#91CADB] text-white text-lg font-bold px-6 py-2 rounded-xl shadow-md hover:brightness-105 transition-all">
             Mulai Coding
           </button>
+          </Link>
+          {/* <button className="bg-[#91CADB] text-white text-lg font-bold px-6 py-2 rounded-xl shadow-md hover:brightness-105 transition-all">
+            Mulai Coding
+          </button> */}
         </div>
 
         {/* Right Side - Duck */}

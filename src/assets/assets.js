@@ -7,6 +7,7 @@ import cursor from "./cursor.png";
 import footer_img from "./footer_img.png";
 import bg_wider from "./bg_wider.png";
 import bg_better from "./bg_better.png";
+// import warning from "./warning.png";
 
 export const assets = {
   crop_logo,
@@ -17,5 +18,6 @@ export const assets = {
   cursor,
   footer_img,
   bg_wider,
-  bg_better
+  bg_better,
+  // warning
 };

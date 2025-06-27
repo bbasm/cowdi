@@ -1,5 +1,6 @@
 import React from "react";
 import { assets } from "./../assets/assets";
+import { Link } from "react-router-dom";
 
 const Tentang = () => {
   return (
@@ -25,9 +26,12 @@ const Tentang = () => {
 
         {/* Button with cursor image */}
         <div className="relative inline-block">
-          <button className="bg-[#91CADB] text-white text-lg font-bold px-6 py-3 rounded-xl shadow-md hover:brightness-105 transition-all">
-            Mulai Coding
-          </button>
+          <Link to="/mulaicoding">
+            <button className="bg-[#91CADB] text-white text-lg font-bold px-6 py-3 rounded-xl shadow-md hover:brightness-105 transition-all">
+              Mulai Coding
+            </button>
+          </Link>
+
           <img
             src={assets.cursor}
             alt="cursor"
