@@ -32,7 +32,7 @@ const Faqs = () => {
   };
 
   return (
-    <section className="bg-[#FCF4EB] pt-5 px-4 font-[Poppins]">
+    <section className="bg-[#FCF4EB] pt-5 px-4 font-[Poppins] pb-8">
       <h1 className="text-[2.5rem] md:text-[3rem] text-[#F98D08] font-[Potta_One] mb-4 text-center">
         FAQs
       </h1>

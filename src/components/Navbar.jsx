@@ -8,8 +8,6 @@ const Navbar = () => {
 
   return (
     <nav className="bg-transparent navbarclass ">
-      {/* sticky or  not? */}
-      {/* <nav className="bg-transparent navbarclass sticky top-0 z-50"> */}
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={assets.crop_logo} className="logo" alt="logo" />

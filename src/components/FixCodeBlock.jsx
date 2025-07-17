@@ -14,9 +14,8 @@ const CodeBlock = ({ snippet }) => {
     const saved = localStorage.getItem(id);
     if (saved) {
       setCode(saved);
-      setHasUserEdited(true); // they've interacted before
+      setHasUserEdited(true);
     } else {
-      // First time loading — add 1 empty line
       setCode(starterCode.endsWith("\n") ? starterCode : starterCode + "\n");
     }
   }, [id, starterCode]);
@@ -28,7 +27,6 @@ const CodeBlock = ({ snippet }) => {
   const run = () => {
     let result = "";
     try {
-      // eslint-disable-next-line no-eval
       result = eval(code);
       setHasError(false);
       if (mustFix) setFixed(true);
@@ -54,9 +52,8 @@ const CodeBlock = ({ snippet }) => {
   const getLineNumbers = () => {
     let lines = code.split("\n");
 
-    // Only add extra line if not yet edited by user
     if (!hasUserEdited && lines[lines.length - 1] !== "") {
-      lines.push(""); // simulate default extra line
+      lines.push("");
     }
 
     return lines.map((_, i) => i + 1).join("\n");

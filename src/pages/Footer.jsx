@@ -4,7 +4,7 @@ import { assets } from "./../assets/assets";
 const Footer = () => {
   return (
     <div className="w-full overflow-hidden bg-[#FCF4EB]">
-      <div className="h-[100px]" /> {/* Spacer to push image down */}
+      <div className="h-[75px]" />
       <img
         src={assets.bg_better}
         alt="footer"

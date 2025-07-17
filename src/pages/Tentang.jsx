@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Tentang = () => {
   return (
-    // <section className="bg-[#FCF4EB] w-full px-6 sm:px-10 md:px-20 lg:px-32 py-20 flex flex-col md:flex-row items-center justify-center gap-12">
     <section className="bg-[#FCF4EB] w-full px-6 sm:px-10 md:px-20 lg:px-32 py-20 flex flex-col md:flex-row items-center justify-center gap-12">
       {/* Left image */}
       <img

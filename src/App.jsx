@@ -16,10 +16,15 @@ function App() {
           element={
             <>
               <Navbar />
-              <section id="home"><Home /></section>
-              <section id="tentang"><Tentang /></section>
-              <section id="faqs"><Faqs /></section>
-              <Footer />
+              <section id="home">
+                <Home />
+              </section>
+              <section id="tentang">
+                <Tentang />
+              </section>
+              <section id="faqs">
+                <Faqs />
+              </section>
             </>
           }
         />
@@ -27,6 +32,7 @@ function App() {
 
         <Route path="/mulaicoding/:lessonNumber?" element={<MulaiCoding />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

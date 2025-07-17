@@ -7,7 +7,6 @@ const Home = () => {
     <section className="relative w-full min-h-screen bg-[#FCF4EB] overflow-hidden">
       {/* Pond Background */}
       <img
-        // src={assets.background}
         src={assets.background}
         alt="Background"
         className="absolute bottom-0 left-0 w-full h-[180px] object-cover z-0"
@@ -15,12 +14,6 @@ const Home = () => {
 
       {/* Main Content */}
       <div
-        //       className="
-        //   relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10
-        //   min-h-[calc(100vh-180px)]
-        //   flex flex-col md:flex-row justify-between items-center md:items-end
-        //   pt-24 sm:pt-28 md:pt-32 xl:pt-0
-        // "
         className="
     relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 
     min-h-[calc(100vh-180px)] 
@@ -51,9 +44,6 @@ const Home = () => {
             Mulai Coding
           </button>
           </Link>
-          {/* <button className="bg-[#91CADB] text-white text-lg font-bold px-6 py-2 rounded-xl shadow-md hover:brightness-105 transition-all">
-            Mulai Coding
-          </button> */}
         </div>
 
         {/* Right Side - Duck */}

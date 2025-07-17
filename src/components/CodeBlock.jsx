@@ -7,8 +7,8 @@ const CodeBlock = ({ snippet }) => {
 
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
-  const [fixed, setFixed] = useState(!mustFix);
   const [hasError, setHasError] = useState(false);
+  const [fixed, setFixed] = useState(!mustFix);
   const [hasUserEdited, setHasUserEdited] = useState(false);
   const [pyodideReady, setPyodideReady] = useState(false);
 
@@ -25,20 +25,38 @@ const CodeBlock = ({ snippet }) => {
   }, [id, starterCode]);
 
   useEffect(() => {
+    const init = async () => {
+      await runPython(""); // dummy run to warm up
+      setPyodideReady(true);
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
     autoResize();
   }, [code]);
 
-  // Load Pyodide when component mounts
-  useEffect(() => {
-    const initPyodide = async () => {
-      await runPython(""); // Dummy run to ensure it's loaded
-      setPyodideReady(true);
-    };
-    initPyodide();
-  }, []);
+  const autoResize = () => {
+    const el = textareaRef.current;
+    if (el) {
+      el.style.height = "auto";
+      el.style.height = el.scrollHeight + "px";
+    }
+  };
+
+  const getLineNumbers = () => {
+    let lines = code.split("\n");
+    if (!hasUserEdited && lines[lines.length - 1] !== "") {
+      lines.push(""); // add default extra line if untouched
+    }
+    return lines.map((_, i) => i + 1).join("\n");
+  };
+
 
   const run = async () => {
     const { output, error } = await runPython(code);
+    localStorage.setItem(id, code);
+
     if (error) {
       setOutput(error);
       setHasError(true);
@@ -46,9 +64,10 @@ const CodeBlock = ({ snippet }) => {
     } else {
       setOutput(output);
       setHasError(false);
-      if (mustFix) setFixed(true);
+      if (mustFix && output.trim()) {
+        setFixed(true);
+      }
     }
-    localStorage.setItem(id, code);
   };
 
   const reset = () => {
@@ -63,22 +82,6 @@ const CodeBlock = ({ snippet }) => {
     localStorage.removeItem(id);
   };
 
-  const getLineNumbers = () => {
-    let lines = code.split("\n");
-    if (!hasUserEdited && lines[lines.length - 1] !== "") {
-      lines.push("");
-    }
-    return lines.map((_, i) => i + 1).join("\n");
-  };
-
-  const autoResize = () => {
-    const el = textareaRef.current;
-    if (el) {
-      el.style.height = "auto";
-      el.style.height = el.scrollHeight + "px";
-    }
-  };
-
   return (
     <div className="mb-6 font-source text-base pt-6">
       {/* Top bar */}
@@ -89,7 +92,12 @@ const CodeBlock = ({ snippet }) => {
       >
         <div className="flex gap-4">
           <button onClick={reset} title="Reset" className="w-6 h-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+            >
               <path
                 fill="#3B3B3B"
                 d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6s-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8s-3.58-8-8-8"
@@ -99,10 +107,17 @@ const CodeBlock = ({ snippet }) => {
           <button
             onClick={run}
             title="Run"
-            className={`w-6 h-6 ${!pyodideReady ? "opacity-40 cursor-not-allowed" : ""}`}
+            className={`w-6 h-6 ${
+              !pyodideReady ? "opacity-40 cursor-not-allowed" : ""
+            }`}
             disabled={!pyodideReady}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+            >
               <path
                 fill="#3B3B3B"
                 d="m6.192 3.67l13.568 7.633a.8.8 0 0 1 0 1.394L6.192 20.33A.8.8 0 0 1 5 19.632V4.368a.8.8 0 0 1 1.192-.697"
@@ -112,7 +127,7 @@ const CodeBlock = ({ snippet }) => {
         </div>
       </div>
 
-      {/* Code Editor */}
+      {/* Editor */}
       <div className="flex border rounded-b-lg overflow-hidden text-[16px] leading-[1.8]">
         <pre className="bg-white text-gray-400 px-4 py-3 text-right select-none font-source whitespace-pre">
           {getLineNumbers()}
@@ -129,11 +144,17 @@ const CodeBlock = ({ snippet }) => {
         />
       </div>
 
-      {/* Output */}
       {output && (
-        <pre className="bg-white mt-4 p-3 rounded-md border border-gray-300 font-source text-[16px] leading-6 whitespace-pre-wrap">
-          {output}
-        </pre>
+        <div className="bg-white mt-4 p-3 rounded-md border border-gray-300 text-[16px] leading-6">
+          <pre className="font-source whitespace-pre-wrap">{output}</pre>
+
+          {hasError && snippet.showRaw && (
+            <details className="mt-2 text-gray-400 font-source">
+              <summary className="cursor-pointer">Lihat detail error</summary>
+              <pre className="text-sm mt-1">{rawError}</pre>
+            </details>
+          )}
+        </div>
       )}
 
       {/* Fix prompt */}
