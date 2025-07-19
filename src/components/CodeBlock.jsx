@@ -52,7 +52,6 @@ const CodeBlock = ({ snippet }) => {
     return lines.map((_, i) => i + 1).join("\n");
   };
 
-
   const run = async () => {
     const { output, error } = await runPython(code);
     localStorage.setItem(id, code);
@@ -83,7 +82,7 @@ const CodeBlock = ({ snippet }) => {
   };
 
   return (
-    <div className="mb-6 font-source text-base pt-6">
+    <div className="mb-6 font-source text-base pt-6 text-black"> {/* 👈 Ensures all text is black */}
       {/* Top bar */}
       <div
         className={`flex justify-end items-center px-4 py-2.5 rounded-t-lg ${
@@ -128,13 +127,13 @@ const CodeBlock = ({ snippet }) => {
       </div>
 
       {/* Editor */}
-      <div className="flex border rounded-b-lg overflow-hidden text-[16px] leading-[1.8]">
+      <div className="flex border rounded-b-lg overflow-hidden text-[16px] leading-[1.8] bg-white text-black">
         <pre className="bg-white text-gray-400 px-4 py-3 text-right select-none font-source whitespace-pre">
           {getLineNumbers()}
         </pre>
         <textarea
           ref={textareaRef}
-          className="flex-1 p-3 font-source resize-none outline-none bg-white"
+          className="flex-1 p-3 font-source resize-none outline-none bg-white text-black"
           value={code}
           onChange={(e) => {
             setCode(e.target.value);
@@ -144,16 +143,10 @@ const CodeBlock = ({ snippet }) => {
         />
       </div>
 
+      {/* Output */}
       {output && (
-        <div className="bg-white mt-4 p-3 rounded-md border border-gray-300 text-[16px] leading-6">
+        <div className="bg-white mt-4 p-3 rounded-md border border-gray-300 text-[16px] leading-6 text-black">
           <pre className="font-source whitespace-pre-wrap">{output}</pre>
-
-          {hasError && snippet.showRaw && (
-            <details className="mt-2 text-gray-400 font-source">
-              <summary className="cursor-pointer">Lihat detail error</summary>
-              <pre className="text-sm mt-1">{rawError}</pre>
-            </details>
-          )}
         </div>
       )}
 

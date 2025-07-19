@@ -1,54 +1,88 @@
 {
-  "title": "TETETES?",
+  "title": "🧠 Komputer Bisa Ingat? Yuk Kenalan Sama Variabel!",
   "blocks": [
     {
-      "type": "image",
-      "subtitle": "👋 Halo, teman-teman!",
-      "image": "duck.png",
-      "imagePosition": "left",
-      "imageSize": "w-64",
-      "paragraphs": [
-        "Selamat datang di CowDi — Coding with Didi! 🐤 Di sini, kita akan belajar cara memberi perintah ke komputer supaya dia bisa menggambar, bermain, dan melakukan hal-hal seru lainnya!",
-        "Tapi, kita mulai dari awal dulu ya…"
-      ]
-    },
-    {
       "type": "text",
-      "subtitle": "💻 Apa Itu Coding?",
-      "paragraphs": [
-        "Bayangin kamu punya robot. Robot itu bisa melakukan banyak hal: menggambar, bernyanyi, bahkan main game. Tapi… robot itu nggak tahu harus ngapain kalau kamu nggak ngasih perintah.",
-        "Nah, coding adalah cara kita memberi perintah ke komputer atau robot supaya dia tahu apa yang harus dilakukan.",
-        "Coding itu seperti bahasa yang dipakai manusia untuk ngobrol sama komputer!"
-      ]
-    },
-    {
-      "type": "code",
-      "subtitle": "🐍 Apa Itu Python?",
-      "paragraphs": [
-        "Python adalah salah satu bahasa coding yang paling gampang dimengerti dan banyak dipakai di seluruh dunia. Python itu seperti bahasa Indonesia-nya komputer — mudah dibaca, mudah ditulis.",
-        "Coba jalankan perintah Python dibawah:"
+      "subtitle": "🤔 Komputer Itu Pinter, Tapi…",
+      "contentOrder": ["littleParagraphs", "paragraphs", "codeSnippets", "listItems"],
+      "littleParagraphs": [
+        "Komputer bisa hitung cepat, tunjukin gambar, dan banyak hal keren. Tapi... komputer itu pelupa banget!",
+        "Kalau kamu gak bilang sesuatu ke dia, dia gak bakal ingat.."
       ],
-      "codeSnippets": [
-        {
-          "id": "python-hello-correct",
-          "starterCode": "print(\"Halo Dunia!\")",
-          "mustFix": false
-        }
-      ],
+      "paragraphs": ["Makanya kita perlu kasih tau dia:"],
       "listItems": [
-        "Nah, yuk kita pahami artinya:",
-        "'print' artinya “tampilkan”. Ini kayak ngomong ke komputer: “Tunjukin ini di layar, ya!”",
-        "'\"Halo Dunia!\"' adalah teks yang mau ditampilkan. Harus pakai tanda kutip supaya komputer ngerti itu tulisan.",
-        "Jadi, 'print(\"Halo Dunia!\")' artinya: “Hai komputer, tampilkan tulisan ‘Halo Dunia!’ di layar!”"
+        "\"Eh inget ya! Namaku Didi!\"",
+        "\"Eh, tolong simpan angka 10 ya!\""
         
       ]
     },
     {
-      "type": "fix_code",
-      "subtitle": "⚠️ Hati-hati Saat Menulis!",
+      "type": "code",
+      "subtitle": "📦 Variabel: Tempat Penyimpanan",
+      "contentOrder": [ "littleParagraphs", "paragraphs", "codeSnippets", "listItems"],
+      "littleParagraphs": [
+        "Di Python, kita bisa menyimpan sesuatu ke dalam sebuah \"kotak\" yang punya nama.",
+        "Kotak ini disebut variabel."
+      ],
+      "paragraphs":[
+        "Contoh:"
+      ],
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct",
+          "starterCode": "nama = \"Didi\"\numur = 10\nprint(nama, umur)",
+          "mustFix": false
+        }
+      ],
       "listItems": [
-        "Harus huruf kecil: 'print', bukan 'Print'",
-        "Teks harus pakai tanda kutip: '\"Halo Dunia!\"'"
+        "nama itu kotak isinya \"Didi\"",
+        "umur itu kotak isinya angka 5"
+        
+      ]
+    },
+    {
+      "type": "code",
+      "subtitle": "🛠️ Variabel Bisa Bantu Kita Banyak Hal",
+      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
+      "littleParagraphs": ["Coba contoh ini:"],
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct",
+          "starterCode": "a = 10\nb = 20\n\njumlah = a + b\nprint(jumlah)",
+          "mustFix": false
+        }
+      ],
+      "paragraphsAfterCode": [
+        "Kenapa ini keren? Karena:"
+      ],
+      "listItems": [
+        "Kita bisa ngasih nama ke angka-angka",
+        "Kita bisa hitung hasilnya dan simpan lagi ke kotak baru!"
+      ]
+    },
+
+        {
+      "type": "code",
+      "subtitle": "🔁 Kita Bisa Ganti Isinya Juga",
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct",
+          "starterCode": "warna = \"kuning\"\nwarna = warna\nprint(warna)",
+          "mustFix": false
+        }
+      ],
+      "paragraphsAfterCode": [
+        "Karena komputer simpan yang terakhir, dia gak inget yang sebelumnya."
+      ]
+    },
+    {
+      "type": "fix_code",
+      "subtitle": "⚠️ Hati-Hati!",
+      "littleParagraphs": ["Beberapa hal yang harus diperhatikan:"],
+      "listItems": [
+        "Nama variabel gak boleh ada spasi",
+        "Harus diawali huruf (bukan angka)",
+        "Jangan pakai nama-nama penting kayak 'print', 'input', 'if', dll"
       ],
       "paragraphs": [
         "Kadang, kita bisa salah nulis. Contohnya kayak gini nih:"
@@ -59,12 +93,35 @@
       "codeSnippets": [
         {
           "id": "python-hello-error",
-          "starterCode": "print(Halo Dunia!)",
+          "starterCode": "print = \"Halo\"\nprint(print)",
           "mustFix": true
         }
+      ]
+    },
+        {
+      "type": "text",
+      "subtitle": "💡 Kenapa Ini Penting?",
+      "littleParagraphs": [
+        "Karena dengan menyimpan data:"
       ],
-      "paragraphsAfterCode": [
-        "Kalau seperti itu, komputer tidak tahu apa maksudnya dan akan error. Coba ubahlah biar tidak error dan bisa berjalan!"
+      "listItems": [
+        "Kamu bisa bikin program yang lebih panjang",
+        "Kamu bisa ubah isi tanpa nulis ulang semuanya",
+        "Kamu bikin komputer \ningat\n sesuatu"
+      ]
+    },
+    {
+      "type": "fix_code",
+      "subtitle": "🧪 Saatnya Coba Sendiri",
+      "paragraphs": [
+        "Kadang, kita bisa salah nulis. Contohnya kayak gini nih:"
+      ],
+      "codeSnippets": [
+        {
+          "id": "python-hello-error",
+          "starterCode": "nama = \numur = \n\nprint(\"Namaku\", nama)\nprint(\"Aku berumur\", umur, \"tahun\")",
+          "mustFix": true
+        }
       ]
     }
   ]
