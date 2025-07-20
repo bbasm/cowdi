@@ -29,7 +29,7 @@ function getFriendlyError(message) {
     return "❌ Sepertinya ada masalah dengan spasi atau tab. Coba periksa awal baris kodenya!";
   }
   if (message.includes("TypeError")) {
-    return "❌ Ada yang salah dengan tipe data yang kamu pakai. Misalnya, kamu mungkin mencoba menjumlahkan angka dan tulisan.";
+    return "❌ Coba cek nama yang kamu pakai. Apakah kamu menimpa perintah penting? ";
   }
   return "⚠️ Ups! Komputer tidak mengerti kodenya. Coba periksa kembali.";
 }

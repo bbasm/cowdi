@@ -41,7 +41,7 @@ const LessonRenderer = ({ lessonNum }) => {
       </h1>
 
       {lesson.blocks.map((block, i) => (
-        <BlockRenderer key={i} block={block} />
+        <BlockRenderer key={i} block={block} lessonNum={lessonNum} />
       ))}
 
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-10">
@@ -98,4 +98,3 @@ const LessonRenderer = ({ lessonNum }) => {
 };
 
 export default LessonRenderer;
-

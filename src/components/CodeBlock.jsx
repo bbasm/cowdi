@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import "../styles/codeblock.css";
 import { runPython } from "../utils/pyodideRunner";
 
-const CodeBlock = ({ snippet }) => {
+const CodeBlock = ({ snippet, lessonNum }) => {
   const { id, starterCode, mustFix } = snippet;
+  // const storageKey = `lesson${lessonNum}-${id}`;
+  const storageKey = `lesson${lessonNum}-${id}-${starterCode}`;
 
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
@@ -15,14 +17,14 @@ const CodeBlock = ({ snippet }) => {
   const textareaRef = useRef(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem(id);
+    const saved = localStorage.getItem(storageKey);
     if (saved) {
       setCode(saved);
       setHasUserEdited(true);
     } else {
       setCode(starterCode.endsWith("\n") ? starterCode : starterCode + "\n");
     }
-  }, [id, starterCode]);
+  }, [storageKey, starterCode]);
 
   useEffect(() => {
     const init = async () => {
@@ -54,7 +56,7 @@ const CodeBlock = ({ snippet }) => {
 
   const run = async () => {
     const { output, error } = await runPython(code);
-    localStorage.setItem(id, code);
+    localStorage.setItem(storageKey, code);
 
     if (error) {
       setOutput(error);
@@ -69,6 +71,18 @@ const CodeBlock = ({ snippet }) => {
     }
   };
 
+  // const reset = () => {
+  //   const initial = starterCode.endsWith("\n")
+  //     ? starterCode
+  //     : starterCode + "\n";
+  //   setCode(initial);
+  //   setOutput("");
+  //   setFixed(!mustFix);
+  //   setHasError(false);
+  //   setHasUserEdited(false);
+  //   localStorage.removeItem(storageKey);
+  // };
+
   const reset = () => {
     const initial = starterCode.endsWith("\n")
       ? starterCode
@@ -78,11 +92,11 @@ const CodeBlock = ({ snippet }) => {
     setFixed(!mustFix);
     setHasError(false);
     setHasUserEdited(false);
-    localStorage.removeItem(id);
+    localStorage.removeItem(storageKey);
   };
 
   return (
-    <div className="mb-6 font-source text-base pt-6 text-black"> {/* 👈 Ensures all text is black */}
+    <div className="mb-6 font-source text-base pt-2 text-black">
       {/* Top bar */}
       <div
         className={`flex justify-end items-center px-4 py-2.5 rounded-t-lg ${

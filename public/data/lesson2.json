@@ -29,7 +29,7 @@
       ],
       "codeSnippets": [
         {
-          "id": "python-hello-correct",
+          "id": "python-hello-correct-1",
           "starterCode": "nama = \"Didi\"\numur = 10\nprint(nama, umur)",
           "mustFix": false
         }
@@ -43,11 +43,11 @@
     {
       "type": "code",
       "subtitle": "🛠️ Variabel Bisa Bantu Kita Banyak Hal",
-      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
-      "littleParagraphs": ["Coba contoh ini:"],
+      "contentOrder": ["paragraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
+      "paragraphs": ["Coba contoh ini:"],
       "codeSnippets": [
         {
-          "id": "python-hello-correct",
+          "id": "python-hello-correct-1",
           "starterCode": "a = 10\nb = 20\n\njumlah = a + b\nprint(jumlah)",
           "mustFix": false
         }
@@ -64,10 +64,11 @@
         {
       "type": "code",
       "subtitle": "🔁 Kita Bisa Ganti Isinya Juga",
+      "contentOrder": ["paragraphsAfterCode", "codeSnippets"],
       "codeSnippets": [
         {
-          "id": "python-hello-correct",
-          "starterCode": "warna = \"kuning\"\nwarna = warna\nprint(warna)",
+          "id": "python-hello-correct-2",
+          "starterCode": "warna = \"kuning\"\nwarna = \"merah\"\nprint(warna)",
           "mustFix": false
         }
       ],
@@ -78,24 +79,28 @@
     {
       "type": "fix_code",
       "subtitle": "⚠️ Hati-Hati!",
+      "contentOrder": ["littleParagraphs", "listItems", "paragraphs", "codeSnippets", "paragraphsAfterCode"],
       "littleParagraphs": ["Beberapa hal yang harus diperhatikan:"],
       "listItems": [
         "Nama variabel gak boleh ada spasi",
         "Harus diawali huruf (bukan angka)",
-        "Jangan pakai nama-nama penting kayak 'print', 'input', 'if', dll"
+        "Jangan pakai nama-nama penting kayak 'print', 'input', 'if', dll \n"
       ],
       "paragraphs": [
-        "Kadang, kita bisa salah nulis. Contohnya kayak gini nih:"
+        "\nContoh yang salah:"
       ],
       "image": "warning.png",
-      "imagePosition": "left",
+      "imagePosition": "right",
       "imageSize": "w-[300px]",
       "codeSnippets": [
-        {
-          "id": "python-hello-error",
+        {   
+          "id": "python-hello-error-1",
           "starterCode": "print = \"Halo\"\nprint(print)",
           "mustFix": true
         }
+      ],
+      "paragraphsAfterCode": [
+        "Kalau seperti itu, komputer tidak tahu apa maksudnya dan akan error. Coba ubahlah biar tidak error dan bisa berjalan!"
       ]
     },
         {
@@ -118,11 +123,23 @@
       ],
       "codeSnippets": [
         {
-          "id": "python-hello-error",
+          "id": "python-hello-error-2",
           "starterCode": "nama = \numur = \n\nprint(\"Namaku\", nama)\nprint(\"Aku berumur\", umur, \"tahun\")",
           "mustFix": true
         }
       ]
+    },
+       {
+      "type": "text",
+      "subtitle": "🎉 Sip! Kamu Hebat!",
+      "contentOrder": ["paragraphs", "listItems", "paragraphsAfterCode"],
+      "paragraphs": ["Sekarang kamu sudah tahu:"],
+      "listItems": [
+        "Gimana komputer bisa ingat sesuatu",
+        "Gimana cara nyimpen teks dan angka.",
+        "Gimana ngitung dan ganti isinya"
+      ],
+      "paragraphsAfterCode": ["💡 Pelajaran ini bakal berguna banget di petualangan coding selanjutnya!"]
     }
   ]
 }

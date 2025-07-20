@@ -1,14 +1,13 @@
 import React from "react";
-import TextBlock from "./TextBlock";
 import ImageBlock from "./ImageBlock";
 import CodeBlock from "./CodeBlock";
 
 const BlockRenderer = ({ block }) => {
   const {
-    type,
     subtitle,
     image,
     imagePosition = "right",
+    imageSize = "w-full",
     contentOrder = [
       "paragraphs",
       "littleParagraphs",
@@ -23,72 +22,11 @@ const BlockRenderer = ({ block }) => {
     paragraphsAfterCode = [],
   } = block;
 
-  // ❗️HANDLE SPECIAL BLOCK TYPES FIRST
-  if (type === "image") {
-    return (
-      <div className="mb-15 px-4">
-        <div
-          className={`flex flex-col md:flex-row ${
-            imagePosition === "left" ? "md:flex-row-reverse" : ""
-          } items-start gap-14`}
-        >
-          <div className="md:w-1/2 w-full flex justify-center md:justify-start items-start">
-            <ImageBlock
-              image={image}
-              subtitle={subtitle}
-              imageSize={block.imageSize}
-            />
-          </div>
-          <div className="md:w-1/2 text-[#66BAEF] md:text-lg space-y-4">
-            <h2 className="text-2xl font-bold mb-4 text-[#3D83AC]">
-              {subtitle}
-            </h2>
-            {paragraphs.map((p, i) => (
-              <p key={`p-${i}`}>{p}</p>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const isSpecialCase = subtitle?.toLowerCase().includes("hati-hati");
 
-  if (type === "code" || type === "fix_code") {
-    return (
-      <div className="mb-15 px-4">
-        <h2 className="text-2xl font-bold mb-4 text-[#3D83AC]">{subtitle}</h2>
-
-        <div className="text-[#66BAEF] md:text-lg space-y-4">
-          {paragraphs.map((p, i) => (
-            <p key={`p-${i}`}>{p}</p>
-          ))}
-
-          {codeSnippets.map((snipp) => (
-            <CodeBlock key={snipp.id} snippet={snipp} />
-          ))}
-
-          {listItems.length > 0 && (
-            <ul className="list-disc pl-5 space-y-2 text-[#66BAEF] md:text-lg">
-              {listItems.map((li, i) => (
-                <li key={`li-${i}`} dangerouslySetInnerHTML={{ __html: li }} />
-              ))}
-            </ul>
-          )}
-
-          {paragraphsAfterCode.map((p, i) => (
-            <p key={`pac-${i}`} className="mt-4 md:text-lg text-[#66BAEF]">
-              {p}
-            </p>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  // ❗️Fallback for type === "text" or others
-  const isSpecialCase = subtitle.toLowerCase().includes("hati-hati");
-
-  const renderContent = (type) => {
-    switch (type) {
+  // Render different content types
+  const renderContent = (contentType) => {
+    switch(contentType) {
       case "paragraphs":
         return paragraphs.map((p, i) => <p key={`p-${i}`}>{p}</p>);
       case "littleParagraphs":
@@ -104,17 +42,12 @@ const BlockRenderer = ({ block }) => {
           <CodeBlock key={snipp.id} snippet={snipp} />
         ));
       case "listItems":
-        return (
-          listItems.length > 0 && (
-            <ul
-              key="list"
-              className="list-disc pl-5 space-y-2 text-[#66BAEF] md:text-lg"
-            >
-              {listItems.map((li, i) => (
-                <li key={`li-${i}`} dangerouslySetInnerHTML={{ __html: li }} />
-              ))}
-            </ul>
-          )
+        return listItems.length > 0 && (
+          <ul className={`list-disc pl-5 space-y-2 ${isSpecialCase ? "" : "text-[#66BAEF] md:text-lg"}`}>
+            {listItems.map((li, i) => (
+              <li key={`li-${i}`} dangerouslySetInnerHTML={{ __html: li }} />
+            ))}
+          </ul>
         );
       case "paragraphsAfterCode":
         return paragraphsAfterCode.map((p, i) => (
@@ -127,61 +60,56 @@ const BlockRenderer = ({ block }) => {
     }
   };
 
-  const textContent = (
-    <div
-      className={`${
-        image ? "md:w-1/2" : "w-full"
-      } text-[#66BAEF] md:text-lg space-y-4`}
-    >
-      {image && (
-        <h2 className="text-2xl font-bold mb-4 text-[#3D83AC]">{subtitle}</h2>
-      )}
+  // Split content into what goes beside image vs full-width
+  const getContentGroups = () => {
+    let beforeCode = [];
+    let afterCode = [];
+    let foundCode = false;
 
-      {isSpecialCase && listItems.length > 0 && (
-        <ul className="list-disc pl-5 space-y-2">
-          {listItems.map((li, i) => (
-            <li
-              key={`special-li-${i}`}
-              dangerouslySetInnerHTML={{ __html: li }}
-            />
-          ))}
-        </ul>
-      )}
+    contentOrder.forEach(type => {
+      if (type === "codeSnippets") foundCode = true;
+      foundCode ? afterCode.push(type) : beforeCode.push(type);
+    });
 
-      {!isSpecialCase &&
-        contentOrder.map((type, i) => (
-          <React.Fragment key={i}>{renderContent(type)}</React.Fragment>
-        ))}
-    </div>
-  );
+    return { beforeCode, afterCode };
+  };
 
-  const imageContent = image && (
-    <div className="md:w-1/2 w-full flex justify-center md:justify-start items-start">
-      <ImageBlock
-        image={image}
-        subtitle={subtitle}
-        imageSize={block.imageSize}
-      />
-    </div>
-  );
+  const { beforeCode, afterCode } = getContentGroups();
 
   return (
     <div className="mb-15 px-4">
-      {!image && (
+      {/* Title */}
+      {subtitle && (
         <h2 className="text-2xl font-bold mb-4 text-[#3D83AC]">{subtitle}</h2>
       )}
 
-      {image ? (
-        <div
-          className={`flex flex-col md:flex-row ${
-            imagePosition === "left" ? "md:flex-row-reverse" : ""
-          } items-start gap-14`}
-        >
-          {imageContent}
-          {textContent}
+      {/* Content with image */}
+      {image && (
+        <div className={`flex flex-col md:flex-row ${imagePosition === "left" ? "" : "md:flex-row-reverse"} gap-6 mb-6`}>
+          {/* Image container */}
+          <div className={`md:w-1/2 ${imageSize} flex justify-center md:justify-start`}>
+            <ImageBlock image={image} subtitle={subtitle} imageSize={imageSize} />
+          </div>
+
+          {/* Text content */}
+          <div className="md:w-1/2 text-[#66BAEF] md:text-lg space-y-4">
+            {beforeCode.map(type => renderContent(type))}
+          </div>
         </div>
-      ) : (
-        <div className="w-full">{textContent}</div>
+      )}
+
+      {/* Content without image */}
+      {!image && beforeCode.length > 0 && (
+        <div className="text-[#66BAEF] md:text-lg space-y-4 mb-6">
+          {beforeCode.map(type => renderContent(type))}
+        </div>
+      )}
+
+      {/* Full-width content (code snippets etc) */}
+      {afterCode.length > 0 && (
+        <div className="text-[#66BAEF] md:text-lg space-y-4">
+          {afterCode.map(type => renderContent(type))}
+        </div>
       )}
     </div>
   );
