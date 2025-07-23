@@ -6,30 +6,58 @@
       "subtitle": "👋 Halo, teman-teman!",
       "image": "duck.png",
       "imagePosition": "right",
-      "imageSize": "w-64",
+      "imageSize": "w-65",
       "paragraphs": [
         "Selamat datang di CowDi — Coding with Didi! 🐤 Di sini, kita akan belajar cara memberi perintah ke komputer supaya dia bisa menggambar, bermain, dan melakukan hal-hal seru lainnya!",
         "Tapi, kita mulai dari awal dulu ya…"
-      ]
+      ],
+      "paragraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-4"
+      }
     },
     {
       "type": "text",
       "subtitle": "💻 Apa Itu Coding?",
       "paragraphs": [
-        "Bayangin kamu punya robot. Robot itu bisa melakukan banyak hal: menggambar, bernyanyi, bahkan main game. Tapi… robot itu nggak tahu harus ngapain kalau kamu nggak ngasih perintah.\n\n",
-        
-        "\nNah, coding adalah cara kita memberi perintah ke komputer atau robot supaya dia tahu apa yang harus dilakukan. Coding itu seperti bahasa yang dipakai manusia untuk ngobrol sama komputer!"
-      ]
+        "Bayangin kamu punya robot. Robot itu bisa melakukan banyak hal: menggambar, bernyanyi, bahkan main game",
+        "Tapi… robot itu nggak tahu harus ngapain kalau kamu nggak ngasih perintah."
+      ],
+      "paragraphPadding": {
+        "top": "pt-1",
+        "bottom": "pb-3"
+      },
+      "littleParagraphs": [
+        "Nah, coding adalah cara kita memberi perintah ke komputer atau robot supaya dia tahu apa yang harus dilakukan. Coding itu seperti bahasa yang dipakai manusia untuk ngobrol sama komputer!"
+      ],
+      "littleParagraphPadding": {
+        "top": "pt-6",
+        "bottom": "pb-1"
+      }
     },
     {
       "type": "code",
       "subtitle": "🐍 Apa Itu Python?",
 
-      "contentOrder": ["paragraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
+      "contentOrder": ["paragraphs", "littleParagraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
       "paragraphs": [
-        "Python adalah salah satu bahasa coding yang paling gampang dimengerti dan banyak dipakai di seluruh dunia. Python itu seperti bahasa Indonesia-nya komputer — mudah dibaca, mudah ditulis.",
+        "Python adalah salah satu bahasa coding yang paling gampang dimengerti dan banyak dipakai di seluruh dunia. Python itu seperti bahasa Indonesia-nya komputer — mudah dibaca, mudah ditulis."
+      ],
+      "littleParagraphs": [
         "Coba jalankan perintah Python dibawah:"
       ],
+      "littleParagraphPadding": {
+        "top": "pt-4",
+        "bottom": "pb-0"
+      },
+      "littleParagraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-4"
+      },
+      "paragraphPadding": {
+        "top": "pt-2",
+        "bottom": "pb-3"
+      },
       "codeSnippets": [
         {
           "id": "python-hello-correct",

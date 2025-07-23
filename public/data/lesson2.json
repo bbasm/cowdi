@@ -4,13 +4,25 @@
     {
       "type": "text",
       "subtitle": "🤔 Komputer Itu Pinter, Tapi…",
-      "contentOrder": ["littleParagraphs", "paragraphs", "codeSnippets", "listItems"],
+      "contentOrder": ["littleParagraphs", "paragraphs", "codeSnippets", "specialText"],
       "littleParagraphs": [
         "Komputer bisa hitung cepat, tunjukin gambar, dan banyak hal keren. Tapi... komputer itu pelupa banget!",
         "Kalau kamu gak bilang sesuatu ke dia, dia gak bakal ingat.."
       ],
+      "littleParagraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-3"
+      },
+      "paragraphPadding": {
+        "top": "pt-5",
+        "bottom": "pb-0"
+      },
+      "paragraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-1"
+      },
       "paragraphs": ["Makanya kita perlu kasih tau dia:"],
-      "listItems": [
+      "specialText": [
         "\"Eh inget ya! Namaku Didi!\"",
         "\"Eh, tolong simpan angka 10 ya!\""
         
@@ -19,14 +31,26 @@
     {
       "type": "code",
       "subtitle": "📦 Variabel: Tempat Penyimpanan",
-      "contentOrder": [ "littleParagraphs", "paragraphs", "codeSnippets", "listItems"],
-      "littleParagraphs": [
+      "contentOrder": [ "paragraphs", "littleParagraphs", "codeSnippets", "listItems"],
+      "paragraphs": [
         "Di Python, kita bisa menyimpan sesuatu ke dalam sebuah \"kotak\" yang punya nama.",
         "Kotak ini disebut variabel."
       ],
-      "paragraphs":[
+      "paragraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-2"
+      },
+      "littleParagraphs":[
         "Contoh:"
       ],
+      "littleParagraphPadding": {
+        "top": "pt-4",
+        "bottom": "pb-0"
+      },
+      "littleParagraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-5"
+      },
       "codeSnippets": [
         {
           "id": "python-hello-correct-1",
@@ -45,6 +69,14 @@
       "subtitle": "🛠️ Variabel Bisa Bantu Kita Banyak Hal",
       "contentOrder": ["paragraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
       "paragraphs": ["Coba contoh ini:"],
+      "paragraphPadding": {
+        "top": "pt-2",
+        "bottom": "pb-0"
+      },
+      "paragraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-4"
+      },
       "codeSnippets": [
         {
           "id": "python-hello-correct-1",
@@ -60,11 +92,10 @@
         "Kita bisa hitung hasilnya dan simpan lagi ke kotak baru!"
       ]
     },
-
-        {
+    {
       "type": "code",
       "subtitle": "🔁 Kita Bisa Ganti Isinya Juga",
-      "contentOrder": ["paragraphsAfterCode", "codeSnippets"],
+      "contentOrder": ["paragraphs", "codeSnippets"],
       "codeSnippets": [
         {
           "id": "python-hello-correct-2",
@@ -72,9 +103,17 @@
           "mustFix": false
         }
       ],
-      "paragraphsAfterCode": [
+      "paragraphs": [
         "Karena komputer simpan yang terakhir, dia gak inget yang sebelumnya."
-      ]
+      ],
+      "paragraphPadding": {
+        "top": "pt-2",
+        "bottom": "pb-0"
+      },
+      "paragraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-4"
+      }
     },
     {
       "type": "fix_code",
@@ -89,6 +128,14 @@
       "paragraphs": [
         "\nContoh yang salah:"
       ],
+      "paragraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-6"
+      },
+      "paragraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-40"
+      },
       "image": "warning.png",
       "imagePosition": "right",
       "imageSize": "w-[300px]",
@@ -130,9 +177,12 @@
       ]
     },
        {
-      "type": "text",
+      "type": "image",
       "subtitle": "🎉 Sip! Kamu Hebat!",
-      "contentOrder": ["paragraphs", "listItems", "paragraphsAfterCode"],
+      "image": "juara_mengingat.jpg",
+      "imagePosition": "right",
+      "imageSize": "w-100",
+      "contentOrder": ["image", "paragraphs", "listItems", "paragraphsAfterCode"],
       "paragraphs": ["Sekarang kamu sudah tahu:"],
       "listItems": [
         "Gimana komputer bisa ingat sesuatu",
