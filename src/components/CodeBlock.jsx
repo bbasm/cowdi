@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/codeblock.css";
-import { runPython } from "../utils/pyodideRunner";
+import {
+  runPython,
+  isPyodideReady,
+  loadPyodideInstance,
+} from "../utils/pyodideRunner";
 
 const CodeBlock = ({ snippet, lessonNum }) => {
   const { id, starterCode, mustFix } = snippet;
-  // const storageKey = `lesson${lessonNum}-${id}`;
   const storageKey = `lesson${lessonNum}-${id}-${starterCode}`;
 
   const [code, setCode] = useState("");
@@ -27,11 +30,14 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   }, [storageKey, starterCode]);
 
   useEffect(() => {
-    const init = async () => {
-      await runPython(""); // dummy run to warm up
-      setPyodideReady(true);
+    const warmUp = async () => {
+      if (!isPyodideReady()) {
+        await loadPyodideInstance();
+      }
+      setPyodideReady(true); // ✅ ensure this gets called after ready
     };
-    init();
+
+    warmUp();
   }, []);
 
   useEffect(() => {
@@ -55,6 +61,11 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   };
 
   const run = async () => {
+    if (!pyodideReady) {
+      setOutput("⏳ Pyodide belum siap! Tunggu sebentar ya...");
+      return;
+    }
+
     const { output, error } = await runPython(code);
     localStorage.setItem(storageKey, code);
 
@@ -70,18 +81,6 @@ const CodeBlock = ({ snippet, lessonNum }) => {
       }
     }
   };
-
-  // const reset = () => {
-  //   const initial = starterCode.endsWith("\n")
-  //     ? starterCode
-  //     : starterCode + "\n";
-  //   setCode(initial);
-  //   setOutput("");
-  //   setFixed(!mustFix);
-  //   setHasError(false);
-  //   setHasUserEdited(false);
-  //   localStorage.removeItem(storageKey);
-  // };
 
   const reset = () => {
     const initial = starterCode.endsWith("\n")
@@ -117,26 +116,35 @@ const CodeBlock = ({ snippet, lessonNum }) => {
               />
             </svg>
           </button>
-          <button
-            onClick={run}
-            title="Run"
-            className={`w-6 h-6 ${
-              !pyodideReady ? "opacity-40 cursor-not-allowed" : ""
-            }`}
-            disabled={!pyodideReady}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
+          <div className="relative group">
+            <button
+              onClick={run}
+              title={pyodideReady ? "Jalankan kode" : ""}
+              className={`w-6 h-6 ${
+                !pyodideReady ? "opacity-40 cursor-not-allowed" : ""
+              }`}
+              disabled={!pyodideReady}
             >
-              <path
-                fill="#3B3B3B"
-                d="m6.192 3.67l13.568 7.633a.8.8 0 0 1 0 1.394L6.192 20.33A.8.8 0 0 1 5 19.632V4.368a.8.8 0 0 1 1.192-.697"
-              />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="26"
+                height="26"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#3B3B3B"
+                  d="m6.192 3.67l13.568 7.633a.8.8 0 0 1 0 1.394L6.192 20.33A.8.8 0 0 1 5 19.632V4.368a.8.8 0 0 1 1.192-.697"
+                />
+              </svg>
+            </button>
+
+            {/* Tooltip when loading */}
+            {!pyodideReady && (
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-50">
+                ⏳ Tunggu sebentar... Komputernya masih siap-siap!
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -157,10 +165,17 @@ const CodeBlock = ({ snippet, lessonNum }) => {
         />
       </div>
 
-      {/* Output */}
       {output && (
         <div className="bg-white mt-4 p-3 rounded-md border border-gray-300 text-[16px] leading-6 text-black">
-          <pre className="font-source whitespace-pre-wrap">{output}</pre>
+          <pre
+            className={
+              output.startsWith("⏳")
+                ? "font-[Poppins] italic text-gray-600"
+                : "font-source"
+            }
+          >
+            {output}
+          </pre>
         </div>
       )}
 

@@ -2,7 +2,10 @@
   "title": "Ini Angka atau Kata, Ya?",
   "blocks": [
     {
-      "type": "text",
+      "type": "image",
+      "image": "didi_bingung.jpg",
+      "imagePosition": "right",
+      "imageSize": "w-75",
       "contentOrder": ["littleParagraphs", "specialText", "paragraphsAfterCode"],
       "subtitle": "🤔 Komputer Pinter, Tapi Gak Bisa Tebak-tebakan",
       "littleParagraphs": [
@@ -23,14 +26,19 @@
       "type": "text",
       "subtitle": "🧩 Kenalan Sama Tipe Data!",
 
-      "contentOrder": ["paragraphs", "listItems", "specialText"],
+      "contentOrder": ["paragraphs", "littleParagraphs", "listItems", "specialText"],
       "paragraphs": [
-        "Komputer butuh tau jenis dari isi yang kamu masukin. Di Python, ini disebut tipe data.",
+        "Komputer butuh tau jenis dari isi yang kamu masukin. Di Python, ini disebut tipe data."
+      ],
+      "littleParagraphs": [
         "Bayangin kamu punya 3 kotak besar:"
       ],
       "paragraphPadding": {
         "top": "pt-0",
-        "bottom": "pb-5"
+        "bottom": "pb-3"
+      },
+      "littleParagraphPadding": {
+
       },
       "listItems": [
         "Kotak Angka (int) → angka bulat kayak 5, 100, -3",
@@ -52,7 +60,7 @@
       "contentOrder": ["codeSnippets", "listItems"],
       "codeSnippets": [
         {
-          "id": "python-hello-correct-2",
+          "id": "python-hello-correct-3-1",
           "starterCode": "umur = 14 \ntinggi = 155.5 \nnama = \"Didi\" \n\nprint(umur) \nprint(tinggi) \nprint(nama)",
           "mustFix": false
         }
@@ -66,7 +74,7 @@
     {
       "type": "code",
       "subtitle": "❗ Jangan Gabung Sembarangan",
-      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs"],
+      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs", "specialText"],
       "littleParagraphPadding": {
         "top": "pt-0",
         "bottom": "pb-0"
@@ -78,14 +86,14 @@
       "littleParagraphs": ["Kita coba ini:"],
       "codeSnippets": [
         {
-          "id": "python-hello-correct-2",
+          "id": "python-hello-correct-3-2",
           "starterCode": "umur = 10 \nprint(\"Umurku: \" + umur)",
           "mustFix": false
         }
       ],
       "paragraphPadding": {
         "top": "pt-0",
-        "bottom": "pb-2"
+        "bottom": "pb-3"
       },
       "paragraphMargin": {
         "top": "-mt-0",
@@ -95,48 +103,56 @@
         "💥 Python bingung!",
         "Karena \"Umurku: \" itu string, sedangkan umur itu int.",
         "Python bingung: “Kok kamu suruh aku gabung kata + angka???”"
+      ],
+      "specialText": [
+        "Belum perlu diperbaiki ya! Di bawah ini kita kasih tau caranya yang bener ✨"
       ]
     },
     {
-      "type": "code",
-      "subtitle": "✅ Gimana Benerinnya?",
-      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs", "codeSnippets", "paragraphsAfterCode"],
-      "littleParagraphs": ["Cara 1:"],
-      "littleParagraphPadding": {
-        "top": "pt-0",
-        "bottom": "pb-2"
-      },
-      "littleParagraphMargin": {
-        "top": "-mt-0",
-        "bottom": "-mb-7"
-      },
-      "codeSnippets": [
-        {
-          "id": "python-str-correct-1",
-          "starterCode": "print(\"Umurku: \" + str(umur))",
-          "mustFix": false
-        }
-      ],
-      "paragraphsAfterCode": [
-        "📌 Catatan: str() = ubah angka jadi teks"
-        ],
-      "paragraphs": ["Cara 2 (lebih keren!):"],
-      "paragraphPadding": {
-        "top": "pt-0",
-        "bottom": "pb-2"
-      },
-      "paragraphMargin": {
-        "top": "-mt-0",
-        "bottom": "-mb-1"
-      },
-      "codeSnippets": [
-        {
-          "id": "python-str-correct-2",
-          "starterCode": "umur = 10\nprint(f\"Umurku: {umur}\")",
-          "mustFix": false
-        }
-      ]
-    },
+  "type": "code",
+  "subtitle": "✅ Gimana Benerinnya?",
+  "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs"],
+  "littleParagraphs": ["Cara 1:"],
+  "littleParagraphMargin": {
+    "bottom": "-mb-4"
+  },
+  "codeSnippets": [
+    {
+      "id": "python-str-correct-3-3",
+      "starterCode": "umur = 10\nprint(\"Umurku: \" + str(umur))",
+      "mustFix": false
+    }
+  ],
+  "paragraphMargin": {
+    "top": "-mt-3"
+  },
+  "paragraphs": [
+    "📌 Cara ini pakai fungsi `str()` buat ubah angka jadi teks, biar bisa digabung."
+  ]
+},
+{
+  "type": "code",
+  "subtitle": "",
+  "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs"],
+  "littleParagraphs": ["Cara 2 (lebih keren):"],
+  "littleParagraphMargin": {
+    "bottom": "-mb-4",
+    "top":"-mt-3"
+  },
+  "codeSnippets": [
+    {
+      "id": "python-str-correct-3-4",
+      "starterCode": "umur = 10\nprint(f\"Umurku: {umur}\")",
+      "mustFix": false
+    }
+  ],
+  "paragraphMargin": {
+    "top": "-mt-3"
+  },
+  "paragraphs": [
+    "📌 Ini namanya *f-string*! Cepat, singkat, dan gampang dibaca. Python otomatis ngerti kalau kamu mau masukin isi dari `umur` ke dalam teks."
+  ]
+},
      {
       "type": "fix_code",
       "subtitle": "🧪 Perbaiki Yuk!",
@@ -152,7 +168,7 @@
       },
       "codeSnippets": [
         {   
-          "id": "python-hello-error-1",
+          "id": "python-hello-error-3-5",
           "starterCode": "harga = 15000 \nmakanan = \"Bakso\" \n\nprint(\"Harga \" + makanan + \" adalah \" + harga)",
           "mustFix": true
         }

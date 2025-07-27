@@ -25,13 +25,13 @@
       ],
       "paragraphPadding": {
         "top": "pt-1",
-        "bottom": "pb-3"
+        "bottom": "pb-2"
       },
       "littleParagraphs": [
         "Nah, coding adalah cara kita memberi perintah ke komputer atau robot supaya dia tahu apa yang harus dilakukan. Coding itu seperti bahasa yang dipakai manusia untuk ngobrol sama komputer!"
       ],
       "littleParagraphPadding": {
-        "top": "pt-6",
+        "top": "pt-3",
         "bottom": "pb-1"
       }
     },
@@ -41,7 +41,7 @@
 
       "contentOrder": ["paragraphs", "littleParagraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
       "paragraphs": [
-        "Python adalah salah satu bahasa coding yang paling gampang dimengerti dan banyak dipakai di seluruh dunia. Python itu seperti bahasa Indonesia-nya komputer — mudah dibaca, mudah ditulis."
+        "Python adalah salah satu bahasa coding yang paling gampang dimengerti dan banyak dipakai di seluruh dunia. Python itu seperti bahasa Indonesia-nya komputer, mudah dibaca dan mudah ditulis."
       ],
       "littleParagraphs": [
         "Coba jalankan perintah Python dibawah:"
@@ -60,7 +60,7 @@
       },
       "codeSnippets": [
         {
-          "id": "python-hello-correct",
+          "id": "python-hello-correct-1-1",
           "starterCode": "print(\"Halo Dunia!\")",
           "mustFix": false
         }
@@ -68,9 +68,9 @@
       "paragraphsAfterCode": [
         "Nah, yuk kita pahami artinya:"],
       "listItems": [
-        "'print' artinya “tampilkan”. Ini kayak ngomong ke komputer: “Tunjukin ini di layar, ya!”",
-        "'\"Halo Dunia!\"' adalah teks yang mau ditampilkan. Harus pakai tanda kutip supaya komputer ngerti itu tulisan.",
-        "Jadi, 'print(\"Halo Dunia!\")' artinya: “Hai komputer, tampilkan tulisan ‘Halo Dunia!’ di layar!”"
+        {"text": "'print' artinya “tampilkan”. Ini kayak ngomong ke komputer: “Tunjukin ini di layar, ya!”", "padding": "pt-0 pb-1"},
+        {"text": "'\"Halo Dunia!\"' adalah teks yang mau ditampilkan. Harus pakai tanda kutip supaya komputer ngerti itu tulisan.", "padding": "pt-1 pb-1"},
+        {"text": "Jadi, 'print(\"Halo Dunia!\")' artinya: “Hai komputer, tampilkan tulisan ‘Halo Dunia!’ di layar!”", "padding": "pt-1 pb-2"}
         
       ]
     },
@@ -90,7 +90,7 @@
       "imageSize": "w-[250px]",
       "codeSnippets": [
         {
-          "id": "python-hello-error",
+          "id": "python-hello-error-1-1",
           "starterCode": "print(Halo Dunia!)",
           "mustFix": true
         }

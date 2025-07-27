@@ -1,0 +1,218 @@
+{
+  "title": "Ulang-Ulang? Tinggal For! + Jurus Rahasia Python 🪄",
+  "blocks": [
+    {
+      "type": "code",
+      "contentOrder": ["paragraphs", "codeSnippets", "paragraphsAfterCode", "specialText"],
+      "subtitle": "🌀 Komputer Bisa Capek?",
+      "paragraphMargin": {
+        "bottom": "-mb-2"
+      },
+      "paragraphs": [
+        "Coba bayangin kamu suruh komputer nulis ini:"],
+        "codeSnippets": [
+        {
+          "id": "python-print-correct-4-1",
+          "starterCode": "print(\"Halo!\")\nprint(\"Halo!\")\nprint(\"Halo!\")\n",
+          "mustFix": false
+        }
+      ],
+        "paragraphsAfterCode" : [
+            "Capek ngetiknya kan?"
+        ],
+        "specialText":[
+            "Komputer gak capek sih... tapi kita yang capek nulis ulang-ulang 😅"
+        ],
+        "specialTextMargin": {
+        "top": "mt-3",
+        "bottom": "mb-2"
+      }
+    },
+    {
+      "type": "code",
+      "contentOrder": ["paragraphs", "codeSnippets", "paragraphsAfterCode", "specialText"],
+      "subtitle": "🔁 Gunain Perulangan!",
+      "paragraphMargin": {
+        "bottom": "-mb-2"
+      },
+      "paragraphs": [
+        "Kita bisa suruh Python ngulang perintah pakai 'for'."],
+        "codeSnippets": [
+        {
+          "id": "python-correct-4-2",
+          "starterCode": "for i in range(3):\n  print(\"Halo!\")",
+          "mustFix": false
+        }
+      ],
+        "paragraphsAfterCode" : [
+            "Python bakal nulis “Halo!” 3 kali. Hemat tenaga banget! 🙌"
+        ]
+    },
+    {
+      "type": "text",
+      "subtitle": "🤓 Apa Artinya?",
+      "contentOrder": ["listItems"],
+      "listItems": [
+        "i itu kayak penghitung: mulai dari 0, terus naik",
+        "range(3) = berarti ngulang 3 kali",
+        ": artinya “ini bagian yang mau diulang ya!”"
+      ],
+      "specialText": [
+        "Eh… tunggu. \"100\" itu string, bukan angka?",
+        "Yup! Karena ada tanda kutip!"
+      ]
+    },
+    {
+      "type": "code",
+      "subtitle": "🎨 Gabung Sama Angka!",
+      "contentOrder": ["littleParagraphs", "specialText", "paragraphs", "paragraphsAfterCode", "codeSnippets"],
+      "littleParagraphs": [
+        "Kadang kita pengen bikin tulisan yang beda-beda tiap kali ngulang. Misalnya, kita mau komputer bilang"
+      ],
+      "littleParagraphPadding": {
+        "bottom":"mb-4"
+      },
+      "specialText": ["\"Ulangan ke-0\", \"Ulangan ke-1\", \"Ulangan ke-2\", dan seterusnya."],
+      "paragraphs": ["Gimana caranya? Gampang! Python kasih kita angka i di setiap putaran, dan kita bisa masukin ke tulisan pakai {i}. Kayak sulap!"],
+      "paragraphPadding": {
+        "top": "pt-4"
+      },
+      "paragraphsAfterCode": [
+        "Contohnya kayak gini nih (langsung coba yuk!):"
+      ],
+      "codeSnippets": [
+        {
+          "id": "python-correct-4-3",
+          "starterCode": "for i in range(3):\n  print(f\"Ulangan ke-{i}\")",
+          "mustFix": false
+        }
+      ]
+    },
+    {
+      "type": "fix_code",
+      "subtitle": "⚠️ Coba Perbaiki Yuk!",
+      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs"],
+      "littleParagraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-0"
+      },
+      "littleParagraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-4"
+      },
+      "littleParagraphs": ["Kita coba ini:"],
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct-4-4",
+          "starterCode": "for i in range(5)\n  print(f\"Aku belajar Python\")",
+          "mustFix": false
+        }
+      ],
+      "paragraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-2"
+      },
+      "paragraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-0"
+      },
+      "paragraphs": [
+        "❌ Kenapa error ya? Coba benerin biar bisa jalan!"
+        ]
+    },
+    {
+        "type": "text",
+        "contentOrder": ["paragraphs", "specialText", "paragraphsAfterCode"],
+        "subtitle": "🧠 Fungsi Itu Jurus Rahasia!",
+        "paragraphPadding": {
+          "bottom": "pb-4"
+        },
+        "paragraphs": [
+            "Bayangin kamu lagi main game, terus ada tombol spesial:"
+            ],
+            "specialText": [
+                "Tekan sekali ➜ langsung keluar jurus keren!"
+            ],
+            "paragraphsAfterCode": [
+                "Nah, fungsi di Python juga gitu. Kita bisa bikin satu jurus (alias kumpulan perintah), terus tinggal panggil namanya kapan aja kita mau."
+            ]
+    },
+    {
+      "type": "code",
+      "subtitle": "🪄 Bikin Jurus Sendiri",
+      "contentOrder": ["codeSnippets", "paragraphsAfterCode", "listItems"],
+      "codeSnippets": [
+        {
+          "id": "python-correct-4-5",
+          "starterCode": "def sulap():\n  print(\"Abrakadabra!\")\n  print(\"🎩✨ POOF!\")\n\nsulap()",
+          "mustFix": false
+        }
+      ],
+      "paragraphsAfterCode": [
+        "🧠 Penjelasan:"
+      ],
+      "listItems": [
+        "def itu kayak bilang: \"Eh Python, aku mau bikin jurus baru nih!\"",
+        "sulap() itu cara kita manggil jurusnya"
+      ]
+    },
+    {
+      "type": "code",
+      "subtitle": "🔁 Fungsi + Loop = Power Combo!",
+      "contentOrder": ["codeSnippets", "paragraphsAfterCode", "listItems"],
+      "codeSnippets": [
+        {
+          "id": "python-correct-4-6",
+          "starterCode": "def semangat():\n  print(\"Ayo semangat belajar!\")\n  print(\"Jangan menyerah! 💪\")\n  print(\"Kamu hebat!\")\n\nfor i in range(3):\n  semangat()",
+          "mustFix": false
+        }
+      ],
+      "paragraphsAfterCode": [
+        "🧠 Penjelasan:"
+      ],
+      "listItems": [
+        "def itu kayak bilang: \"Eh Python, aku mau bikin jurus baru nih!\"",
+        "sulap() itu cara kita manggil jurusnya"
+      ]
+    },
+     {
+      "type": "fix_code",
+      "subtitle": "⚠️ Coba Perbaiki Fungsi Ini",
+      "contentOrder": ["littleParagraphs", "codeSnippets"],
+      "littleParagraphs": ["Didi pengen komputer manggil temennya 2 kali, tapi kok gak jalan ya?"],
+      "littleParagraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-2"
+      },
+      "littleParagraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-5"
+      },
+      "codeSnippets": [
+        {   
+          "id": "python-hello-error-4-7",
+          "starterCode": "def panggil_teman:\n  print(\"hai, sini dong!!\")\n  \nfor i in range(2):\n  panggil_teman()",
+          "mustFix": true
+        }
+      ]
+    },
+    {
+  "type": "text",
+  "subtitle": "🏆 Didi Bangga Banget Nih!",
+  "contentOrder": ["paragraphs", "listItems", "paragraphsAfterCode"],
+  "paragraphs": ["Kamu barusan nguasain ilmu keren banget:"],
+  "paragraphPadding": {
+    "bottom": "mb-3"
+  },
+  "listItems": [
+    "Ngulang perintah dengan loop",
+    "Bikin fungsi alias jurus sendiri",
+    "Gabungin keduanya jadi super power!"
+  ],
+  "paragraphsAfterCode": [
+    "💡 Semua ini bakal kamu pake buat bikin gambar yang keren dan ajaib banget nanti!"
+  ]
+}
+
+  ]
+}
