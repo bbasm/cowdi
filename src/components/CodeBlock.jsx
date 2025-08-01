@@ -5,6 +5,11 @@ import {
   isPyodideReady,
   loadPyodideInstance,
 } from "../utils/pyodideRunner";
+import {
+  runTurtle,
+  isTurtleReady,
+  loadTurtleInstance,
+} from "../utils/turtleRunner";
 
 const CodeBlock = ({ snippet, lessonNum }) => {
   const { id, starterCode, mustFix } = snippet;
@@ -16,6 +21,7 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   const [fixed, setFixed] = useState(!mustFix);
   const [hasUserEdited, setHasUserEdited] = useState(false);
   const [pyodideReady, setPyodideReady] = useState(false);
+  const [canvasData, setCanvasData] = useState(null);
 
   const textareaRef = useRef(null);
 
@@ -31,14 +37,22 @@ const CodeBlock = ({ snippet, lessonNum }) => {
 
   useEffect(() => {
     const warmUp = async () => {
-      if (!isPyodideReady()) {
-        await loadPyodideInstance();
+      const isTurtleCode = code.includes('turtle') || code.includes('from turtle');
+      
+      if (isTurtleCode) {
+        if (!isTurtleReady()) {
+          await loadTurtleInstance();
+        }
+      } else {
+        if (!isPyodideReady()) {
+          await loadPyodideInstance();
+        }
       }
-      setPyodideReady(true); // ✅ ensure this gets called after ready
+      setPyodideReady(true);
     };
 
     warmUp();
-  }, []);
+  }, [code]);
 
   useEffect(() => {
     autoResize();
@@ -62,22 +76,45 @@ const CodeBlock = ({ snippet, lessonNum }) => {
 
   const run = async () => {
     if (!pyodideReady) {
-      setOutput("⏳ Pyodide belum siap! Tunggu sebentar ya...");
+      setOutput("⏳ Python belum siap! Tunggu sebentar ya...");
       return;
     }
 
-    const { output, error } = await runPython(code);
-    localStorage.setItem(storageKey, code);
+    const isTurtleCode = code.includes('turtle') || code.includes('from turtle');
+    
+    if (isTurtleCode) {
+      const result = await runTurtle(code);
+      localStorage.setItem(storageKey, code);
 
-    if (error) {
-      setOutput(error);
-      setHasError(true);
-      setFixed(false);
+      if (result.error) {
+        setOutput(result.error);
+        setHasError(true);
+        setFixed(false);
+        setCanvasData(null);
+      } else {
+        setOutput(result.output || "Kode berhasil dijalankan! Lihat gambar di bawah.");
+        setHasError(false);
+        setCanvasData(result.canvasData);
+        if (mustFix) {
+          setFixed(true);
+        }
+      }
     } else {
-      setOutput(output);
-      setHasError(false);
-      if (mustFix && output.trim()) {
-        setFixed(true);
+      const { output, error } = await runPython(code);
+      localStorage.setItem(storageKey, code);
+
+      if (error) {
+        setOutput(error);
+        setHasError(true);
+        setFixed(false);
+        setCanvasData(null);
+      } else {
+        setOutput(output);
+        setHasError(false);
+        setCanvasData(null);
+        if (mustFix && output.trim()) {
+          setFixed(true);
+        }
       }
     }
   };
@@ -91,6 +128,7 @@ const CodeBlock = ({ snippet, lessonNum }) => {
     setFixed(!mustFix);
     setHasError(false);
     setHasUserEdited(false);
+    setCanvasData(null);
     localStorage.removeItem(storageKey);
   };
 
@@ -176,6 +214,17 @@ const CodeBlock = ({ snippet, lessonNum }) => {
           >
             {output}
           </pre>
+        </div>
+      )}
+
+      {/* Turtle Canvas */}
+      {canvasData && (
+        <div className="bg-white mt-4 p-3 rounded-md border border-gray-300 flex justify-center">
+          <img 
+            src={`data:image/svg+xml;base64,${canvasData}`} 
+            alt="Turtle Graphics Output"
+            className="max-w-full h-auto"
+          />
         </div>
       )}
 

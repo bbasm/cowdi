@@ -1,0 +1,208 @@
+{
+  "title": "PyTurtle Dasar – Si Kura-Kura Ajaib",
+  "blocks": [
+    {
+      "type": "image",
+      "subtitle": "🐢 Si Kura-Kura yang Bisa Gambar!",
+      "paragraphPadding": {
+        "bottom": "pb-2"
+      },
+      "paragraphs": [
+        "Pernah bayangin kura-kura bisa menggambar? Di Python, kamu bisa! Kita akan pakai teman baru kita: PyTurtle! 🐢✏️",
+        "Bayangin ada kura-kura kecil di layar. Dia bisa jalan lurus, belok kanan, belok kiri... dan tiap dia jalan, dia ninggalin jejak gambar! Wah, seru banget kan?"
+      ],
+      "image": "pyturtle.jpg",
+      "imagePosition": "right",
+      "imageSize": "w-65"
+    },
+    {
+      "type": "code",
+      "contentOrder": ["paragraphs", "littleParagraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
+      "subtitle": "📦 Pertama, Kita Panggil Si Turtle",
+      "paragraphs": [
+        "Sebelum bisa nyuruh kura-kura ngapa-ngapain, kita harus panggil dia dulu"],
+    "littleParagraphs": [
+        "Caranya?"
+    ],
+    "littleParagraphMargin": {
+        "bottom": "-mb-3"
+    },
+        "codeSnippets": [
+        {
+          "id": "python-correct-5-1",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()",
+          "mustFix": false
+        }
+      ],
+        "paragraphsAfterCode" : [
+            "📌 Penjelasan:"
+        ],
+        "listItems": [
+            "from turtle import * ➜ Kasih tahu Python: “Aku mau pakai turtle!”",
+            "kura = turtle.Turtle() ➜ Bikin kura-kura bernama kura."
+        ]
+    },
+    {
+      "type": "code",
+      "subtitle": "🛫 Coba Suruh Jalan Dulu!?",
+      "contentOrder": ["paragraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
+      "paragraphs": [
+        "Sekarang kita suruh dia jalan ke depan:"
+      ],
+      "paragraphMargin": {
+        "bottom": "-mb-2"
+    },
+    
+      "codeSnippets": [
+        {
+          "id": "python-correct-5-2",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)\n\nturtle.done()",
+          "mustFix": false
+        }
+      ],
+      "paragraphsAfterCode": [
+        "💡 Artinya:"
+      ],
+      "listItems": [
+        "kura.forward(100) ➜ Jalan lurus 100 langkah.",
+        "turtle.done() ➜ Tutup programnya dengan rapi."
+      ]
+      
+    },
+    {
+      "type": "code",
+      "subtitle": "🔄 Belok Kanan dan Kiri!",
+      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs", "listItems", "paragraphsAfterCode"],
+      "littleParagraphs": [
+        "Kita juga bisa suruh dia belok!"
+      ],
+      "littleParagraphMargin": {
+        "bottom": "-mb-2"
+    },
+      "codeSnippets": [
+        {
+          "id": "python-correct-5-3",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)\nkura.left(90)\nkura.forward(100)\n\nturtle.done()",
+          "mustFix": false
+        }
+      ],
+      "paragraphs": [
+        "💬 Penjelasan:"
+      ],
+      "listItems": [
+        "left(90) ➜ Belok kiri 90 derajat",
+        "right(90) ➜ Belok kanan 90 derajat"
+      ],
+      "paragraphsAfterCode": [
+        "Coba ubah jadi kura.right(90) dan lihat bedanya!"
+      ]
+    },
+    
+    {
+      "type": "code",
+      "subtitle": "🎨 Ganti Warna dan Ketebalan Garis",
+      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs", "listItems", "paragraphsAfterCode"],
+      "littleParagraphs": [
+        "Biar lebih keren, kita bisa ubah warna dan ketebalan garis."
+      ],
+      "littleParagraphMargin": {
+        "bottom": "-mb-2"
+      },
+      "codeSnippets": [
+        {
+          "id": "python-correct-5-4",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.pencolor(\"blue\")\nkura.pensize(5)\n\nkura.forward(100)\n\nturtle.done()",
+          "mustFix": false
+        }
+      ],
+      "paragraphs": [
+        "📌 Penjelasan:"
+      ],
+      "listItems": [
+        "pencolor(\"blue\") ➜ Ganti warna jadi biru.",
+        "pensize(5) ➜ Garis jadi lebih tebal."
+      ],
+      "paragraphsAfterCode": [
+        "🧠 Catatan: Kamu harus gerakkan kura-kura supaya warna dan ketebalan keliatan. Kalau dia diam, ya nggak bakal keliatan apa-apa!"
+      ]
+    },
+    
+    {
+      "type": "code",
+      "subtitle": "🧙‍♂️ Jalan Tapi Gak Gambar Dulu",
+      "contentOrder": ["littleParagraphs", "codeSnippets", "paragraphs", "listItems"],
+      "littleParagraphs": [
+        "Kadang, kamu mau si kura-kura jalan tanpa gambar."
+      ],
+      "littleParagraphMargin": {
+        "bottom": "-mb-2"
+      },
+      "codeSnippets": [
+        {
+          "id": "python-correct-5-5",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)\nkura.penup()\nkura.forward(50)\nkura.pendown()\nkura.forward(100)\n\nturtle.done()",
+          "mustFix": false
+        }
+      ],
+      "paragraphs": [
+        "📌 Penjelasan:"
+      ],
+      "listItems": [
+        "penup() ➜ Si kura-kura angkat pena, jadi jalan tapi tidak ninggalin garis.",
+        "pendown() ➜ Turunin pena lagi, jadi mulai gambar."
+      ]
+    },
+    {
+      "type": "fix_code",
+      "subtitle": "🧪 Yuk, Coba Sendiri!",
+      "contentOrder": ["paragraphs","listItems" , "codeSnippets"],
+      "littleParagraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-0"
+      },
+      "littleParagraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-4"
+      },
+      "paragraphs": ["Coba kamu buat ini:"],
+      "listItems": [
+        "Jalan 100 langkah",
+        "Belok kanan",
+        "Ganti warna jadi merah",
+        "Jalan lagi 100 langkah"
+      ],
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct-5-6",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
+          "mustFix": false
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtitle": "🏁 Siap ke Level Selanjutnya?",
+      "contentOrder": ["paragraphs","listItems" , "codeSnippets", "littleParagraphs"],
+      "littleParagraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-0"
+      },
+      "littleParagraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-4"
+      },
+      "paragraphs": ["Kamu sekarang udah bisa:"],
+      "listItems": [
+        "Bikin kura-kura jalan",
+        "Belokin dia ke kanan/kiri",
+        "Ganti warna & ketebalan",
+        "Jalan tanpa gambar"
+      ],
+      "littleParagraphs": [
+        "🔥 Di bab berikutnya, kita bakal belajar gambar bentuk-bentuk keren kayak kotak, segitiga, dan bintang ajaib pakai perulangan (for loop)!"
+      ]
+    }
+    
+
+  ]
+}
