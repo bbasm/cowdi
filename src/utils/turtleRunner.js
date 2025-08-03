@@ -30,11 +30,25 @@ export async function loadTurtleInstance() {
             self.pen_width = 1
             self.lines = []
             self.speed_value = 5
+            self.commands = []  # Store all drawing commands for animation
             
         def forward(self, distance):
             old_x, old_y = self.x, self.y
-            self.x += distance * math.cos(math.radians(self.angle))
-            self.y += distance * math.sin(math.radians(self.angle))
+            new_x = self.x + distance * math.cos(math.radians(self.angle))
+            new_y = self.y + distance * math.sin(math.radians(self.angle))
+            
+            # Record command for animation
+            self.commands.append({
+                'type': 'move',
+                'from': {'x': old_x, 'y': old_y, 'angle': self.angle},
+                'to': {'x': new_x, 'y': new_y, 'angle': self.angle},
+                'pen_down': self.pen_down,
+                'color': self.pen_color,
+                'width': self.pen_width,
+                'distance': distance
+            })
+            
+            self.x, self.y = new_x, new_y
             if self.pen_down:
                 self.lines.append({
                     'x1': old_x, 'y1': old_y,
@@ -47,10 +61,26 @@ export async function loadTurtleInstance() {
             self.forward(-distance)
             
         def left(self, angle):
+            old_angle = self.angle
             self.angle += angle
+            # Record rotation command
+            self.commands.append({
+                'type': 'rotate',
+                'from_angle': old_angle,
+                'to_angle': self.angle,
+                'position': {'x': self.x, 'y': self.y}
+            })
             
         def right(self, angle):
+            old_angle = self.angle
             self.angle -= angle
+            # Record rotation command
+            self.commands.append({
+                'type': 'rotate',
+                'from_angle': old_angle,
+                'to_angle': self.angle,
+                'position': {'x': self.x, 'y': self.y}
+            })
             
         def penup(self):
             self.pen_down = False
@@ -69,6 +99,17 @@ export async function loadTurtleInstance() {
             
         def goto(self, x, y):
             old_x, old_y = self.x, self.y
+            
+            # Record goto command
+            self.commands.append({
+                'type': 'goto',
+                'from': {'x': old_x, 'y': old_y, 'angle': self.angle},
+                'to': {'x': x, 'y': y, 'angle': self.angle},
+                'pen_down': self.pen_down,
+                'color': self.pen_color,
+                'width': self.pen_width
+            })
+            
             self.x, self.y = x, y
             if self.pen_down:
                 self.lines.append({
@@ -88,56 +129,105 @@ export async function loadTurtleInstance() {
                 self.forward(step_distance)
                 self.left(step_angle)
                 
-        def get_canvas_data(self):
-            if not self.lines:
-                return None
-                
-            # Calculate bounds
-            all_x = [line['x1'] for line in self.lines] + [line['x2'] for line in self.lines]
-            all_y = [line['y1'] for line in self.lines] + [line['y2'] for line in self.lines]
+        def validate_lesson5_requirements(self):
+            # Check if user completed all lesson 5 requirements:
+            # 1. Jalan 100 langkah (forward with distance around 100)
+            # 2. Belok kanan (right turn)
+            # 3. Ganti warna jadi merah (pencolor red)
+            # 4. Jalan lagi 100 langkah (another forward with distance around 100)
             
-            if not all_x:
-                return None
-                
-            margin = 20
-            min_x, max_x = min(all_x) - margin, max(all_x) + margin
-            min_y, max_y = min(all_y) - margin, max(all_y) + margin
-            width = max_x - min_x
-            height = max_y - min_y
+            forward_moves = []
+            right_turns = []
+            red_color_found = False
             
-            # Create SVG
-            svg_lines = []
-            svg_lines.append(f'<svg width="400" height="400" viewBox="{min_x} {-max_y} {width} {height}" xmlns="http://www.w3.org/2000/svg">')
-            svg_lines.append('<rect width="100%" height="100%" fill="white"/>')
+            # Collect all forward moves and right turns
+            for cmd in self.commands:
+                if cmd['type'] == 'move':
+                    distance = abs(cmd.get('distance', 0))
+                    if distance >= 50:  # Any significant forward movement
+                        forward_moves.append({
+                            'distance': distance,
+                            'index': len(forward_moves)
+                        })
+                        
+                elif cmd['type'] == 'rotate':
+                    # Check for right turn (negative angle change)
+                    angle_diff = cmd['to_angle'] - cmd['from_angle']
+                    # Normalize angle difference to -180 to 180 range
+                    while angle_diff > 180:
+                        angle_diff -= 360
+                    while angle_diff < -180:
+                        angle_diff += 360
+                    
+                    # Right turn is negative angle (clockwise)
+                    if angle_diff < -30:  # At least 30 degrees right turn
+                        right_turns.append(True)
             
-            # Draw grid
-            step = 50
-            for x in range(int(min_x // step) * step, int(max_x // step + 1) * step, step):
-                svg_lines.append(f'<line x1="{x}" y1="{-max_y}" x2="{x}" y2="{-min_y}" stroke="#f0f0f0" stroke-width="0.5"/>')
-            for y in range(int(min_y // step) * step, int(max_y // step + 1) * step, step):
-                svg_lines.append(f'<line x1="{min_x}" y1="{-y}" x2="{max_x}" y2="{-y}" stroke="#f0f0f0" stroke-width="0.5"/>')
-            
-            # Draw turtle lines (flip Y coordinate for correct orientation)
+            # Check for red color in any line or command
             for line in self.lines:
-                color = line['color']
-                if color == 'black':
-                    color = '#000000'
-                elif color == 'red':
-                    color = '#ff0000'
-                elif color == 'blue':
-                    color = '#0000ff'
-                elif color == 'green':
-                    color = '#008000'
+                if line['color'] in ['red', '#ff0000', '#FF0000', 'Red', 'RED']:
+                    red_color_found = True
+                    break
+            
+            # Check requirements more flexibly
+            has_forward_100_1 = len(forward_moves) >= 1 and any(70 <= move['distance'] <= 130 for move in forward_moves[:1])
+            has_right_turn = len(right_turns) >= 1
+            has_red_color = red_color_found
+            has_forward_100_2 = len(forward_moves) >= 2 and any(70 <= move['distance'] <= 130 for move in forward_moves[1:])
+                    
+            return {
+                'valid': has_forward_100_1 and has_right_turn and has_red_color and has_forward_100_2,
+                'checks': {
+                    'forward_100_1': has_forward_100_1,
+                    'right_turn': has_right_turn,
+                    'red_color': has_red_color,
+                    'forward_100_2': has_forward_100_2
+                }
+            }
                 
-                svg_lines.append(f'<line x1="{line["x1"]}" y1="{-line["y1"]}" x2="{line["x2"]}" y2="{-line["y2"]}" stroke="{color}" stroke-width="{line["width"]}" stroke-linecap="round"/>')
+        def get_canvas_data(self):
+            if not self.commands:
+                return None
+                
+            # Calculate bounds from commands
+            all_x = [0]  # Start with origin
+            all_y = [0]
             
-            svg_lines.append('</svg>')
-            svg_content = '\\n'.join(svg_lines)
+            for cmd in self.commands:
+                if cmd['type'] in ['move', 'goto']:
+                    all_x.extend([cmd['from']['x'], cmd['to']['x']])
+                    all_y.extend([cmd['from']['y'], cmd['to']['y']])
+                elif cmd['type'] == 'rotate':
+                    all_x.append(cmd['position']['x'])
+                    all_y.append(cmd['position']['y'])
             
-            # Convert SVG to base64
-            import base64
-            svg_base64 = base64.b64encode(svg_content.encode('utf-8')).decode('utf-8')
-            return svg_base64
+            if not all_x or (max(all_x) - min(all_x) == 0 and max(all_y) - min(all_y) == 0):
+                # Single point or no movement, create small bounds
+                margin = 50
+                bounds = {
+                    'min_x': -margin, 'max_x': margin,
+                    'min_y': -margin, 'max_y': margin,
+                    'width': 2 * margin, 'height': 2 * margin
+                }
+            else:
+                margin = 30
+                min_x, max_x = min(all_x) - margin, max(all_x) + margin
+                min_y, max_y = min(all_y) - margin, max(all_y) + margin
+                bounds = {
+                    'min_x': min_x, 'max_x': max_x,
+                    'min_y': min_y, 'max_y': max_y,
+                    'width': max_x - min_x, 'height': max_y - min_y
+                }
+            
+            # Return animation data with validation as JSON string
+            import json
+            validation = self.validate_lesson5_requirements()
+            return json.dumps({
+                'commands': self.commands,
+                'bounds': bounds,
+                'final_lines': self.lines,
+                'validation': validation
+            })
 
     # Global turtle instance
     _turtle = SimpleTurtle()
@@ -213,6 +303,24 @@ export async function loadTurtleInstance() {
 }
 
 function getFriendlyError(message) {
+  // Check for turtle-specific errors first
+  if (message.includes("turtle") || message.includes("Turtle")) {
+    if (message.includes("NameError") && message.includes("turtle")) {
+      return "❌ Kamu belum import turtle! Pastikan ada baris 'from turtle import *' di awal kode.";
+    }
+    if (message.includes("AttributeError") && (message.includes("forward") || message.includes("left") || message.includes("right"))) {
+      return "❌ Pastikan kamu sudah bikin turtle dulu dengan 'kura = turtle.Turtle()' sebelum menggunakan perintah gerak.";
+    }
+    if (message.includes("TypeError") && message.includes("missing") && message.includes("argument")) {
+      return "❌ Perintah turtle ini butuh angka! Contoh: kura.forward(100) atau kura.left(90).";
+    }
+    if (message.includes("ValueError") && message.includes("invalid literal")) {
+      return "❌ Angka yang kamu masukkan tidak valid. Pastikan pakai angka seperti 100, bukan huruf.";
+    }
+    return "❌ Ada masalah dengan kode turtle. Cek lagi perintah yang kamu tulis!";
+  }
+
+  // Keep original Python error messages unchanged
   if (message.includes("SyntaxError")) {
     if (message.includes("invalid decimal literal")) {
       return "❌ Nama variabel tidak boleh dimulai dengan angka. Gunakan huruf dulu, baru boleh pakai angka.";
@@ -247,6 +355,7 @@ export async function runTurtle(code) {
       from io import StringIO
       sys.stdout = sys.stderr = StringIO()
       _turtle.lines = []  # Reset drawing
+      _turtle.commands = []  # Reset commands
       _turtle.x = 0
       _turtle.y = 0
       _turtle.angle = 90
@@ -262,7 +371,17 @@ export async function runTurtle(code) {
     const output = await pyodide.runPythonAsync("sys.stdout.getvalue()");
     
     // Get canvas data
-    const canvasData = await pyodide.runPythonAsync("_turtle.get_canvas_data()");
+    const canvasDataRaw = await pyodide.runPythonAsync("_turtle.get_canvas_data()");
+    
+    let canvasData = null;
+    if (canvasDataRaw) {
+      try {
+        canvasData = JSON.parse(canvasDataRaw);
+      } catch (e) {
+        console.error("Failed to parse canvas data:", e);
+        canvasData = null;
+      }
+    }
 
     return { 
       output: output.trim(),

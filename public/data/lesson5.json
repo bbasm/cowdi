@@ -175,7 +175,7 @@
         {
           "id": "python-hello-correct-5-6",
           "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
-          "mustFix": false
+          "mustFix": true
         }
       ]
     },

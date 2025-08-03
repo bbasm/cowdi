@@ -10,18 +10,59 @@ import {
   isTurtleReady,
   loadTurtleInstance,
 } from "../utils/turtleRunner";
+import AnimatedTurtleCanvas from "./AnimatedTurtleCanvas";
+import { setLesson5ValidationStatus } from "../utils/lessonProgress";
+
+// Global loading queue to manage progressive loading
+let loadingQueue = [];
+let isProcessingQueue = false;
+
+const processLoadingQueue = async () => {
+  if (isProcessingQueue || loadingQueue.length === 0) return;
+  
+  isProcessingQueue = true;
+  
+  while (loadingQueue.length > 0) {
+    const { isTurtleCode, resolve } = loadingQueue.shift();
+    
+    try {
+      if (isTurtleCode) {
+        await loadTurtleInstance();
+      } else {
+        await loadPyodideInstance();
+      }
+      resolve(true);
+    } catch (error) {
+      console.error("Failed to load environment:", error);
+      resolve(true); // Still resolve to make button available
+    }
+    
+    // Small delay between loading each component
+    await new Promise(resolve => setTimeout(resolve, 200));
+  }
+  
+  isProcessingQueue = false;
+};
 
 const CodeBlock = ({ snippet, lessonNum }) => {
   const { id, starterCode, mustFix } = snippet;
   const storageKey = `lesson${lessonNum}-${id}-${starterCode}`;
+  
+  // Check if this is the lesson 5 validation exercise
+  const isLesson5ValidationExercise = id === "python-hello-correct-5-6";
+  
+  // Check if this is the first turtle example that shouldn't be runnable
+  const isNonRunnableTurtleExample = starterCode.trim() === "from turtle import *\n\nkura = turtle.Turtle()" && !isLesson5ValidationExercise;
 
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [hasError, setHasError] = useState(false);
-  const [fixed, setFixed] = useState(!mustFix);
+  const [fixed, setFixed] = useState(!mustFix && !isLesson5ValidationExercise);
   const [hasUserEdited, setHasUserEdited] = useState(false);
   const [pyodideReady, setPyodideReady] = useState(false);
   const [canvasData, setCanvasData] = useState(null);
+  const [animationData, setAnimationData] = useState(null);
+  const [validationResult, setValidationResult] = useState(null);
 
   const textareaRef = useRef(null);
 
@@ -36,22 +77,25 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   }, [storageKey, starterCode]);
 
   useEffect(() => {
-    const warmUp = async () => {
-      const isTurtleCode = code.includes('turtle') || code.includes('from turtle');
-      
-      if (isTurtleCode) {
-        if (!isTurtleReady()) {
-          await loadTurtleInstance();
-        }
-      } else {
-        if (!isPyodideReady()) {
-          await loadPyodideInstance();
-        }
-      }
+    const isTurtleCode = code.includes('turtle') || code.includes('from turtle');
+    
+    // Check if already ready
+    if ((isTurtleCode && isTurtleReady()) || (!isTurtleCode && isPyodideReady())) {
       setPyodideReady(true);
-    };
+      return;
+    }
 
-    warmUp();
+    // Add to loading queue
+    const loadingPromise = new Promise((resolve) => {
+      loadingQueue.push({ isTurtleCode, resolve });
+    });
+
+    loadingPromise.then(() => {
+      setPyodideReady(true);
+    });
+
+    // Start processing the queue
+    processLoadingQueue();
   }, [code]);
 
   useEffect(() => {
@@ -91,11 +135,35 @@ const CodeBlock = ({ snippet, lessonNum }) => {
         setHasError(true);
         setFixed(false);
         setCanvasData(null);
+        setAnimationData(null);
       } else {
-        setOutput(result.output || "Kode berhasil dijalankan! Lihat gambar di bawah.");
+        setOutput(result.output || "Kode berhasil dijalankan! Lihat animasi di bawah.");
         setHasError(false);
-        setCanvasData(result.canvasData);
-        if (mustFix) {
+        
+        // Handle new animation format
+        if (result.canvasData && result.canvasData.commands) {
+          setCanvasData(null);
+          setAnimationData(result.canvasData);
+          
+          // Handle lesson 5 validation
+          if (isLesson5ValidationExercise && result.canvasData.validation) {
+            setValidationResult(result.canvasData.validation);
+            if (result.canvasData.validation.valid) {
+              setFixed(true);
+              setLesson5ValidationStatus(true); // Save progress
+            } else {
+              setFixed(false);
+              setLesson5ValidationStatus(false); // Save incomplete status
+            }
+          }
+        } else {
+          // Fallback for other cases
+          setCanvasData(result.canvasData);
+          setAnimationData(null);
+          setValidationResult(null);
+        }
+        
+        if (mustFix && !isLesson5ValidationExercise) {
           setFixed(true);
         }
       }
@@ -108,10 +176,12 @@ const CodeBlock = ({ snippet, lessonNum }) => {
         setHasError(true);
         setFixed(false);
         setCanvasData(null);
+        setAnimationData(null);
       } else {
         setOutput(output);
         setHasError(false);
         setCanvasData(null);
+        setAnimationData(null);
         if (mustFix && output.trim()) {
           setFixed(true);
         }
@@ -125,10 +195,12 @@ const CodeBlock = ({ snippet, lessonNum }) => {
       : starterCode + "\n";
     setCode(initial);
     setOutput("");
-    setFixed(!mustFix);
+    setFixed(!mustFix && !isLesson5ValidationExercise);
     setHasError(false);
     setHasUserEdited(false);
     setCanvasData(null);
+    setAnimationData(null);
+    setValidationResult(null);
     localStorage.removeItem(storageKey);
   };
 
@@ -141,7 +213,12 @@ const CodeBlock = ({ snippet, lessonNum }) => {
         }`}
       >
         <div className="flex gap-4">
-          <button onClick={reset} title="Reset" className="w-6 h-6">
+          <button 
+            onClick={reset} 
+            title="Reset" 
+            className={`w-6 h-6 ${isNonRunnableTurtleExample ? 'opacity-40 cursor-not-allowed' : ''}`}
+            disabled={isNonRunnableTurtleExample}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="26"
@@ -157,11 +234,11 @@ const CodeBlock = ({ snippet, lessonNum }) => {
           <div className="relative group">
             <button
               onClick={run}
-              title={pyodideReady ? "Jalankan kode" : ""}
+              title={pyodideReady && !isNonRunnableTurtleExample ? "Jalankan kode" : ""}
               className={`w-6 h-6 ${
-                !pyodideReady ? "opacity-40 cursor-not-allowed" : ""
+                !pyodideReady || isNonRunnableTurtleExample ? "opacity-40 cursor-not-allowed" : ""
               }`}
-              disabled={!pyodideReady}
+              disabled={!pyodideReady || isNonRunnableTurtleExample}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -227,13 +304,59 @@ const CodeBlock = ({ snippet, lessonNum }) => {
           />
         </div>
       )}
+      
+      {/* Animated Turtle Canvas */}
+      {animationData && (
+        <AnimatedTurtleCanvas animationData={animationData} />
+      )}
+
+      {/* Lesson 5 Validation Feedback */}
+      {isLesson5ValidationExercise && validationResult && (
+        <div className={`mt-4 p-3 rounded-md border ${validationResult.valid ? 'bg-green-50 border-green-300' : 'bg-yellow-50 border-yellow-300'}`}>
+          <div className="flex items-center mb-2">
+            <span className="text-lg mr-2">{validationResult.valid ? '✅' : '📋'}</span>
+            <span className={`font-medium ${validationResult.valid ? 'text-green-800' : 'text-yellow-800'}`}>
+              {validationResult.valid ? 'Sempurna! Semua tugas selesai!' : 'Checklist Tugas:'}
+            </span>
+          </div>
+          
+          {!validationResult.valid && (
+            <ul className="space-y-1 text-sm">
+              <li className={`flex items-center ${validationResult.checks.forward_100_1 ? 'text-green-700' : 'text-gray-600'}`}>
+                <span className="mr-2">{validationResult.checks.forward_100_1 ? '✅' : '⏳'}</span>
+                Jalan 100 langkah
+              </li>
+              <li className={`flex items-center ${validationResult.checks.right_turn ? 'text-green-700' : 'text-gray-600'}`}>
+                <span className="mr-2">{validationResult.checks.right_turn ? '✅' : '⏳'}</span>
+                Belok kanan
+              </li>
+              <li className={`flex items-center ${validationResult.checks.red_color ? 'text-green-700' : 'text-gray-600'}`}>
+                <span className="mr-2">{validationResult.checks.red_color ? '✅' : '⏳'}</span>
+                Ganti warna jadi merah
+              </li>
+              <li className={`flex items-center ${validationResult.checks.forward_100_2 ? 'text-green-700' : 'text-gray-600'}`}>
+                <span className="mr-2">{validationResult.checks.forward_100_2 ? '✅' : '⏳'}</span>
+                Jalan lagi 100 langkah
+              </li>
+            </ul>
+          )}
+          
+          {validationResult.valid && (
+            <p className="text-green-700 text-sm mt-2">
+              🎉 Kamu berhasil menyelesaikan semua tugas! Sekarang kamu bisa lanjut ke pelajaran berikutnya.
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Fix prompt */}
-      {mustFix && !fixed && (
+      {(mustFix && !fixed) || (isLesson5ValidationExercise && !fixed) ? (
         <p className="text-yellow-500 mt-2 text-sm font-medium font-source">
-          Perbaiki kode ini untuk melanjutkan ➤
+          {isLesson5ValidationExercise 
+            ? "Selesaikan semua tugas di atas untuk melanjutkan ➤"
+            : "Perbaiki kode ini untuk melanjutkan ➤"}
         </p>
-      )}
+      ) : null}
     </div>
   );
 };
