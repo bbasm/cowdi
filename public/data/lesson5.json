@@ -17,7 +17,7 @@
     },
     {
       "type": "code",
-      "contentOrder": ["paragraphs", "littleParagraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
+      "contentOrder": ["paragraphs", "littleParagraphs", "codeSnippets", "paragraphsAfterCode", "listItems", "specialText"],
       "subtitle": "📦 Pertama, Kita Panggil Si Turtle",
       "paragraphs": [
         "Sebelum bisa nyuruh kura-kura ngapa-ngapain, kita harus panggil dia dulu"],
@@ -40,6 +40,9 @@
         "listItems": [
             "from turtle import * ➜ Kasih tahu Python: “Aku mau pakai turtle!”",
             "kura = turtle.Turtle() ➜ Bikin kura-kura bernama kura."
+        ],
+        "specialText": [
+          "🛑 Belum bisa dijalankan nih! Soalnya kura-kuranya baru dateng, tapi belum disuruh ngapa-ngapain. Dia masih bengong nungguin perintah! 😆"
         ]
     },
     {
@@ -56,7 +59,7 @@
       "codeSnippets": [
         {
           "id": "python-correct-5-2",
-          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)\n\nturtle.done()",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)",
           "mustFix": false
         }
       ],
@@ -64,8 +67,7 @@
         "💡 Artinya:"
       ],
       "listItems": [
-        "kura.forward(100) ➜ Jalan lurus 100 langkah.",
-        "turtle.done() ➜ Tutup programnya dengan rapi."
+        "kura.forward(100) ➜ Jalan lurus 100 langkah."
       ]
       
     },
@@ -82,7 +84,7 @@
       "codeSnippets": [
         {
           "id": "python-correct-5-3",
-          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)\nkura.left(90)\nkura.forward(100)\n\nturtle.done()",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)\nkura.left(90)\nkura.forward(100)",
           "mustFix": false
         }
       ],
@@ -111,7 +113,7 @@
       "codeSnippets": [
         {
           "id": "python-correct-5-4",
-          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.pencolor(\"blue\")\nkura.pensize(5)\n\nkura.forward(100)\n\nturtle.done()",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.pencolor(\"blue\")\nkura.pensize(5)\n\nkura.forward(100)",
           "mustFix": false
         }
       ],
@@ -140,7 +142,7 @@
       "codeSnippets": [
         {
           "id": "python-correct-5-5",
-          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)\nkura.penup()\nkura.forward(50)\nkura.pendown()\nkura.forward(100)\n\nturtle.done()",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\nkura.forward(100)\nkura.penup()\nkura.forward(50)\nkura.pendown()\nkura.forward(100)",
           "mustFix": false
         }
       ],
