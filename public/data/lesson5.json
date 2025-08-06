@@ -39,7 +39,7 @@
         ],
         "listItems": [
             "from turtle import * ➜ Kasih tahu Python: “Aku mau pakai turtle!”",
-            "kura = turtle.Turtle() ➜ Bikin kura-kura bernama kura."
+            "kura = turtle.Turtle() ➜ “Memanggil” kura-kura digital dan kasih dia nama kura, biar nanti gampang kita ajak jalan-jalan 🐢"
         ],
         "specialText": [
           "🛑 Belum bisa dijalankan nih! Soalnya kura-kuranya baru dateng, tapi belum disuruh ngapa-ngapain. Dia masih bengong nungguin perintah! 😆"
@@ -169,7 +169,7 @@
       "paragraphs": ["Coba kamu buat ini:"],
       "listItems": [
         "Jalan 100 langkah",
-        "Belok kanan",
+        "Belok kanan 90 derajat",
         "Ganti warna jadi merah",
         "Jalan lagi 100 langkah"
       ],

@@ -4,6 +4,14 @@ const AnimatedTurtleCanvas = ({ animationData }) => {
   const canvasRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const turtleImageRef = useRef(null);
+
+  useEffect(() => {
+    // Load turtle image
+    const img = new Image();
+    img.src = '/assets/kura.png';
+    turtleImageRef.current = img;
+  }, []);
 
   useEffect(() => {
     if (!animationData || !canvasRef.current) {
@@ -204,26 +212,44 @@ const AnimatedTurtleCanvas = ({ animationData }) => {
   }, [animationData]);
 
   const drawTurtle = (ctx, x, y, angle) => {
+    const turtleImage = turtleImageRef.current;
+    
+    if (!turtleImage || !turtleImage.complete) {
+      // Fallback to original turtle shape if image not loaded
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(((angle - 90) * Math.PI) / 180);
+
+      const size = 16;
+      ctx.fillStyle = "#4a9";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, size / 3, size / 4, 0, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = "#2a7";
+      ctx.beginPath();
+      ctx.moveTo(0, -size / 4);
+      ctx.lineTo(-size / 6, size / 6);
+      ctx.lineTo(size / 6, size / 6);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+      return;
+    }
+
     ctx.save();
     ctx.translate(x, y);
-    ctx.rotate(((angle - 90) * Math.PI) / 180); // Adjust for turtle facing up initially
+    ctx.rotate(((-angle + 90) * Math.PI) / 180); // Rotate so turtle head faces movement direction
 
-    const size = 16;
-
-    // Draw a simple turtle shape
-    ctx.fillStyle = "#4a9";
-    ctx.beginPath();
-    ctx.ellipse(0, 0, size / 3, size / 4, 0, 0, 2 * Math.PI);
-    ctx.fill();
-
-    // Draw direction indicator
-    ctx.fillStyle = "#2a7";
-    ctx.beginPath();
-    ctx.moveTo(0, -size / 4);
-    ctx.lineTo(-size / 6, size / 6);
-    ctx.lineTo(size / 6, size / 6);
-    ctx.closePath();
-    ctx.fill();
+    const size = 32; // Make turtle bigger
+    ctx.drawImage(
+      turtleImage,
+      -size / 2, // Center horizontally
+      -size / 2, // Center vertically
+      size,
+      size
+    );
 
     ctx.restore();
   };

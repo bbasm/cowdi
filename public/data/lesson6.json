@@ -12,23 +12,27 @@
     },
     {
       "type": "image",
-      "contentOrder": ["paragraphs", "littleParagraphs", "listItems"],
+      "contentOrder": ["paragraphs", "littleParagraphs", "paragraphsAfterCode", "listItems"],
       "subtitle": "🎡 Derajat Itu Kayak Setir Mobil",
       "paragraphs": [
         "Bayangin kura-kura kamu lagi nyetir mobil mainan.",
-        "Kalau mau belok dikit, setirnya diputer sedikit. Kalau mau belok banyak, setirnya diputer lebar, kan?"
+        "Kalau mau belok dikit, setirnya diputer sedikit. Kalau mau belok banyak, setirnya diputer lebar banget."
     ],
-    "littleParagraphPadding": {
+    "littleParagraphMargin": {
         "top": "pt-3"
     },
     "littleParagraphs": [
         "Nah, derajat itu cara kita nunjukin seberapa jauh kura-kura belok."
     ],
+    "paragraphsAfterCode": [
+      "Dan serunya, kura-kura bisa belok berapa pun derajatnya, dari 1°, 10°, 57°, sampai 360° semuanya bisa! Tinggal kita yang tentuin angkanya.",
+        "Contohnya:"
+    ],
     "listItems": [
-        "Kalau belok 90 derajat, itu kayak belok ke kanan atau kiri di persimpangan jalan.",
-        "Kalau belok 45 derajat, itu belok setengah dari itu—lebih tajam!",
-        "Kalau 180 derajat, dia muter balik!",
-        "Kalau 360 derajat, dia muter penuh dan balik ke arah semula."
+        "90° ➜ Belok seperempat putaran, kayak belok di persimpangan jalan",
+        "180° ➜ Setengah putaran, alias muter balik.",
+        "270° ➜ Tiga perempat putaran, jadi kayak muter tapi nggak sampai penuh.",
+        "360° ➜ Putaran penuh, balik lagi ke arah semula."
     ]
     },
     {
@@ -126,66 +130,81 @@
         }
       ]
     },
-    {
+        {
       "type": "code",
-      "subtitle": "Coba Bentuk Unik: Zigzag Spiral!",
-      "contentOrder": ["paragraphs", "littleParagraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
+      "contentOrder": ["paragraphs", "codeSnippets"],
+      "subtitle": "🏎️ Misi Lintasan Balap Segi Delapan",
       "paragraphs": [
-        "Sekarang waktunya eksperimen seru!"
-      ],
-    "littleParagraphs": [
-        "Daripada bikin bentuk bulat lagi, yuk kita coba zigzag spiral! Kura-kura jalan makin jauh, tapi belokannya tetap. Ini bikin efek kayak spiral muter-muter!"
+        "Kali ini kura-kura mau bikin lintasan balap berbentuk segi delapan",
+        "Kalau segi empat punya 4 sisi, segi delapan tentu punya 8 sisi. Nah, karena kita udah jago, tinggal hitung aja dan coding!"
     ],
-    "littleParagraphMargin": {
-        "bottom": "-mb-2"
-    },
-      "codeSnippets": [
+        "codeSnippets": [
         {
           "id": "python-correct-6-4",
-          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n\nfor i in range(10):\n  kura.forward(i * 10)\n  kura.right(45)",
-          "mustFix": false
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
+          "mustFix": true
         }
-      ],
-      "paragraphsAfterCode": [
-        "✨ Seru, kan? Coba ganti right(45) jadi left(60)… hasilnya beda lagi!"
       ]
     },
-    {
+        {
       "type": "code",
-      "subtitle": "🎨 Bonus: Pelangi Poligon!",
-      "contentOrder": ["littleParagraphs", "codeSnippets"],
-      "littleParagraphs": [
-        "Mau yang lebih keren? Coba ini:"
+      "subtitle": "🗺️ Misi Rahasia: Rumah Didi",
+      "contentOrder": ["paragraphsAfterCode", "littleParagraphs", "specialText", "paragraphs", "codeSnippets"],
+      "paragraphsAfterCode": [
+        "Didi mau punya rumah baru! Tapi bukan rumah beneran… rumah gambar!",
+        "Rumahnya ada badan (persegi) dan atap (segitiga)."
       ],
-      "littleParagraphMargin": {
-        "bottom": "-mb-3"
-    },
+      "littleParagraphs": [
+        "Tapi, Didi pengin rumahnya rapi, nyambung, dan atapnya runcing di tengah."
+      ],
+      "littleParagraphPadding": {
+        "bottom": "pb-4"
+      },
+      "specialText": [
+        "🎯 Petunjuk Misi:"
+      ],
+      "paragraphMargin": {
+        "top": "-mt-1"
+
+      },
+      "paragraphs": [
+        "1. Badan rumah punya 4 sisi yang sama panjang. (Hmm… ingat nggak derajat belokannya kalau 4 sisi?)",
+        "2. Setelah selesai bikin badan rumah, jangan angkat pena — langsung lanjut bikin atapnya!",
+        "3. Pastikan kura-kura menghadap ke atas sebelum mulai bikin atap. Kalau arahnya masih miring atau ke bawah, kasih belokan dulu:",
+        "  - 30° kalau kamu mulai dari sisi atas rumah.",
+        "  - 60° kalau posisinya agak serong dan mau langsung menuju puncak atap.",
+        "4. Atapnya harus runcing di tengah, lalu turun lagi ke sisi lainnya.",
+        "5. Panjang atap = panjang sisi rumah.",
+        "✨ Bonus: Kasih warna berbeda untuk atap dan badan biar rumahnya lebih keren!"
+      ],
       "codeSnippets": [
         {
           "id": "python-correct-6-5",
-          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n\ncolors = [\"red\", \"orange\", \"yellow\", \"green\", \"blue\", \"purple\"]\n\nfor i in range(6):\n  kura.pencolor(colors[i])\n  kura.forward(100)\n  kura.left(60)",
-          "mustFix": false
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
+          "mustFix": true
         }
       ]
     },
-{
+    {
   "type": "text",
   "contentOrder": ["paragraphs", "listItems", "paragraphsAfterCode"],
-  "subtitle": "🎉 Keren! Kamu Udah Jago Belok!",
+  "subtitle": "🎉 Misi Belok Selesai!",
   "paragraphs": [
-    "Yeay! Sekarang kamu udah bisa bikin kura-kura belok-belok pakai derajat! 💪🐢",
-    "Kamu tahu kalau 1 putaran penuh itu 360 derajat. Kalau mau bikin bentuk, tinggal bagi 360 dengan jumlah sisinya. Gampang kan?"
+    "Mantap! Sekarang kamu udah jago bikin kura-kura belok ke segala arah pakai derajat! 💪🐢",
+    "Kamu juga udah tahu rahasianya: cukup bagi 360 dengan jumlah sisi, dan bentuknya langsung jadi rapi."
   ],
   "listItems": [
-    "360° itu satu putaran penuh",
-    "Bentuk = 360 dibagi jumlah sisi",
-    "Bisa ubah warna, panjang, dan arah"
+    "360° = 1 putaran penuh",
+    "Derajat belok = 360 ÷ jumlah sisi",
+    "Bisa dipakai buat semua bentuk, dari kotak sampai segi seribu!",
+    "Bisa campur sama warna, ukuran, dan pola sendiri"
   ],
   "paragraphsAfterCode": [
-    "Di bab selanjutnya, kita bakal bikin bentuk-bentuk yang lebih keren lagi, kayak ⭐ bintang, 🛞 roda, dan 🪄 bentuk-bentuk ajaib lainnya!",
-    "Siap-siap buat jadi seniman kura-kura yang super kreatif! Yuk lanjut!"
+    "Di bab selanjutnya, kita bakal naik level: bikin bentuk-bentuk unik dan keren kayak bintang ⭐ , roda balap 🛞 , bahkan pola sihir rahasia 🪄 ",
+    "Siap-siap, kura-kura kamu bakal jadi seniman sejati!"
   ]
 }
+
 
   ]
 }
