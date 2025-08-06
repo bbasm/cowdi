@@ -11,7 +11,8 @@ import {
   loadTurtleInstance,
 } from "../utils/turtleRunner";
 import AnimatedTurtleCanvas from "./AnimatedTurtleCanvas";
-import { setLesson5ValidationStatus } from "../utils/lessonProgress";
+import { setLesson5ValidationStatus, markExerciseCompleted } from "../utils/lessonProgress";
+import { createValidationResult } from "../utils/requirementChecker";
 
 // Global loading queue to manage progressive loading
 let loadingQueue = [];
@@ -51,8 +52,8 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   // Check if this is the lesson 5 validation exercise
   const isLesson5ValidationExercise = id === "python-hello-correct-5-6";
   
-  // Check if this is the first turtle example that shouldn't be runnable
-  const isNonRunnableTurtleExample = starterCode.trim() === "from turtle import *\n\nkura = turtle.Turtle()" && !isLesson5ValidationExercise;
+  // Check if this is the first turtle example that shouldn't be runnable (only python-correct-5-1)
+  const isNonRunnableTurtleExample = id === "python-correct-5-1";
 
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
@@ -65,6 +66,9 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   const [validationResult, setValidationResult] = useState(null);
 
   const textareaRef = useRef(null);
+  
+  // Check if this exercise has specific requirements (like lesson 5)
+  const hasRequirements = ['python-correct-7-4', 'python-correct-6-5', 'python-correct-6-4'].includes(id);
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
@@ -156,14 +160,39 @@ const CodeBlock = ({ snippet, lessonNum }) => {
               setLesson5ValidationStatus(false); // Save incomplete status
             }
           }
+          
+          // Handle requirements validation for specific exercises
+          if (hasRequirements) {
+            const validation = createValidationResult(id, code);
+            setValidationResult(validation);
+            if (validation && validation.valid) {
+              setFixed(true);
+              markExerciseCompleted(lessonNum, id);
+            } else {
+              setFixed(false);
+            }
+          }
         } else {
           // Fallback for other cases
           setCanvasData(result.canvasData);
           setAnimationData(null);
-          setValidationResult(null);
+          
+          // Handle requirements validation for non-animated cases
+          if (hasRequirements) {
+            const validation = createValidationResult(id, code);
+            setValidationResult(validation);
+            if (validation && validation.valid) {
+              setFixed(true);
+              markExerciseCompleted(lessonNum, id);
+            } else {
+              setFixed(false);
+            }
+          } else {
+            setValidationResult(null);
+          }
         }
         
-        if (mustFix && !isLesson5ValidationExercise) {
+        if (mustFix && !isLesson5ValidationExercise && !hasRequirements) {
           setFixed(true);
         }
       }
@@ -195,7 +224,7 @@ const CodeBlock = ({ snippet, lessonNum }) => {
       : starterCode + "\n";
     setCode(initial);
     setOutput("");
-    setFixed(!mustFix && !isLesson5ValidationExercise);
+    setFixed(!mustFix && !isLesson5ValidationExercise && !hasRequirements);
     setHasError(false);
     setHasUserEdited(false);
     setCanvasData(null);
@@ -310,8 +339,8 @@ const CodeBlock = ({ snippet, lessonNum }) => {
         <AnimatedTurtleCanvas animationData={animationData} />
       )}
 
-      {/* Lesson 5 Validation Feedback */}
-      {isLesson5ValidationExercise && validationResult && (
+      {/* Validation Feedback */}
+      {(isLesson5ValidationExercise || hasRequirements) && validationResult && (
         <div className={`mt-4 p-3 rounded-md border ${validationResult.valid ? 'bg-green-50 border-green-300' : 'bg-yellow-50 border-yellow-300'}`}>
           <div className="flex items-center mb-2">
             <span className="text-lg mr-2">{validationResult.valid ? '✅' : '📋'}</span>
@@ -322,22 +351,35 @@ const CodeBlock = ({ snippet, lessonNum }) => {
           
           {!validationResult.valid && (
             <ul className="space-y-1 text-sm">
-              <li className={`flex items-center ${validationResult.checks.forward_100_1 ? 'text-green-700' : 'text-gray-600'}`}>
-                <span className="mr-2">{validationResult.checks.forward_100_1 ? '✅' : '⏳'}</span>
-                Jalan 100 langkah
-              </li>
-              <li className={`flex items-center ${validationResult.checks.right_turn ? 'text-green-700' : 'text-gray-600'}`}>
-                <span className="mr-2">{validationResult.checks.right_turn ? '✅' : '⏳'}</span>
-                Belok kanan
-              </li>
-              <li className={`flex items-center ${validationResult.checks.red_color ? 'text-green-700' : 'text-gray-600'}`}>
-                <span className="mr-2">{validationResult.checks.red_color ? '✅' : '⏳'}</span>
-                Ganti warna jadi merah
-              </li>
-              <li className={`flex items-center ${validationResult.checks.forward_100_2 ? 'text-green-700' : 'text-gray-600'}`}>
-                <span className="mr-2">{validationResult.checks.forward_100_2 ? '✅' : '⏳'}</span>
-                Jalan lagi 100 langkah
-              </li>
+              {isLesson5ValidationExercise ? (
+                // Lesson 5 specific validation
+                <>
+                  <li className={`flex items-center ${validationResult.checks.forward_100_1 ? 'text-green-700' : 'text-gray-600'}`}>
+                    <span className="mr-2">{validationResult.checks.forward_100_1 ? '✅' : '⏳'}</span>
+                    Jalan 100 langkah
+                  </li>
+                  <li className={`flex items-center ${validationResult.checks.right_turn ? 'text-green-700' : 'text-gray-600'}`}>
+                    <span className="mr-2">{validationResult.checks.right_turn ? '✅' : '⏳'}</span>
+                    Belok kanan
+                  </li>
+                  <li className={`flex items-center ${validationResult.checks.red_color ? 'text-green-700' : 'text-gray-600'}`}>
+                    <span className="mr-2">{validationResult.checks.red_color ? '✅' : '⏳'}</span>
+                    Ganti warna jadi merah
+                  </li>
+                  <li className={`flex items-center ${validationResult.checks.forward_100_2 ? 'text-green-700' : 'text-gray-600'}`}>
+                    <span className="mr-2">{validationResult.checks.forward_100_2 ? '✅' : '⏳'}</span>
+                    Jalan lagi 100 langkah
+                  </li>
+                </>
+              ) : (
+                // Requirements validation for other exercises
+                validationResult.requirements.map((req) => (
+                  <li key={req.id} className={`flex items-center ${req.passed ? 'text-green-700' : 'text-gray-600'}`}>
+                    <span className="mr-2">{req.passed ? '✅' : '⏳'}</span>
+                    {req.description}
+                  </li>
+                ))
+              )}
             </ul>
           )}
           
@@ -350,9 +392,9 @@ const CodeBlock = ({ snippet, lessonNum }) => {
       )}
 
       {/* Fix prompt */}
-      {(mustFix && !fixed) || (isLesson5ValidationExercise && !fixed) ? (
+      {(mustFix && !fixed) || (isLesson5ValidationExercise && !fixed) || (hasRequirements && !fixed) ? (
         <p className="text-yellow-500 mt-2 text-sm font-medium font-source">
-          {isLesson5ValidationExercise 
+          {(isLesson5ValidationExercise || hasRequirements)
             ? "Selesaikan semua tugas di atas untuk melanjutkan ➤"
             : "Perbaiki kode ini untuk melanjutkan ➤"}
         </p>

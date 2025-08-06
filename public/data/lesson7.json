@@ -135,7 +135,7 @@
     {
       "id": "python-correct-7-4",
       "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
-      "mustFix": false
+      "mustFix": true
     }
   ]
 },

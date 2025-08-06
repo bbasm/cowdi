@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/codeblock.css";
+import RequirementChecklist from "./RequirementChecklist";
+import { getRequirements } from "../utils/requirementChecker";
 
 const CodeBlock = ({ snippet, lessonNum }) => {
   const { id, starterCode, mustFix } = snippet;
@@ -11,7 +13,11 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   const [fixed, setFixed] = useState(!mustFix);
   const [hasError, setHasError] = useState(false);
   const [hasUserEdited, setHasUserEdited] = useState(false);
+  const [requirements, setRequirements] = useState(null);
   const textareaRef = useRef(null);
+
+  // Check if this exercise has specific requirements
+  const hasRequirements = ['python-correct-7-4', 'python-correct-6-5', 'python-correct-6-4'].includes(id);
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
@@ -25,7 +31,18 @@ const CodeBlock = ({ snippet, lessonNum }) => {
 
   useEffect(() => {
     autoResize();
-  }, [code]);
+    
+    // Check requirements if this exercise has them
+    if (hasRequirements && code.trim()) {
+      const reqResult = getRequirements(id, code);
+      setRequirements(reqResult);
+      
+      // Update fixed status based on requirements
+      if (mustFix && reqResult && reqResult.allPassed) {
+        setFixed(true);
+      }
+    }
+  }, [code, hasRequirements, id, mustFix]);
 
   const run = () => {
     let result = "";
@@ -136,6 +153,11 @@ const CodeBlock = ({ snippet, lessonNum }) => {
           Perbaiki kode ini untuk melanjutkan ➤
         </p>
       )}
+
+      <RequirementChecklist 
+        requirements={requirements}
+        isVisible={hasRequirements && hasUserEdited}
+      />
     </div>
   );
 };

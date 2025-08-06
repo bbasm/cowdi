@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(del test_requirements.js)",
+      "Bash(rm:*)",
+      "Bash(npm run build:*)",
+      "Bash(node:*)"
+    ],
+    "deny": []
+  }
+}

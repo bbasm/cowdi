@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BlockRenderer from "./BlockRenderer";
 import { useNavigate } from "react-router-dom";
-import { canAccessLesson, isLesson5ValidationCompleted } from "../utils/lessonProgress";
+import { canAccessLesson, isLesson5ValidationCompleted, isLessonRequirementsCompleted } from "../utils/lessonProgress";
 
 const LessonRenderer = ({ lessonNum }) => {
   const [lesson, setLesson] = useState(null);
@@ -19,7 +19,12 @@ const LessonRenderer = ({ lessonNum }) => {
       return isLesson5ValidationCompleted();
     }
     
-    // For other lessons, always allow (for now)
+    // Check if lesson has specific requirements
+    if ([6, 7].includes(lessonNum)) {
+      return isLessonRequirementsCompleted(lessonNum);
+    }
+    
+    // For other lessons, always allow
     return true;
   };
   
