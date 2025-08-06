@@ -1,0 +1,165 @@
+{
+  "title": "✨ Bentuk Ajaib dan Pola Warna-Warni!",
+  "blocks": [
+    {
+      "type": "text",
+      "subtitle": "🎨 Kura-Kura Jadi Seniman!",
+      "contentOrder": ["littleParagraphs", "paragraphs"],
+      "littleParagraphs": [
+        "Didi dan kura-kura udah lulus jadi pembuat bentuk-bentuk rapi seperti segitiga, persegi, dan segi enam.",
+        "Tapi… itu baru pemanasan. 🔥"
+      ],
+      "littleParagraphMargin": {
+        "bottom": "-mb-1",
+        "top": "mt-1"
+      },
+      "paragraphPadding": {
+        "top": "pt-5"
+      },
+      "paragraphs": [
+        "Sekarang, kita masuk ke dunia bentuk ajaib, garis-garis yang saling silang, sudut-sudut rahasia, dan pola warna-warni yang menarik perhatian ✨🌀",
+        "Siap? Pasang sabuk pengamanmu, karena kura-kura akan mulai petualangan seni! 🐢🎨"
+      ]
+    },
+    {
+  "type": "code",
+  "subtitle": "🌈 Pelangi Poligon",
+  "contentOrder": ["paragraphs", "codeSnippets", "listItems", "specialText", "paragraphsAfterCode"],
+  "paragraphs": [
+    "Sebelum bikin bentuk yang ribet, kita mulai dari yang gampang tapi cantik.",
+    "Kita bisa bikin poligon (bentuk bersisi sama, misalnya segi enam) dan warnanya ganti setiap sisi.",
+    "Caranya, pertama kita simpan daftar warna di dalam list, lalu sebelum kura-kura jalan, kita ganti warna penanya berdasarkan urutan list tersebut."
+  ],
+  "codeSnippets": [
+    {
+      "id": "python-correct-7-1",
+      "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\ncolors = [\"red\", \"orange\", \"yellow\", \"green\", \"blue\", \"purple\"]\n\nfor i in range(6):\n  kura.pencolor(colors[i])\n  kura.forward(100)\n  kura.left(60)",
+      "mustFix": false
+    }
+  ],
+  "listItems": [
+    "`colors` → list berisi warna-warna pelangi",
+     "`i` → angka urutan (0, 1, 2, ...) yang otomatis bertambah setiap putaran `for`.",
+    "`colors[i]` → ambil warna dari `colors` sesuai nomor urut `i`. Misalnya `i = 0` berarti warna pertama, `i = 1` berarti warna kedua."
+  ],
+  "specialText": [
+    "Kalau jumlah sisi poligon lebih banyak daripada jumlah warna di list, warna akan mengulang lagi dari awal list."
+  ],
+  "paragraphsAfterCode": [
+    "Keren, kan? Jadi setiap sisi poligon punya warna berbeda, persis kayak pelangi!"
+  ]
+},
+{
+  "type": "code",
+  "subtitle": "⭐ Rahasia Sudut Bintang",
+  "contentOrder": ["paragraphs", "specialText", "listItems", "littleParagraphs", "codeSnippets", "paragraphsAfterCode"],
+  "paragraphs": [
+    "Kalau bikin segi lima biasa, gampang: 360 ÷ 5 = 72°. Tapi bintang itu nggak sesederhana itu.",
+    "Rahasia bintang: kita nggak mau ke titik sebelahnya, tapi lompat satu titik setiap kali."
+  ],
+  "specialText": [
+    "Bayangin ada 5 titik bintang: 1, 2, 3, 4, 5. Segi lima biasa jalan 1 → 2 → 3 → 4 → 5.",
+    "Kalau bintang, jalannya 1 → 3 → 5 → 2 → 4 → kembali ke 1."
+  ],
+  "listItems": [
+    "72° → belokan segi lima biasa",
+    "Kalau mau lompat satu titik, sudutnya harus jadi dua kali lipat: 72° × 2 = 144°.",
+    "144° → sudut belokan yang bikin garis nyilang dan membentuk bintang."
+  ],
+  "littleParagraphs": [
+    "Nah, sekarang saatnya kita terjemahkan rahasia sudut ini jadi kode dan lihat apakah kura-kura kita bisa membuat bintangnya!"
+  ],
+  "littleParagraphMargin": {
+    "bottom": "-mb-2"
+  },
+  "codeSnippets": [
+    {
+      "id": "python-correct-7-2",
+      "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n\nfor i in range(5):\n  kura.forward(100)\n  kura.right(144)",
+      "mustFix": false
+    }
+  ],
+  "paragraphsAfterCode": [
+    "Kalau kamu ganti `right(144)` jadi `left(144)`, bentuknya tetap bintang tapi arahnya kebalik."
+  ]
+},
+    {
+      "type": "code",
+      "subtitle": "🛞 Roda Bergigi",
+      "contentOrder": ["paragraphs", "specialText", "paragraphsAfterCode", "listItems", "codeSnippets", "littleParagraphs"],
+      "paragraphs": [
+        "Bayangin lingkaran yang pinggirnya bergerigi kayak matahari mainan."
+      ],
+      "specialText": [
+        "Kita bisa bikin dengan trik maju → mundur → belok sedikit → ulangi."
+      ],
+      "paragraphsAfterCode": [
+        "Kenapa belok sedikit-sedikit?"
+      ],
+      "listItems": [
+        "Kalau beloknya besar, bentuk roda jadi nggak halus—malah kelihatan kayak banyak sisi kotak.",
+  "Supaya bentuknya bulat, kita belok sedikit saja setiap langkah.",
+        "Kalau kita belok 10° tiap kali, 360 ÷ 10 = 36, artinya kita harus ulangi 36 kali biar rodanya muter penuh."
+      ],
+      "codeSnippets": [
+        {
+          "id": "python-correct-7-3",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n\nfor i in range(36):\n  kura.forward(50)\n  kura.backward(50)\n  kura.right(10)",
+          "mustFix": false
+        }
+      ],
+      "littleParagraphs": [
+  "Keren! 🎉 Sekarang kamu udah bikin roda bergigi yang rapi dan bulat.",
+  "Coba ganti jadi 5° atau 20° dan lihat bedanya. Siapa tahu kamu malah nemuin desain roda baru yang unik!"
+]
+
+    },
+{
+  "type": "code",
+  "subtitle": "🎯 Tantangan Ajaib: Bintang Pelangi!",
+  "contentOrder": ["paragraphs", "specialText", "listItems", "codeSnippets"],
+  "paragraphs": [
+    "Saatnya tantangan seru! Kali ini, kita bikin bintang yang setiap garisnya punya warna berbeda",
+    "Kamu sudah tahu dua rahasia penting: cara menggambar bintang dan cara membuat warna berganti. Sekarang, gabungkan keduanya!"
+  ],
+  "specialText": [
+    "💡 Petunjuk"
+  ],
+  "listItems": [
+    "Pakai list warna seperti di Pelangi Poligon (pakai minimal 5 warna biar cantik).",
+    "Gunakan sudut belokan yang tepat untuk bintang 5 sudut.",
+    "Ubah warna pena sebelum menggambar setiap garis.",
+    "Bebas pilih panjang garisnya, coba eksperimen!"
+  ],
+  "codeSnippets": [
+    {
+      "id": "python-correct-7-4",
+      "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
+      "mustFix": false
+    }
+  ]
+},
+    {
+  "type": "text",
+  "subtitle": "💪😎 Kamu Luar Biasa!",
+  "contentOrder": ["littleParagraphs", "paragraphs", "specialText"],
+  "littleParagraphs": [
+    "Wih, kamu udah sejauh ini! 🚀",
+    "Dari cuma nyuruh kura-kura jalan lurus, sekarang kamu udah bikin bintang, roda, dan pola warna-warni kayak seniman digital."
+  ],
+  "littleParagraphMargin": {
+    "top": "-mt-1"
+  },
+  "paragraphs": [
+    "Ingat, setiap bentuk keren dimulai dari satu ide kecil. 💡"
+  ],
+  "specialText": [
+    "Teruslah bereksperimen, gabungkan trik yang sudah kamu pelajari, dan jangan takut mencoba hal baru.",
+    "Pokoknya jangan takut gagal, karena tiap eksperimen itu langkah menuju karya masterpiece-mu! 🎨🔥"
+  ]
+}
+
+
+
+  ]
+}
