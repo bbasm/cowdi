@@ -4,7 +4,8 @@
       "Bash(del test_requirements.js)",
       "Bash(rm:*)",
       "Bash(npm run build:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }

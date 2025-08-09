@@ -2,7 +2,7 @@ import React from "react";
 import ImageBlock from "./ImageBlock";
 import CodeBlock from "./CodeBlock";
 
-const BlockRenderer = ({ block }) => {
+const BlockRenderer = ({ block, lessonNum }) => {
   const {
     subtitle,
     image,
@@ -72,7 +72,7 @@ const BlockRenderer = ({ block }) => {
 
       case "codeSnippets":
         return codeSnippets.map((snippet, i) => (
-          <CodeBlock key={snippet.id || `code-${i}`} snippet={snippet} />
+          <CodeBlock key={snippet.id || `code-${i}`} snippet={snippet} lessonNum={lessonNum} />
         ));
 
       case "listItems":

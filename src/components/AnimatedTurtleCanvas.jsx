@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const AnimatedTurtleCanvas = ({ animationData, exerciseId }) => {
+const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimationComplete }) => {
   const canvasRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const turtleImageRef = useRef(null);
+  const animationCancelRef = useRef(null);
 
   useEffect(() => {
     // Load turtle image
@@ -12,6 +13,21 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId }) => {
     img.src = '/assets/kura.png';
     turtleImageRef.current = img;
   }, []);
+
+  // Handle execution cancellation
+  useEffect(() => {
+    if (!isExecuting && animationCancelRef.current) {
+      animationCancelRef.current();
+      setIsAnimating(false);
+      setCurrentStep(0);
+      
+      // Clear the canvas immediately
+      if (canvasRef.current) {
+        const ctx = canvasRef.current.getContext("2d");
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      }
+    }
+  }, [isExecuting]);
 
   useEffect(() => {
     if (!animationData || !canvasRef.current) {
@@ -68,13 +84,27 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId }) => {
       let currentY = 0;
       let currentAngle = 90;
       let stepIndex = 0;
+      let isCancelled = false;
+      
+      // Set up cancellation
+      animationCancelRef.current = () => {
+        isCancelled = true;
+      };
       
       // Check if this is a high-repetition exercise that should go fast
       const isHighRepetition = exerciseId === 'python-correct-7-3' || commands.length > 20;
 
       const drawStep = () => {
+        if (isCancelled) {
+          return;
+        }
+        
         if (stepIndex >= commands.length) {
           setIsAnimating(false);
+          animationCancelRef.current = null;
+          if (onAnimationComplete) {
+            onAnimationComplete();
+          }
           return;
         }
 
@@ -91,6 +121,10 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId }) => {
           let animStep = 0;
 
           const animateLine = () => {
+            if (isCancelled) {
+              return;
+            }
+            
             // Clear and redraw everything up to current point
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -152,14 +186,18 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId }) => {
             animStep++;
 
             if (animStep <= steps) {
-              setTimeout(animateLine, isHighRepetition ? 5 : 20); // Much faster frame rate for high-repetition
+              if (!isCancelled) {
+                setTimeout(animateLine, isHighRepetition ? 5 : 20); // Much faster frame rate for high-repetition
+              }
             } else {
               currentX = command.to.x;
               currentY = command.to.y;
               currentAngle = command.to.angle;
               stepIndex++;
               setCurrentStep(stepIndex + 1); // Update to next step number
-              setTimeout(drawStep, isHighRepetition ? 10 : 100); // Much shorter pause for high-repetition
+              if (!isCancelled) {
+                setTimeout(drawStep, isHighRepetition ? 10 : 100); // Much shorter pause for high-repetition
+              }
             }
           };
 
@@ -200,7 +238,9 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId }) => {
 
           stepIndex++;
           setCurrentStep(stepIndex + 1); // Update to next step number
-          setTimeout(drawStep, isHighRepetition ? 20 : 200); // Much shorter pause for rotation in high-repetition
+          if (!isCancelled) {
+            setTimeout(drawStep, isHighRepetition ? 20 : 200); // Much shorter pause for rotation in high-repetition
+          }
         }
       };
 

@@ -101,33 +101,25 @@ export function checkOctagonRequirements(code) {
     },
     {
       id: "octagon-angle",
-      description:
-        "Menggunakan sudut yang benar untuk segi delapan (45 derajat)",
+      description: "Menggunakan sudut yang benar untuk segi delapan",
       check: (code) => {
         return /45/.test(code) && /(left|right)\s*\(\s*45\s*\)/i.test(code);
       },
     },
-    {
-      id: "turtle-movement",
-      description: "Menggunakan forward untuk menggambar garis",
-      check: (code) => {
-        return /forward\s*\(/i.test(code);
-      },
-    },
-    {
-      id: "turtle-import",
-      description: "Mengimpor turtle library",
-      check: (code) => {
-        return /from\s+turtle\s+import\s+\*/i.test(code);
-      },
-    },
-    {
-      id: "turtle-object",
-      description: "Membuat objek turtle",
-      check: (code) => {
-        return /turtle\.Turtle\(\)/i.test(code);
-      },
-    },
+    // {
+    //   id: "turtle-import",
+    //   description: "Mengimpor turtle library",
+    //   check: (code) => {
+    //     return /from\s+turtle\s+import\s+\*/i.test(code);
+    //   },
+    // },
+    // {
+    //   id: "turtle-object",
+    //   description: "Membuat objek turtle",
+    //   check: (code) => {
+    //     return /turtle\.Turtle\(\)/i.test(code);
+    //   },
+    // },
   ];
 
   return checkRequirements(code, requirements);

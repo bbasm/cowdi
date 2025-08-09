@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BlockRenderer from "./BlockRenderer";
 import { useNavigate } from "react-router-dom";
-import { canAccessLesson, isLesson5ValidationCompleted, isLessonRequirementsCompleted } from "../utils/lessonProgress";
+import { canAccessLesson, isLesson5ValidationCompleted, isLessonRequirementsCompleted, getIncompleteMustFixExercises } from "../utils/lessonProgress";
 
 const LessonRenderer = ({ lessonNum }) => {
   const [lesson, setLesson] = useState(null);
@@ -14,26 +14,21 @@ const LessonRenderer = ({ lessonNum }) => {
   
   // Check if user can proceed to next lesson
   const checkCanProceed = () => {
-    // Special case for lesson 5 -> 6: check validation completion
-    if (lessonNum === 5) {
-      return isLesson5ValidationCompleted();
-    }
-    
-    // Check if lesson has specific requirements
-    if ([6, 7].includes(lessonNum)) {
-      return isLessonRequirementsCompleted(lessonNum);
-    }
-    
-    // For other lessons, always allow
-    return true;
+    // All lessons now require mustFix completion plus any additional requirements
+    return isLessonRequirementsCompleted(lessonNum);
   };
   
   const handleNextLesson = () => {
     if (canProceed) {
       navigate(nextLesson);
     } else {
-      // Show warning or prevent navigation
-      alert("Selesaikan semua tugas di pelajaran ini sebelum melanjutkan!");
+      // Show warning with specific incomplete exercises
+      const incompleteMustFix = getIncompleteMustFixExercises(lessonNum);
+      if (incompleteMustFix.length > 0) {
+        alert(`Selesaikan semua latihan wajib di pelajaran ini terlebih dahulu!\n\nLatihan yang belum diselesaikan: ${incompleteMustFix.length} latihan`);
+      } else {
+        alert("Selesaikan semua tugas di pelajaran ini sebelum melanjutkan!");
+      }
     }
   };
 

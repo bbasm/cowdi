@@ -11,7 +11,7 @@ import {
   loadTurtleInstance,
 } from "../utils/turtleRunner";
 import AnimatedTurtleCanvas from "./AnimatedTurtleCanvas";
-import { setLesson5ValidationStatus, markExerciseCompleted } from "../utils/lessonProgress";
+import { setLesson5ValidationStatus, markExerciseCompleted, markMustFixCompleted } from "../utils/lessonProgress";
 import { createValidationResult } from "../utils/requirementChecker";
 
 // Global loading queue to manage progressive loading
@@ -58,14 +58,38 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [hasError, setHasError] = useState(false);
-  const [fixed, setFixed] = useState(!mustFix && !isLesson5ValidationExercise);
+  const [fixed, setFixed] = useState(() => {
+    try {
+      if (mustFix && lessonNum) {
+        // Check if this mustFix exercise was already completed
+        const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
+        return progress.mustFixCompleted?.[id] === true || progress[id] === true;
+      }
+      if (isLesson5ValidationExercise && lessonNum) {
+        const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
+        return progress.validationCompleted === true;
+      }
+      if (hasRequirements && lessonNum) {
+        const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
+        return progress[id] === true;
+      }
+      return !mustFix && !isLesson5ValidationExercise;
+    } catch (error) {
+      console.error('Error initializing fixed state:', error);
+      return !mustFix && !isLesson5ValidationExercise;
+    }
+  });
   const [hasUserEdited, setHasUserEdited] = useState(false);
   const [pyodideReady, setPyodideReady] = useState(false);
   const [canvasData, setCanvasData] = useState(null);
   const [animationData, setAnimationData] = useState(null);
   const [validationResult, setValidationResult] = useState(null);
+  const [isExecuting, setIsExecuting] = useState(false);
 
   const textareaRef = useRef(null);
+  const executionCancelRef = useRef(null);
+  const runTimeoutRef = useRef(null);
+  const lastRunTimeRef = useRef(0);
   
   // Check if this exercise has specific requirements (like lesson 5)
   const hasRequirements = ['python-correct-7-4', 'python-correct-6-5', 'python-correct-6-4'].includes(id);
@@ -106,6 +130,18 @@ const CodeBlock = ({ snippet, lessonNum }) => {
     autoResize();
   }, [code]);
 
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (executionCancelRef.current) {
+        executionCancelRef.current();
+      }
+      if (runTimeoutRef.current) {
+        clearTimeout(runTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const autoResize = () => {
     const el = textareaRef.current;
     if (el) {
@@ -122,25 +158,41 @@ const CodeBlock = ({ snippet, lessonNum }) => {
     return lines.map((_, i) => i + 1).join("\n");
   };
 
-  const run = async () => {
+  const executeCode = async () => {
     if (!pyodideReady) {
       setOutput("⏳ Python belum siap! Tunggu sebentar ya...");
       return;
     }
 
+    setIsExecuting(true);
+    
+    // Create cancel token for this execution
+    let isCancelled = false;
+    executionCancelRef.current = () => {
+      isCancelled = true;
+      setIsExecuting(false);
+    };
+
     const isTurtleCode = code.includes('turtle') || code.includes('from turtle');
     
     if (isTurtleCode) {
-      const result = await runTurtle(code);
-      localStorage.setItem(storageKey, code);
+      try {
+        const result = await runTurtle(code);
+        
+        // Check if execution was cancelled
+        if (isCancelled) {
+          return;
+        }
+        
+        localStorage.setItem(storageKey, code);
 
-      if (result.error) {
-        setOutput(result.error);
-        setHasError(true);
-        setFixed(false);
-        setCanvasData(null);
-        setAnimationData(null);
-      } else {
+        if (result.error) {
+          setOutput(result.error);
+          setHasError(true);
+          setFixed(false);
+          setCanvasData(null);
+          setAnimationData(null);
+        } else {
         setOutput(result.output || "Kode berhasil dijalankan! Lihat animasi di bawah.");
         setHasError(false);
         
@@ -155,6 +207,9 @@ const CodeBlock = ({ snippet, lessonNum }) => {
             if (result.canvasData.validation.valid) {
               setFixed(true);
               setLesson5ValidationStatus(true); // Save progress
+              if (lessonNum && id) {
+                markMustFixCompleted(lessonNum, id);
+              }
             } else {
               setFixed(false);
               setLesson5ValidationStatus(false); // Save incomplete status
@@ -168,6 +223,9 @@ const CodeBlock = ({ snippet, lessonNum }) => {
             if (validation && validation.valid) {
               setFixed(true);
               markExerciseCompleted(lessonNum, id);
+              if (mustFix && lessonNum && id) {
+                markMustFixCompleted(lessonNum, id);
+              }
             } else {
               setFixed(false);
             }
@@ -184,6 +242,9 @@ const CodeBlock = ({ snippet, lessonNum }) => {
             if (validation && validation.valid) {
               setFixed(true);
               markExerciseCompleted(lessonNum, id);
+              if (mustFix && lessonNum && id) {
+                markMustFixCompleted(lessonNum, id);
+              }
             } else {
               setFixed(false);
             }
@@ -194,31 +255,107 @@ const CodeBlock = ({ snippet, lessonNum }) => {
         
         if (mustFix && !isLesson5ValidationExercise && !hasRequirements) {
           setFixed(true);
+          if (lessonNum && id) {
+            markMustFixCompleted(lessonNum, id);
+          }
+        }
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          setOutput("Error executing code: " + error.message);
+          setHasError(true);
+          setFixed(false);
+          setCanvasData(null);
+          setAnimationData(null);
         }
       }
     } else {
-      const { output, error } = await runPython(code);
-      localStorage.setItem(storageKey, code);
+      try {
+        const { output, error } = await runPython(code);
+        
+        // Check if execution was cancelled
+        if (isCancelled) {
+          return;
+        }
+        
+        localStorage.setItem(storageKey, code);
 
-      if (error) {
-        setOutput(error);
-        setHasError(true);
-        setFixed(false);
-        setCanvasData(null);
-        setAnimationData(null);
-      } else {
-        setOutput(output);
-        setHasError(false);
-        setCanvasData(null);
-        setAnimationData(null);
-        if (mustFix && output.trim()) {
-          setFixed(true);
+        if (error) {
+          setOutput(error);
+          setHasError(true);
+          setFixed(false);
+          setCanvasData(null);
+          setAnimationData(null);
+        } else {
+          setOutput(output);
+          setHasError(false);
+          setCanvasData(null);
+          setAnimationData(null);
+          if (mustFix && output.trim()) {
+            setFixed(true);
+            if (lessonNum && id) {
+              markMustFixCompleted(lessonNum, id);
+            }
+          }
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          setOutput("Error executing code: " + error.message);
+          setHasError(true);
+          setFixed(false);
         }
       }
     }
+    
+    // Clean up execution state
+    if (!isCancelled) {
+      setIsExecuting(false);
+      executionCancelRef.current = null;
+    }
+  };
+
+  const run = () => {
+    const now = Date.now();
+    
+    // Aggressive throttling - ignore clicks within 200ms
+    if (now - lastRunTimeRef.current < 200) {
+      return;
+    }
+    
+    lastRunTimeRef.current = now;
+
+    // Clear any existing timeout
+    if (runTimeoutRef.current) {
+      clearTimeout(runTimeoutRef.current);
+    }
+
+    // Cancel any existing execution immediately
+    if (executionCancelRef.current) {
+      executionCancelRef.current();
+    }
+
+    // Clear animation data immediately to stop any running animations
+    setAnimationData(null);
+    setCanvasData(null);
+    setOutput("");
+    
+    // Set executing state immediately to prevent multiple clicks
+    setIsExecuting(true);
+
+    // Execute immediately without debounce
+    executeCode();
   };
 
   const reset = () => {
+    // Cancel any running execution
+    if (executionCancelRef.current) {
+      executionCancelRef.current();
+    }
+    if (runTimeoutRef.current) {
+      clearTimeout(runTimeoutRef.current);
+      runTimeoutRef.current = null;
+    }
+    
     const initial = starterCode.endsWith("\n")
       ? starterCode
       : starterCode + "\n";
@@ -227,10 +364,36 @@ const CodeBlock = ({ snippet, lessonNum }) => {
     setFixed(!mustFix && !isLesson5ValidationExercise && !hasRequirements);
     setHasError(false);
     setHasUserEdited(false);
+    setIsExecuting(false);
     setCanvasData(null);
     setAnimationData(null);
     setValidationResult(null);
     localStorage.removeItem(storageKey);
+    
+    // Also reset mustFix completion status when resetting
+    if (mustFix && lessonNum) {
+      try {
+        const currentProgress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
+        if (currentProgress.mustFixCompleted?.[id] || currentProgress[id]) {
+          const { mustFixCompleted, ...otherProgress } = currentProgress;
+          const newMustFixCompleted = mustFixCompleted ? { ...mustFixCompleted } : {};
+          delete newMustFixCompleted[id];
+          delete otherProgress[id];
+          
+          localStorage.setItem(`lesson-${lessonNum}-progress`, JSON.stringify({
+            ...otherProgress,
+            mustFixCompleted: newMustFixCompleted
+          }));
+          
+          // Dispatch event to update progress
+          window.dispatchEvent(new CustomEvent('lessonProgressUpdated', { 
+            detail: { lessonNum, data: { ...otherProgress, mustFixCompleted: newMustFixCompleted } } 
+          }));
+        }
+      } catch (error) {
+        console.error('Error resetting mustFix completion:', error);
+      }
+    }
   };
 
   return (
@@ -263,9 +426,16 @@ const CodeBlock = ({ snippet, lessonNum }) => {
           <div className="relative group">
             <button
               onClick={run}
-              title={pyodideReady && !isNonRunnableTurtleExample ? "Jalankan kode" : ""}
+              title={
+                !pyodideReady || isNonRunnableTurtleExample 
+                  ? "" 
+                  : isExecuting 
+                    ? "Jalankan ulang kode (akan membatalkan eksekusi sebelumnya)"
+                    : "Jalankan kode"
+              }
               className={`w-6 h-6 ${
-                !pyodideReady || isNonRunnableTurtleExample ? "opacity-40 cursor-not-allowed" : ""
+                !pyodideReady || isNonRunnableTurtleExample ? "opacity-40 cursor-not-allowed" : 
+                isExecuting ? "opacity-70" : ""
               }`}
               disabled={!pyodideReady || isNonRunnableTurtleExample}
             >
@@ -404,7 +574,15 @@ const CodeBlock = ({ snippet, lessonNum }) => {
       
       {/* Animated Turtle Canvas */}
       {animationData && (
-        <AnimatedTurtleCanvas animationData={animationData} exerciseId={id} />
+        <AnimatedTurtleCanvas 
+          animationData={animationData} 
+          exerciseId={id} 
+          isExecuting={isExecuting}
+          onAnimationComplete={() => {
+            setIsExecuting(false);
+            executionCancelRef.current = null;
+          }}
+        />
       )}
 
       {/* Validation Feedback */}
