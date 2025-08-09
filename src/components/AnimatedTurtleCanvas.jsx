@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const AnimatedTurtleCanvas = ({ animationData }) => {
+const AnimatedTurtleCanvas = ({ animationData, exerciseId }) => {
   const canvasRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -68,6 +68,9 @@ const AnimatedTurtleCanvas = ({ animationData }) => {
       let currentY = 0;
       let currentAngle = 90;
       let stepIndex = 0;
+      
+      // Check if this is a high-repetition exercise that should go fast
+      const isHighRepetition = exerciseId === 'python-correct-7-3' || commands.length > 20;
 
       const drawStep = () => {
         if (stepIndex >= commands.length) {
@@ -149,14 +152,14 @@ const AnimatedTurtleCanvas = ({ animationData }) => {
             animStep++;
 
             if (animStep <= steps) {
-              setTimeout(animateLine, 20); // 50ms per frame
+              setTimeout(animateLine, isHighRepetition ? 5 : 20); // Much faster frame rate for high-repetition
             } else {
               currentX = command.to.x;
               currentY = command.to.y;
               currentAngle = command.to.angle;
               stepIndex++;
               setCurrentStep(stepIndex + 1); // Update to next step number
-              setTimeout(drawStep, 100); // Pause between commands
+              setTimeout(drawStep, isHighRepetition ? 10 : 100); // Much shorter pause for high-repetition
             }
           };
 
@@ -197,7 +200,7 @@ const AnimatedTurtleCanvas = ({ animationData }) => {
 
           stepIndex++;
           setCurrentStep(stepIndex + 1); // Update to next step number
-          setTimeout(drawStep, 200); // Pause for rotation
+          setTimeout(drawStep, isHighRepetition ? 20 : 200); // Much shorter pause for rotation in high-repetition
         }
       };
 

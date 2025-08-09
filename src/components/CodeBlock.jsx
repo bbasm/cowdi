@@ -305,6 +305,74 @@ const CodeBlock = ({ snippet, lessonNum }) => {
             setCode(e.target.value);
             setHasUserEdited(true);
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              const textarea = e.target;
+              const cursorPosition = textarea.selectionStart;
+              const textBeforeCursor = textarea.value.substring(0, cursorPosition);
+              const textAfterCursor = textarea.value.substring(cursorPosition);
+              const currentLineMatch = textBeforeCursor.match(/([^\n]*)$/);
+              const currentLine = currentLineMatch ? currentLineMatch[1] : '';
+              
+              // Check if current line ends with 'for' statement and colon
+              const forLoopPattern = /^\s*for\s+.+:\s*$/;
+              if (forLoopPattern.test(currentLine.trim())) {
+                e.preventDefault();
+                const indentMatch = currentLine.match(/^(\s*)/);
+                const currentIndent = indentMatch ? indentMatch[1] : '';
+                const newIndent = currentIndent + '  '; // Add 2 spaces for indentation
+                
+                const newValue = textBeforeCursor + '\n' + newIndent + textAfterCursor;
+                const newCursorPosition = cursorPosition + 1 + newIndent.length;
+                
+                setCode(newValue);
+                setHasUserEdited(true);
+                
+                // Set cursor position after state update
+                setTimeout(() => {
+                  textarea.selectionStart = textarea.selectionEnd = newCursorPosition;
+                }, 0);
+                return;
+              }
+              
+              // Handle indentation logic
+              const lines = textBeforeCursor.split('\n');
+              const currentLineEmpty = currentLine.trim() === '';
+              const currentLineIndent = currentLine.match(/^(\s*)/);
+              const currentIndentLevel = currentLineIndent ? currentLineIndent[1] : '';
+              
+              // If current line is empty and indented, double enter should dedent
+              if (currentLineEmpty && currentIndentLevel.length > 0) {
+                e.preventDefault();
+                // Remove indentation for empty line
+                const newValue = textBeforeCursor + '\n' + textAfterCursor;
+                const newCursorPosition = cursorPosition + 1;
+                
+                setCode(newValue);
+                setHasUserEdited(true);
+                
+                setTimeout(() => {
+                  textarea.selectionStart = textarea.selectionEnd = newCursorPosition;
+                }, 0);
+                return;
+              }
+              
+              // If current line has content (non-empty), maintain its indentation for next line
+              if (!currentLineEmpty && currentIndentLevel.length > 0) {
+                e.preventDefault();
+                const newValue = textBeforeCursor + '\n' + currentIndentLevel + textAfterCursor;
+                const newCursorPosition = cursorPosition + 1 + currentIndentLevel.length;
+                
+                setCode(newValue);
+                setHasUserEdited(true);
+                
+                setTimeout(() => {
+                  textarea.selectionStart = textarea.selectionEnd = newCursorPosition;
+                }, 0);
+                return;
+              }
+            }
+          }}
           spellCheck={false}
         />
       </div>
@@ -336,7 +404,7 @@ const CodeBlock = ({ snippet, lessonNum }) => {
       
       {/* Animated Turtle Canvas */}
       {animationData && (
-        <AnimatedTurtleCanvas animationData={animationData} />
+        <AnimatedTurtleCanvas animationData={animationData} exerciseId={id} />
       )}
 
       {/* Validation Feedback */}
