@@ -132,7 +132,7 @@
       },
       "paragraphMargin": {
         "top": "-mt-0",
-        "bottom": "-mb-40"
+        "bottom": "-mb-5"
       },
       "image": "warning.png",
       "imagePosition": "right",

@@ -1,5 +1,5 @@
-import crop_logo from "./crop_logo.png";
-import full_logo from "./full_logo.png";
+import crop_logo from "./crop_logo.jpg";
+import full_logo from "./full_logo.jpg";
 import duck from "./duck.png";
 import background from "./background.png";
 import tentang_img from "./tentang.png";

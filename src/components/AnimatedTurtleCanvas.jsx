@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimationComplete }) => {
+const AnimatedTurtleCanvas = ({
+  animationData,
+  exerciseId,
+  isExecuting,
+  onAnimationComplete,
+}) => {
   const canvasRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -10,7 +15,7 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimat
   useEffect(() => {
     // Load turtle image
     const img = new Image();
-    img.src = '/assets/kura.png';
+    img.src = "/assets/kura.png";
     turtleImageRef.current = img;
   }, []);
 
@@ -20,7 +25,7 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimat
       animationCancelRef.current();
       setIsAnimating(false);
       setCurrentStep(0);
-      
+
       // Clear the canvas immediately
       if (canvasRef.current) {
         const ctx = canvasRef.current.getContext("2d");
@@ -36,7 +41,7 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimat
     }
 
     console.log("AnimatedTurtleCanvas: Starting with data:", animationData);
-    
+
     // Reset state for new animation
     setIsAnimating(false);
     setCurrentStep(0);
@@ -85,20 +90,21 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimat
       let currentAngle = 90;
       let stepIndex = 0;
       let isCancelled = false;
-      
+
       // Set up cancellation
       animationCancelRef.current = () => {
         isCancelled = true;
       };
-      
+
       // Check if this is a high-repetition exercise that should go fast
-      const isHighRepetition = exerciseId === 'python-correct-7-3' || commands.length > 20;
+      const isHighRepetition =
+        exerciseId === "python-correct-7-3" || commands.length > 20;
 
       const drawStep = () => {
         if (isCancelled) {
           return;
         }
-        
+
         if (stepIndex >= commands.length) {
           setIsAnimating(false);
           animationCancelRef.current = null;
@@ -124,7 +130,7 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimat
             if (isCancelled) {
               return;
             }
-            
+
             // Clear and redraw everything up to current point
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -255,7 +261,7 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimat
 
   const drawTurtle = (ctx, x, y, angle) => {
     const turtleImage = turtleImageRef.current;
-    
+
     if (!turtleImage || !turtleImage.complete) {
       // Fallback to original turtle shape if image not loaded
       ctx.save();
@@ -328,13 +334,13 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimat
       </div>
       {isAnimating && animationData.commands.length >= 3 && (
         <p className="text-center text-sm text-blue-600 font-source">
-          🐢 Turtle is drawing... Step {currentStep} of{" "}
+          🐢 Kura-kura sedang menggambar... Langkah {currentStep} dari{" "}
           {animationData.commands.length}
         </p>
       )}
       {isAnimating && animationData.commands.length < 3 && (
         <p className="text-center text-sm text-blue-600 font-source">
-          🐢 Turtle is drawing...
+          🐢 Kura-kura sedang menggambar...
         </p>
       )}
     </div>

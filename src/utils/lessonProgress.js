@@ -70,7 +70,7 @@ const MUSTFIX_EXERCISES = {
   3: ['python-hello-error-3-5'],
   4: ['python-hello-error-4-7'],
   5: ['python-hello-correct-5-6'],
-  6: ['python-correct-6-4', 'python-correct-6-5'],
+  6: ['python-correct-6-4'],
   7: ['python-correct-7-4']
 };
 
@@ -112,7 +112,7 @@ export function isLessonRequirementsCompleted(lessonNum) {
     case 5:
       return progress.validationCompleted === true;
     case 6:
-      return progress['python-correct-6-4'] === true && progress['python-correct-6-5'] === true;
+      return progress['python-correct-6-4'] === true;
     case 7:
       return progress['python-correct-7-4'] === true;
     default:

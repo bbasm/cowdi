@@ -130,6 +130,7 @@
         }
       ]
     },
+    
         {
       "type": "code",
       "contentOrder": ["paragraphs", "codeSnippets"],
@@ -150,26 +151,28 @@
       "type": "code",
       "subtitle": "🗺️ Misi Rahasia: Rumah Didi",
       "contentOrder": ["paragraphsAfterCode", "littleParagraphs", "listItems", "specialText", "codeSnippets"],
+      "optionalMessage": "Bagian ini tidak wajib buat lanjut ke bab berikutnya, tapi kalau kamu mau tantangan ekstra, coba kerjakan ya! Siapa tahu rumah Didi jadi rumah keren 🏠💪",
       "paragraphsAfterCode": [
-        "Hari ini, Didi mau punya rumah impian. Badannya kokoh, atapnya runcing, dan semuanya serba pas. Panjang setiap sisinya 80 langkah kura-kura, nggak kurang, nggak lebih.!"
+        "Hari ini, Didi mau punya rumah impian. Badannya kokoh, atapnya runcing, dan semuanya serba pas. Panjang setiap sisinya 80 langkah kura-kura, nggak kurang, nggak lebih!"
       ],
       "littleParagraphs": [
         "Petunjuk dari didi:"
       ],
       "listItems": [
+        "Sebelum bikin kotak, belok dulu ke kanan atau kiri, baru melangkah maju",
         "Gambar dulu bagian bawah rumah sampai rapi",
         "Dari sudut kiri atas rumah, langsung bikin atapnya tanpa putus garis",
         "Atapnya harus nyambung dan runcing di tengah"
       ],
       "specialText": [
-       "💡 Trik rahasia: belok dulu sebelum mulai menggambar kotak! Kalau nggak, nanti kura-kura nyampainya di bawah dan nggak bisa langsung bikin atap.", 
-       "Stelah bikin persegi, kura-kura harus BEL0K DULU (30°) baru jalan! Kalau nggak, atapnya miring dan rumahnya aneh 😆"
+       "💡 Kotaknya bisa pakai for loop biar cepat, tapi segitiganya nggak bisa, soalnya sebelum gambar atap, kura-kura harus belok 30° dulu.",
+       "⚠️ Ingat! Indentasi (spasi di awal baris) itu penting di Python. Semua perintah di dalam loop for harus menjorok 2 spasi. Kalau masih menjorok, Python kira itu masih bagian dari loop."
        ],
       "codeSnippets": [
         {
           "id": "python-correct-6-5",
           "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
-          "mustFix": true
+          "mustFix": false
         }
       ]
     },

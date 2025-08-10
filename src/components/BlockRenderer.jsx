@@ -72,7 +72,12 @@ const BlockRenderer = ({ block, lessonNum }) => {
 
       case "codeSnippets":
         return codeSnippets.map((snippet, i) => (
-          <CodeBlock key={snippet.id || `code-${i}`} snippet={snippet} lessonNum={lessonNum} />
+          <CodeBlock 
+            key={snippet.id || `code-${i}`} 
+            snippet={snippet} 
+            lessonNum={lessonNum} 
+            optionalMessage={block.optionalMessage}
+          />
         ));
 
       case "listItems":

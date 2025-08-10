@@ -45,7 +45,7 @@ const processLoadingQueue = async () => {
   isProcessingQueue = false;
 };
 
-const CodeBlock = ({ snippet, lessonNum }) => {
+const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
   const { id, starterCode, mustFix } = snippet;
   const storageKey = `lesson${lessonNum}-${id}-${starterCode}`;
   
@@ -54,29 +54,44 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   
   // Check if this is the first turtle example that shouldn't be runnable (only python-correct-5-1)
   const isNonRunnableTurtleExample = id === "python-correct-5-1";
+  
+  // Check if this exercise has specific requirements (like lesson 5)
+  const hasRequirements = ['python-correct-7-4', 'python-correct-6-5', 'python-correct-6-4'].includes(id);
 
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [hasError, setHasError] = useState(false);
   const [fixed, setFixed] = useState(() => {
     try {
+      console.log(`[${id}] Initializing fixed state - mustFix: ${mustFix}, hasRequirements: ${hasRequirements}, isLesson5: ${isLesson5ValidationExercise}`);
+      
       if (mustFix && lessonNum) {
         // Check if this mustFix exercise was already completed
         const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
-        return progress.mustFixCompleted?.[id] === true || progress[id] === true;
+        const result = progress.mustFixCompleted?.[id] === true || progress[id] === true;
+        console.log(`[${id}] mustFix check: result = ${result}`);
+        return result;
       }
       if (isLesson5ValidationExercise && lessonNum) {
         const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
-        return progress.validationCompleted === true;
+        const result = progress.validationCompleted === true;
+        console.log(`[${id}] lesson5 validation check: result = ${result}`);
+        return result;
       }
       if (hasRequirements && lessonNum) {
         const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
-        return progress[id] === true;
+        const isCompleted = progress[id] === true;
+        console.log(`[${id}] hasRequirements check: progress[${id}] = ${progress[id]}, isCompleted = ${isCompleted}`, progress);
+        return isCompleted;
       }
-      return !mustFix && !isLesson5ValidationExercise;
+      const defaultResult = !mustFix && !isLesson5ValidationExercise && !hasRequirements;
+      console.log(`[${id}] default fallback: result = ${defaultResult}`);
+      return defaultResult;
     } catch (error) {
       console.error('Error initializing fixed state:', error);
-      return !mustFix && !isLesson5ValidationExercise;
+      const errorResult = !mustFix && !isLesson5ValidationExercise && !hasRequirements;
+      console.log(`[${id}] error fallback: result = ${errorResult}`);
+      return errorResult;
     }
   });
   const [hasUserEdited, setHasUserEdited] = useState(false);
@@ -90,9 +105,6 @@ const CodeBlock = ({ snippet, lessonNum }) => {
   const executionCancelRef = useRef(null);
   const runTimeoutRef = useRef(null);
   const lastRunTimeRef = useRef(0);
-  
-  // Check if this exercise has specific requirements (like lesson 5)
-  const hasRequirements = ['python-correct-7-4', 'python-correct-6-5', 'python-correct-6-4'].includes(id);
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
@@ -370,8 +382,8 @@ const CodeBlock = ({ snippet, lessonNum }) => {
     setValidationResult(null);
     localStorage.removeItem(storageKey);
     
-    // Also reset mustFix completion status when resetting
-    if (mustFix && lessonNum) {
+    // Also reset completion status when resetting
+    if ((mustFix || hasRequirements) && lessonNum) {
       try {
         const currentProgress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
         if (currentProgress.mustFixCompleted?.[id] || currentProgress[id]) {
@@ -640,9 +652,10 @@ const CodeBlock = ({ snippet, lessonNum }) => {
       {/* Fix prompt */}
       {(mustFix && !fixed) || (isLesson5ValidationExercise && !fixed) || (hasRequirements && !fixed) ? (
         <p className="text-yellow-500 mt-2 text-sm font-medium font-source">
-          {(isLesson5ValidationExercise || hasRequirements)
-            ? "Selesaikan semua tugas di atas untuk melanjutkan ➤"
-            : "Perbaiki kode ini untuk melanjutkan ➤"}
+          {optionalMessage ? optionalMessage : 
+            (isLesson5ValidationExercise || hasRequirements)
+              ? "Selesaikan semua tugas di atas untuk melanjutkan ➤"
+              : "Perbaiki kode ini untuk melanjutkan ➤"}
         </p>
       ) : null}
     </div>
