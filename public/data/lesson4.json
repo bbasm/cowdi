@@ -67,7 +67,7 @@
       "subtitle": "🎨 Gabung Sama Angka!",
       "contentOrder": ["littleParagraphs", "specialText", "paragraphs", "paragraphsAfterCode", "codeSnippets"],
       "littleParagraphs": [
-        "Kadang kita pengen bikin tulisan yang beda-beda tiap kali ngulang. Misalnya, kita mau komputer bilang"
+        "Kadang kita pengen bikin tulisan yang beda-beda tiap kali ngulang. Misalnya, kita mau komputer bilang:"
       ],
       "littleParagraphPadding": {
         "bottom":"mb-4"

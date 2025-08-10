@@ -39,8 +39,8 @@
   ],
   "listItems": [
     "`colors` → list berisi warna-warna pelangi",
-     "`i` → angka urutan (0, 1, 2, ...) yang otomatis bertambah setiap putaran `for`.",
-    "`colors[i]` → ambil warna dari `colors` sesuai nomor urut `i`. Misalnya `i = 0` berarti warna pertama, `i = 1` berarti warna kedua."
+     "`i` → angka urutan (0, 1, 2, ...) yang otomatis bertambah setiap putaran `for`",
+    "`colors[i]` → ambil warna dari `colors` sesuai nomor urut `i`. Misalnya `i = 0` berarti warna pertama, `i = 1` berarti warna kedua"
   ],
   "specialText": [
     "Kalau jumlah sisi poligon lebih banyak daripada jumlah warna di list, warna akan mengulang lagi dari awal list."
@@ -58,13 +58,13 @@
     "Rahasia bintang: kita nggak mau ke titik sebelahnya, tapi lompat satu titik setiap kali."
   ],
   "specialText": [
-    "Bayangin ada 5 titik bintang: 1, 2, 3, 4, 5. Segi lima biasa jalan 1 → 2 → 3 → 4 → 5.",
-    "Kalau bintang, jalannya 1 → 3 → 5 → 2 → 4 → kembali ke 1."
+    "Bayangin ada 5 titik bintang: 1, 2, 3, 4, 5. Segi lima biasa jalan 1 → 2 → 3 → 4 → 5",
+    "Kalau bintang, jalannya 1 → 3 → 5 → 2 → 4 → kembali ke 1"
   ],
   "listItems": [
     "72° → belokan segi lima biasa",
-    "Kalau mau lompat satu titik, sudutnya harus jadi dua kali lipat: 72° × 2 = 144°.",
-    "144° → sudut belokan yang bikin garis nyilang dan membentuk bintang."
+    "Kalau mau lompat satu titik, sudutnya harus jadi dua kali lipat: 72° × 2 = 144°",
+    "144° → sudut belokan yang bikin garis nyilang dan membentuk bintang"
   ],
   "littleParagraphs": [
     "Nah, sekarang saatnya kita terjemahkan rahasia sudut ini jadi kode dan lihat apakah kura-kura kita bisa membuat bintangnya!"
@@ -119,16 +119,16 @@
   "subtitle": "🎯 Tantangan Ajaib: Bintang Pelangi!",
   "contentOrder": ["paragraphs", "specialText", "listItems", "codeSnippets"],
   "paragraphs": [
-    "Saatnya tantangan seru! Kali ini, kita bikin bintang yang setiap garisnya punya warna berbeda",
+    "Saatnya tantangan seru! Kali ini, kita bikin bintang yang setiap garisnya punya warna berbeda.",
     "Kamu sudah tahu dua rahasia penting: cara menggambar bintang dan cara membuat warna berganti. Sekarang, gabungkan keduanya!"
   ],
   "specialText": [
     "💡 Petunjuk"
   ],
   "listItems": [
-    "Pakai list warna seperti di Pelangi Poligon (pakai minimal 5 warna biar cantik).",
-    "Gunakan sudut belokan yang tepat untuk bintang 5 sudut.",
-    "Ubah warna pena sebelum menggambar setiap garis.",
+    "Pakai list warna seperti di Pelangi Poligon (pakai minimal 5 warna biar cantik)",
+    "Gunakan sudut belokan yang tepat untuk bintang 5 sudut",
+    "Ubah warna pena sebelum menggambar setiap garis",
     "Bebas pilih panjang garisnya, coba eksperimen!"
   ],
   "codeSnippets": [

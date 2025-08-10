@@ -135,7 +135,7 @@
       "contentOrder": ["paragraphs", "codeSnippets"],
       "subtitle": "🏎️ Misi Lintasan Balap Segi Delapan",
       "paragraphs": [
-        "Kali ini kura-kura mau bikin lintasan balap berbentuk segi delapan",
+        "Kali ini kura-kura mau bikin lintasan balap berbentuk segi delapan.",
         "Kalau segi empat punya 4 sisi, segi delapan tentu punya 8 sisi. Nah, karena kita udah jago, tinggal hitung aja dan coding!"
     ],
         "codeSnippets": [
@@ -157,12 +157,12 @@
         "Petunjuk dari didi:"
       ],
       "listItems": [
-        "Gambar dulu bagian bawah rumah sampai rapi.",
-        "Dari sudut kiri atas rumah, langsung bikin atapnya tanpa putus garis.",
-        "Atapnya harus nyambung dan runcing di tengah."
+        "Gambar dulu bagian bawah rumah sampai rapi",
+        "Dari sudut kiri atas rumah, langsung bikin atapnya tanpa putus garis",
+        "Atapnya harus nyambung dan runcing di tengah"
       ],
       "specialText": [
-       "💡 Trik rahasia: belok dulu sebelum mulai menggambar kotak! Kalau nggak, nanti kura-kura nyampainya di bawah dan nggak bisa langsung bikin atap", 
+       "💡 Trik rahasia: belok dulu sebelum mulai menggambar kotak! Kalau nggak, nanti kura-kura nyampainya di bawah dan nggak bisa langsung bikin atap.", 
        "Stelah bikin persegi, kura-kura harus BEL0K DULU (30°) baru jalan! Kalau nggak, atapnya miring dan rumahnya aneh 😆"
        ],
       "codeSnippets": [

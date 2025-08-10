@@ -8,7 +8,7 @@
       "imagePosition": "right",
       "imageSize": "w-65",
       "paragraphs": [
-        "Selamat datang di CowDi — Coding with Didi! 🐤 Di sini, kita akan belajar cara memberi perintah ke komputer supaya dia bisa menggambar, bermain, dan melakukan hal-hal seru lainnya!",
+        "Selamat datang di CowDi, Coding with Didi! 🐤 Di sini kita akan belajar cara memberi perintah ke komputer supaya dia bisa menggambar, bermain, dan melakukan hal-hal seru lainnya!",
         "Tapi, kita mulai dari awal dulu ya…"
       ],
       "paragraphPadding": {
@@ -20,7 +20,7 @@
       "type": "text",
       "subtitle": "💻 Apa Itu Coding?",
       "paragraphs": [
-        "Bayangin kamu punya robot. Robot itu bisa melakukan banyak hal: menggambar, bernyanyi, bahkan main game",
+        "Bayangin kamu punya robot. Robot itu bisa melakukan banyak hal: menggambar, bernyanyi, bahkan main game.",
         "Tapi… robot itu nggak tahu harus ngapain kalau kamu nggak ngasih perintah."
       ],
       "paragraphPadding": {
@@ -69,7 +69,7 @@
         "Nah, yuk kita pahami artinya:"],
       "listItems": [
         {"text": "'print' artinya “tampilkan”. Ini kayak ngomong ke komputer: “Tunjukin ini di layar, ya!”", "padding": "pt-0 pb-1"},
-        {"text": "'\"Halo Dunia!\"' adalah teks yang mau ditampilkan. Harus pakai tanda kutip supaya komputer ngerti itu tulisan.", "padding": "pt-1 pb-1"},
+        {"text": "'\"Halo Dunia!\"' adalah teks yang mau ditampilkan. Harus pakai tanda kutip supaya komputer ngerti itu tulisan", "padding": "pt-1 pb-1"},
         {"text": "Jadi, 'print(\"Halo Dunia!\")' artinya: “Hai komputer, tampilkan tulisan ‘Halo Dunia!’ di layar!”", "padding": "pt-1 pb-2"}
         
       ]

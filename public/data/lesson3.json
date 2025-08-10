@@ -101,7 +101,7 @@
       },
       "paragraphs": [
         "💥 Python bingung!",
-        "Karena \"Umurku: \" itu string, sedangkan umur itu int.",
+        "Karena \"Umurku: \" itu string, sedangkan umur itu int",
         "Python bingung: “Kok kamu suruh aku gabung kata + angka???”"
       ],
       "specialText": [

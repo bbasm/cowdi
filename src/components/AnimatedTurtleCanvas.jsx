@@ -148,7 +148,6 @@ const AnimatedTurtleCanvas = ({ animationData, exerciseId, isExecuting, onAnimat
               }
             }
 
-            // Draw current line progressively
             if (command.pen_down) {
               const progress = animStep / steps;
               const currentLineX = startX + (endX - startX) * progress;
