@@ -9,6 +9,11 @@ import bg_wider from "./bg_wider.png";
 import bg_better from "./bg_better.png";
 // import warning from "./warning.png";
 
+import slide1 from "./slideshow/slide1.png";
+import slide2 from "./slideshow/slide2.png";
+import slide3 from "./slideshow/slide3.png";
+
+
 export const assets = {
   crop_logo,
   full_logo,
@@ -20,4 +25,11 @@ export const assets = {
   bg_wider,
   bg_better,
   // warning
+
+  slideshowImages: [
+    { src: slide1, alt: "CowDi Bab 7 'Bentuk Ajaib dan Pola Warna-Warni!'" },
+    { src: slide2, alt: "CowDi Bab 3 'Ini Angka atau Kata, Ya?'" },
+    { src: slide3, alt: "CowDi PyTurle 'Rahasia Sudut Bintang'" },
+    
+  ],
 };

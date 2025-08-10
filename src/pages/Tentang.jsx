@@ -51,15 +51,16 @@
 import React from "react";
 import { assets } from "./../assets/assets";
 import { Link } from "react-router-dom";
+import TentangSlideshow from "../components/TentangSlideshow";
 
 const Tentang = () => {
   return (
     <section className="bg-[#FCF4EB] w-full px-6 sm:px-10 md:px-20 lg:px-32 py-20 flex flex-col md:flex-row items-center justify-center gap-12">
-      {/* Left image */}
-      <img
-        src={assets.tentang_img}
-        alt="tentang"
-        className="w-full max-w-md md:max-w-lg h-auto"
+      {/* Left slideshow */}
+      <TentangSlideshow 
+        images={assets.slideshowImages}
+        autoPlayInterval={5000}
+        className=""
       />
 
       {/* Right content */}
