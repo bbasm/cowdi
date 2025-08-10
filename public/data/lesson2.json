@@ -119,7 +119,7 @@
       "contentOrder": ["littleParagraphs", "listItems", "paragraphs", "codeSnippets"],
       "littleParagraphs": ["Beberapa hal yang harus diperhatikan:"],
       "listItems": [
-        "Nama variabel gak boleh ada spasi",
+        "Nama variabel nggak boleh ada spasi (ganti spasi dengan \"_\" atau sambungin huruf kecil semua)",
         "Harus diawali huruf (bukan angka)",
         "Jangan pakai nama-nama penting kayak 'print', 'input', 'if', dll \n"
       ],
@@ -142,13 +142,8 @@
     "id": "python-hello-error-2-5",
     "starterCode": "nama lengkap = \"Didi\"\nprint(nama lengkap)",
     "mustFix": true
-  }, {
-    "id": "python-hello-error-2-4",
-    "starterCode": "2024jadwal = \"Senin, Rabu, Jumat\"\nprint(2024jadwal)",
-    "mustFix": true
   }
 ]
-
     },
         {
       "type": "text",
@@ -169,7 +164,7 @@
       "type": "fix_code",
       "subtitle": "🧪 Saatnya Coba Sendiri",
       "paragraphs": [
-        "Cobalah isi variabel nama dan umur untuk mendapat output!"
+        "Isi nama dan umurmu, lalu jalankan kodenya!"
       ],
       "codeSnippets": [
         {

@@ -26,7 +26,7 @@
       "type": "text",
       "subtitle": "🧩 Kenalan Sama Tipe Data!",
 
-      "contentOrder": ["paragraphs", "littleParagraphs", "listItems", "specialText"],
+      "contentOrder": ["paragraphs", "littleParagraphs", "listItems"],
       "paragraphs": [
         "Komputer butuh tau jenis dari isi yang kamu masukin. Di Python, ini disebut tipe data."
       ],
@@ -43,16 +43,8 @@
       "listItems": [
         "Kotak Angka (int) → angka bulat kayak 5, 100, -3",
         "Kotak Angka Koma dan Desimal (float) → kayak 3.14, 0.5, -2.7",
-        "Kotak Teks (string) → teks bulat kayak \"Halo\", \"Aku lapar\", \"100\""
-      ],
-      "specialText": [
-        "Eh… tunggu. \"100\" itu string, bukan angka?",
-        "Yup! Karena ada tanda kutip!"
-      ],
-      "specialTextMargin": {
-        "top": "mt-9",
-        "bottom": "-mb-6"
-      }
+        "Kotak Teks (string) → teks bulat kayak \"Halo\", \"Aku lapar\", \"Semangat!\""
+      ]
     },
     {
       "type": "code",

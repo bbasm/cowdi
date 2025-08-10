@@ -66,7 +66,7 @@ export function markExerciseCompleted(lessonNum, exerciseId) {
 // All mustFix exercises that need to be completed per lesson
 const MUSTFIX_EXERCISES = {
   1: ['python-hello-error-1-1'],
-  2: ['python-hello-error-2-5', 'python-hello-error-2-4', 'python-hello-error-2-6'],
+  2: ['python-hello-error-2-5', 'python-hello-error-2-6'],
   3: ['python-hello-error-3-5'],
   4: ['python-hello-error-4-7'],
   5: ['python-hello-correct-5-6'],
