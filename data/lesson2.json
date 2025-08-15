@@ -1,0 +1,193 @@
+{
+  "title": "🧠 Komputer Bisa Ingat? Yuk Kenalan Sama Variabel!",
+  "blocks": [
+    {
+      "type": "text",
+      "subtitle": "🤔 Komputer Itu Pinter, Tapi…",
+      "contentOrder": ["littleParagraphs", "paragraphs", "codeSnippets", "specialText"],
+      "littleParagraphs": [
+        "Komputer bisa hitung cepat, tunjukin gambar, dan banyak hal keren. Tapi... komputer itu pelupa banget!",
+        "Kalau kamu gak bilang sesuatu ke dia, dia gak bakal ingat.."
+      ],
+      "littleParagraphMargin": {
+        "top": "-mt-1",
+        "bottom": "-mb-1"
+      },
+      "paragraphs": [
+        "Makanya kita perlu kasih tau dia:"
+      ],
+      "paragraphMargin": {
+        "top": "pt-7",
+        "bottom": "-mb-2"
+      },
+      "specialText": [
+        "\"Eh inget ya! Namaku Didi!\"",
+        "\"Eh, tolong simpan angka 10 ya!\""
+        
+      ]
+    },
+    {
+      "type": "code",
+      "subtitle": "📦 Variabel: Tempat Penyimpanan",
+      "contentOrder": [ "paragraphs", "littleParagraphs", "codeSnippets", "listItems"],
+      "paragraphs": [
+        "Di Python, kita bisa menyimpan sesuatu ke dalam sebuah \"kotak\" yang punya nama.",
+        "Kotak ini disebut variabel."
+      ],
+      "paragraphMargin": {
+        "top": "pt-1",
+        "bottom": "-mb-1"
+      },
+      "littleParagraphs":[
+        "Contoh:"
+      ],
+      "littleParagraphPadding": {
+        "top": "pt-6",
+        "bottom": "pb-0"
+      },
+      "littleParagraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-5"
+      },
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct-2-1",
+          "starterCode": "nama = \"Didi\"\numur = 10\nprint(nama, umur)",
+          "mustFix": false
+        }
+      ],
+      "listItems": [
+        "nama itu variabel yang isinya \"Didi\"",
+        "umur itu variable yang isinya angka 10"
+        
+      ]
+    },
+    {
+      "type": "code",
+      "subtitle": "🛠️ Variabel Bisa Bantu Kita Banyak Hal",
+      "contentOrder": ["paragraphs", "codeSnippets", "paragraphsAfterCode", "listItems"],
+      "paragraphs": ["Coba contoh ini:"],
+      "paragraphPadding": {
+        "top": "pt-2",
+        "bottom": "pb-0"
+      },
+      "paragraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-4"
+      },
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct-2-2",
+          "starterCode": "a = 10\nb = 20\n\njumlah = a + b\nprint(jumlah)",
+          "mustFix": false
+        }
+      ],
+      "paragraphsAfterCode": [
+        "Kenapa ini keren? Karena:"
+      ],
+      "listItems": [
+        "Kita bisa ngasih nama ke angka-angka",
+        "Kita bisa hitung hasilnya dan simpan lagi ke kotak baru!"
+      ]
+    },
+    {
+      "type": "code",
+      "subtitle": "🔁 Kita Bisa Ganti Isinya Juga",
+      "contentOrder": ["codeSnippets", "paragraphs"],
+      "codeSnippets": [
+        {
+          "id": "python-hello-correct-2-3",
+          "starterCode": "warna = \"kuning\"\nwarna = \"merah\"\nprint(warna)",
+          "mustFix": false
+        }
+      ],
+      "paragraphs": [
+        "Karena komputer simpan yang terakhir, dia gak inget yang sebelumnya."
+      ],
+      "paragraphPadding": {
+        "top": "pt-1",
+        "bottom": "pb-0"
+      },
+      "paragraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-4"
+      }
+    },
+    {
+      "type": "fix_code",
+      "subtitle": "⚠️ Hati-Hati!",
+      "contentOrder": ["littleParagraphs", "listItems", "paragraphs", "codeSnippets"],
+      "littleParagraphs": ["Beberapa hal yang harus diperhatikan:"],
+      "listItems": [
+        "Nama variabel nggak boleh ada spasi (ganti spasi dengan \"_\" atau sambungin huruf kecil semua)",
+        "Harus diawali huruf (bukan angka)",
+        "Jangan pakai nama-nama penting kayak 'print', 'input', 'if', dll \n"
+      ],
+      "paragraphs": [
+        "Cobalah ubah agar tidak error dan bisa berjalan!"
+      ],
+      "paragraphPadding": {
+        "top": "pt-0",
+        "bottom": "pb-6"
+      },
+      "paragraphMargin": {
+        "top": "-mt-0",
+        "bottom": "-mb-5"
+      },
+      "image": "warning.png",
+      "imagePosition": "right",
+      "imageSize": "w-[300px]",
+      "codeSnippets": [
+  {
+    "id": "python-hello-error-2-5",
+    "starterCode": "nama lengkap = \"Didi\"\nprint(nama lengkap)",
+    "mustFix": true
+  }
+]
+    },
+        {
+      "type": "text",
+      "subtitle": "💡 Kenapa Ini Penting?",
+      "littleParagraphMargin": {
+        "bottom": "-mb-3"
+      },
+      "littleParagraphs": [
+        "Karena dengan menyimpan data:"
+      ],
+      "listItems": [
+        "Kamu bisa bikin program yang lebih panjang",
+        "Kamu bisa ubah isi tanpa nulis ulang semuanya",
+        "Kamu bikin komputer \ningat\n sesuatu"
+      ]
+    },
+    {
+      "type": "fix_code",
+      "subtitle": "🧪 Saatnya Coba Sendiri",
+      "paragraphs": [
+        "Isi nama dan umurmu, lalu jalankan kodenya!"
+      ],
+      "codeSnippets": [
+        {
+          "id": "python-hello-error-2-6",
+          "starterCode": "nama = \numur = \n\nprint(\"Namaku\", nama)\nprint(\"Aku berumur\", umur, \"tahun\")",
+          "mustFix": true
+        }
+      ]
+    },
+       {
+      "type": "image",
+      "subtitle": "🎉 Sip! Kamu Hebat!",
+      "image": "juara_mengingat.jpg",
+      "imagePosition": "right",
+      "imageSize": "w-100",
+      "contentOrder": ["image", "paragraphs", "listItems", "paragraphsAfterCode"],
+      "paragraphs": ["Sekarang kamu sudah tahu:"],
+      "listItems": [
+        "Gimana komputer bisa ingat sesuatu",
+        "Gimana cara nyimpen teks dan angka",
+        "Gimana ngitung dan ganti isinya"
+      ],
+      "paragraphsAfterCode": ["💡 Pelajaran ini bakal berguna banget di petualangan coding selanjutnya!"]
+    }
+  ]
+}

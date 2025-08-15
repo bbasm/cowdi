@@ -1,0 +1,201 @@
+{
+  "title": "Belok Sana, Belok Sini! Yuk Belajar Derajat!",
+  "blocks": [
+    {
+        "type": "text",
+        "subtitle": "🎯 Misi Baru Kura-Kura!",
+        "paragraphs": [
+            "Didi dan Kura-kura punya misi seru hari ini: menggambar bentuk-bentuk yang lebih keren dan rapi. Tapi… ada satu hal penting dulu yang harus mereka kuasai.",
+            "Belok! 😮",
+            "Tapi bukan belok sembarangan ya, beloknya pakai angka derajat! Derajat? Apaan tuh?"
+        ]
+    },
+    {
+      "type": "image",
+      "contentOrder": ["paragraphs", "littleParagraphs", "paragraphsAfterCode", "listItems"],
+      "subtitle": "🎡 Derajat Itu Kayak Setir Mobil",
+      "paragraphs": [
+        "Bayangin kura-kura kamu lagi nyetir mobil mainan.",
+        "Kalau mau belok dikit, setirnya diputer sedikit. Kalau mau belok banyak, setirnya diputer lebar banget."
+    ],
+    "littleParagraphMargin": {
+        "top": "pt-3"
+    },
+    "littleParagraphs": [
+        "Nah, derajat itu cara kita nunjukin seberapa jauh kura-kura belok."
+    ],
+    "paragraphsAfterCode": [
+      "Dan serunya, kura-kura bisa belok berapa pun derajatnya, dari 1°, 10°, 57°, sampai 360° semuanya bisa! Tinggal kita yang tentuin angkanya.",
+        "Contohnya:"
+    ],
+    "listItems": [
+        "90° ➜ Belok seperempat putaran, kayak belok di persimpangan jalan",
+        "180° ➜ Setengah putaran, alias muter balik.",
+        "270° ➜ Tiga perempat putaran, jadi kayak muter tapi nggak sampai penuh.",
+        "360° ➜ Putaran penuh, balik lagi ke arah semula."
+    ]
+    },
+    {
+        "type": "text",
+        "subtitle": "📏 Gimana Tau Harus Belok Berapa?",
+        "contentOrder": ["paragraphs", "specialText", "paragraphsAfterCode"],
+        "paragraphs": [
+            "Kalau kamu mau gambar bentuk dengan sisi yang sama, kamu tinggal pake rumus simpel:"
+        ],
+        "specialText": [
+            "Derajat belok = 360 ÷ jumlah sisi"
+        ],
+        "paragraphsAfterCode": [
+            "Kenapa 360? Karena 1 putaran penuh = 360°, dan kamu harus muter supaya balik ke titik awal!"
+        ]
+    },
+    {
+      "type": "code",
+      "contentOrder": ["paragraphs", "littleParagraphs", "specialText", "paragraphsAfterCode", "codeSnippets"],
+      "subtitle": "🔺 Segitiga, Si Tiga Sisi!",
+      "paragraphs": [
+        "Kita mulai dari bentuk paling simpel: segitiga.",
+        "Segitiga itu punya 3 sisi, dan kita pengin kura-kura jalan sampai kembali ke titik awal."
+    ],
+    "littleParagraphPadding": {
+        "top": "pt-2",
+        "bottom": "pb-6"
+    },
+    "littleParagraphs": [
+        "Nah, belokannya kita hitung dari 360° dibagi jumlah sisi:"
+    ],
+    "specialText": [
+        "360 ÷ 3 = 120°"
+    ],
+    "paragraphsAfterCode": [
+        "Artinya, setiap kali kura-kura jalan lurus, dia harus belok 120° supaya bisa membentuk segitiga!"
+    ],
+    "littleParagraphMargin": {
+        "bottom": "-mb-3"
+    },
+        "codeSnippets": [
+        {
+          "id": "python-correct-6-1",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n\nfor i in range(3):\n  kura.forward(100)\n  kura.left(120)",
+          "mustFix": false
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "contentOrder": ["paragraphs", "specialText", "littleParagraphs", "codeSnippets"],
+      "subtitle": "◼️ Persegi, Si Kotak Klasik",
+      "paragraphs": [
+        "Kalau segitiga punya 3 sisi, persegi punya 4 sisi. Yuk, kita hitung derajat beloknya:"
+    ],
+    "specialText": [
+        "360 ÷ 4 = 90°"
+    ],
+    "littleParagraphs": [
+        "Jadi setiap kali jalan lurus, belok 90° ke kiri."
+    ],
+    "littleParagraphMargin": {
+        "bottom": "-mb-3"
+    },
+        "codeSnippets": [
+        {
+          "id": "python-correct-6-2",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n\nfor i in range(4):\n  kura.forward(100)\n  kura.left(90)",
+          "mustFix": false
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "contentOrder": ["paragraphs", "specialText", "littleParagraphs", "codeSnippets"],
+      "subtitle": "🔶 Segi Enam, Si Banyak Sisi",
+      "paragraphs": [
+        "Namanya juga segi enam, tentu aja dia punya 6 sisi.",
+        "Kita hitung derajat beloknya:"
+    ],
+    "specialText": [
+        "360 ÷ 6 = 60°"
+    ],
+    "littleParagraphs": [
+        "Ayo coba bikin bentuknya!"
+    ],
+    "littleParagraphMargin": {
+        "bottom": "-mb-3"
+    },
+        "codeSnippets": [
+        {
+          "id": "python-correct-6-3",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n\nfor i in range(6):\n  kura.forward(50)\n  kura.left(60)",
+          "mustFix": false
+        }
+      ]
+    },
+    
+        {
+      "type": "code",
+      "contentOrder": ["paragraphs", "codeSnippets"],
+      "subtitle": "🏎️ Misi Lintasan Balap Segi Delapan",
+      "paragraphs": [
+        "Kali ini kura-kura mau bikin lintasan balap berbentuk segi delapan.",
+        "Kalau segi empat punya 4 sisi, segi delapan tentu punya 8 sisi. Nah, karena kita udah jago, tinggal hitung aja dan coding!"
+    ],
+        "codeSnippets": [
+        {
+          "id": "python-correct-6-4",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
+          "mustFix": true
+        }
+      ]
+    },
+        {
+      "type": "code",
+      "subtitle": "🗺️ Misi Rahasia: Rumah Didi",
+      "contentOrder": ["paragraphsAfterCode", "littleParagraphs", "listItems", "specialText", "codeSnippets"],
+      "optionalMessage": "Bagian ini tidak wajib buat lanjut ke bab berikutnya, tapi kalau kamu mau tantangan ekstra, coba kerjakan ya! Siapa tahu rumah Didi jadi rumah keren 🏠💪",
+      "paragraphsAfterCode": [
+        "Hari ini, Didi mau punya rumah impian. Badannya kokoh, atapnya runcing, dan semuanya serba pas. Panjang setiap sisinya 80 langkah kura-kura, nggak kurang, nggak lebih!"
+      ],
+      "littleParagraphs": [
+        "Petunjuk dari didi:"
+      ],
+      "listItems": [
+        "Sebelum bikin kotak, belok dulu ke kanan atau kiri, baru melangkah maju",
+        "Gambar dulu bagian bawah rumah sampai rapi",
+        "Dari sudut kiri atas rumah, langsung bikin atapnya tanpa putus garis",
+        "Atapnya harus nyambung dan runcing di tengah"
+      ],
+      "specialText": [
+       "💡 Kotaknya bisa pakai for loop biar cepat, tapi segitiganya nggak bisa, soalnya sebelum gambar atap, kura-kura harus belok 30° dulu.",
+       "⚠️ Ingat! Indentasi (spasi di awal baris) itu penting di Python. Semua perintah di dalam loop for harus menjorok 2 spasi. Kalau masih menjorok, Python kira itu masih bagian dari loop."
+       ],
+      "codeSnippets": [
+        {
+          "id": "python-correct-6-5",
+          "starterCode": "from turtle import *\n\nkura = turtle.Turtle()\n",
+          "mustFix": false
+        }
+      ]
+    },
+    {
+  "type": "text",
+  "contentOrder": ["paragraphs", "listItems", "paragraphsAfterCode"],
+  "subtitle": "🎉 Misi Belok Selesai!",
+  "paragraphs": [
+    "Mantap! Sekarang kamu udah jago bikin kura-kura belok ke segala arah pakai derajat! 💪🐢",
+    "Kamu juga udah tahu rahasianya: cukup bagi 360 dengan jumlah sisi, dan bentuknya langsung jadi rapi."
+  ],
+  "listItems": [
+    "360° = 1 putaran penuh",
+    "Derajat belok = 360 ÷ jumlah sisi",
+    "Bisa dipakai buat semua bentuk, dari kotak sampai segi seribu!",
+    "Bisa campur sama warna, ukuran, dan pola sendiri"
+  ],
+  "paragraphsAfterCode": [
+    "Di bab selanjutnya, kita bakal naik level: bikin bentuk-bentuk unik dan keren kayak bintang ⭐ , roda balap 🛞 , bahkan pola sihir rahasia 🪄 ",
+    "Siap-siap, kura-kura kamu bakal jadi seniman sejati!"
+  ]
+}
+
+
+  ]
+}
