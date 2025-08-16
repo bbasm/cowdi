@@ -8,7 +8,8 @@
       "Bash(grep:*)",
       "Bash(find:*)",
       "Bash(mkdir:*)",
-      "Bash(npm run preview:*)"
+      "Bash(npm run preview:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }
