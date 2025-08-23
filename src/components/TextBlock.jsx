@@ -10,7 +10,7 @@ const TextBlock = ({ subtitle, paragraphs, listItems }) => {
       {listItems && (
         <ul className="list-disc pl-5 space-y-1">
           {listItems.map((item, i) => (
-            <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+            <li key={i}>{item}</li>
           ))}
         </ul>
       )}

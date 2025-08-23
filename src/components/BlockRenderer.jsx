@@ -96,8 +96,9 @@ const BlockRenderer = ({ block, lessonNum }) => {
                   <li
                     key={`li-${i}`}
                     className={paddingClass}
-                    dangerouslySetInnerHTML={{ __html: content }}
-                  />
+                  >
+                    {content}
+                  </li>
                 );
               })}
             </ul>

@@ -1,16 +1,25 @@
 // Utility functions for tracking lesson progress
 
 export function getLessonProgress(lessonNum) {
-  const progress = localStorage.getItem(`lesson-${lessonNum}-progress`);
-  return progress ? JSON.parse(progress) : { completed: false };
+  try {
+    const progress = localStorage.getItem(`lesson-${lessonNum}-progress`);
+    return progress ? JSON.parse(progress) : { completed: false };
+  } catch (error) {
+    console.warn('localStorage not available (private mode?), using memory storage');
+    return { completed: false };
+  }
 }
 
 export function setLessonProgress(lessonNum, data) {
-  localStorage.setItem(`lesson-${lessonNum}-progress`, JSON.stringify(data));
-  // Dispatch custom event to notify components of progress change
-  window.dispatchEvent(new CustomEvent('lessonProgressUpdated', { 
-    detail: { lessonNum, data } 
-  }));
+  try {
+    localStorage.setItem(`lesson-${lessonNum}-progress`, JSON.stringify(data));
+    // Dispatch custom event to notify components of progress change
+    window.dispatchEvent(new CustomEvent('lessonProgressUpdated', { 
+      detail: { lessonNum, data } 
+    }));
+  } catch (error) {
+    console.warn('localStorage not available (private mode?), progress not saved');
+  }
 }
 
 export function isLessonCompleted(lessonNum) {
