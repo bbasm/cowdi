@@ -11,7 +11,7 @@ import {
   loadTurtleInstance,
 } from "../utils/turtleRunner";
 import AnimatedTurtleCanvas from "./AnimatedTurtleCanvas";
-import { setLesson5ValidationStatus, markExerciseCompleted, markMustFixCompleted } from "../utils/lessonProgress";
+import { setLesson5ValidationStatus, markExerciseCompleted, markMustFixCompleted, getLessonProgress, setLessonProgress } from "../utils/lessonProgress";
 import { createValidationResult } from "../utils/requirementChecker";
 
 // Global loading queue to manage progressive loading
@@ -67,19 +67,19 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
       
       if (mustFix && lessonNum) {
         // Check if this mustFix exercise was already completed
-        const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
+        const progress = getLessonProgress(lessonNum);
         const result = progress.mustFixCompleted?.[id] === true || progress[id] === true;
         console.log(`[${id}] mustFix check: result = ${result}`);
         return result;
       }
       if (isLesson5ValidationExercise && lessonNum) {
-        const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
+        const progress = getLessonProgress(lessonNum);
         const result = progress.validationCompleted === true;
         console.log(`[${id}] lesson5 validation check: result = ${result}`);
         return result;
       }
       if (hasRequirements && lessonNum) {
-        const progress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
+        const progress = getLessonProgress(lessonNum);
         const isCompleted = progress[id] === true;
         console.log(`[${id}] hasRequirements check: progress[${id}] = ${progress[id]}, isCompleted = ${isCompleted}`, progress);
         return isCompleted;
@@ -107,11 +107,16 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
   const lastRunTimeRef = useRef(0);
 
   useEffect(() => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
-      setCode(saved);
-      setHasUserEdited(true);
-    } else {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        setCode(saved);
+        setHasUserEdited(true);
+      } else {
+        setCode(starterCode.endsWith("\n") ? starterCode : starterCode + "\n");
+      }
+    } catch (error) {
+      console.warn('localStorage not available, using default code');
       setCode(starterCode.endsWith("\n") ? starterCode : starterCode + "\n");
     }
   }, [storageKey, starterCode]);
@@ -196,7 +201,11 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
           return;
         }
         
-        localStorage.setItem(storageKey, code);
+        try {
+          localStorage.setItem(storageKey, code);
+        } catch (e) {
+          console.warn('Failed to save code to localStorage');
+        }
 
         if (result.error) {
           setOutput(result.error);
@@ -290,7 +299,11 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
           return;
         }
         
-        localStorage.setItem(storageKey, code);
+        try {
+          localStorage.setItem(storageKey, code);
+        } catch (e) {
+          console.warn('Failed to save code to localStorage');
+        }
 
         if (error) {
           setOutput(error);
@@ -380,27 +393,26 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
     setCanvasData(null);
     setAnimationData(null);
     setValidationResult(null);
-    localStorage.removeItem(storageKey);
+    try {
+      localStorage.removeItem(storageKey);
+    } catch (e) {
+      console.warn('Failed to remove code from localStorage');
+    }
     
     // Also reset completion status when resetting
     if ((mustFix || hasRequirements) && lessonNum) {
       try {
-        const currentProgress = JSON.parse(localStorage.getItem(`lesson-${lessonNum}-progress`) || '{}');
+        const currentProgress = getLessonProgress(lessonNum);
         if (currentProgress.mustFixCompleted?.[id] || currentProgress[id]) {
           const { mustFixCompleted, ...otherProgress } = currentProgress;
           const newMustFixCompleted = mustFixCompleted ? { ...mustFixCompleted } : {};
           delete newMustFixCompleted[id];
           delete otherProgress[id];
           
-          localStorage.setItem(`lesson-${lessonNum}-progress`, JSON.stringify({
+          setLessonProgress(lessonNum, {
             ...otherProgress,
             mustFixCompleted: newMustFixCompleted
-          }));
-          
-          // Dispatch event to update progress
-          window.dispatchEvent(new CustomEvent('lessonProgressUpdated', { 
-            detail: { lessonNum, data: { ...otherProgress, mustFixCompleted: newMustFixCompleted } } 
-          }));
+          });
         }
       } catch (error) {
         console.error('Error resetting mustFix completion:', error);
