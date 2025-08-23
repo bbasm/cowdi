@@ -1,5 +1,6 @@
 let pyodide = null;
 let isReady = false;
+let loadingPromise = null;
 
 export function isPyodideReady() {
   return isReady;
@@ -7,19 +8,42 @@ export function isPyodideReady() {
 
 export async function loadPyodideInstance() {
   if (pyodide) return pyodide;
+  if (loadingPromise) return loadingPromise;
 
-  pyodide = await window.loadPyodide({
-    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/",
-  });
+  loadingPromise = (async () => {
+    try {
+      // First ensure the Pyodide script is loaded
+      if (typeof window.loadPyodideScript === 'function') {
+        await window.loadPyodideScript();
+      }
+      
+      // Wait a bit for the script to fully initialize
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      if (typeof window.loadPyodide !== 'function') {
+        throw new Error('Pyodide failed to load');
+      }
 
-  await pyodide.runPythonAsync(`
-    import sys
-    from io import StringIO
-    sys.stdout = sys.stderr = StringIO()
-  `);
+      pyodide = await window.loadPyodide({
+        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/",
+      });
 
-  isReady = true;
-  return pyodide;
+      await pyodide.runPythonAsync(`
+        import sys
+        from io import StringIO
+        sys.stdout = sys.stderr = StringIO()
+      `);
+
+      isReady = true;
+      return pyodide;
+    } catch (error) {
+      console.error('Failed to load Pyodide:', error);
+      loadingPromise = null;
+      throw error;
+    }
+  })();
+
+  return loadingPromise;
 }
 
 function getFriendlyError(message) {
@@ -54,9 +78,9 @@ function getFriendlyError(message) {
 }
 
 export async function runPython(code) {
-  const pyodide = await loadPyodideInstance();
-
   try {
+    const pyodide = await loadPyodideInstance();
+
     await pyodide.runPythonAsync(`
       import sys
       from io import StringIO
@@ -71,11 +95,26 @@ export async function runPython(code) {
 
     return { output: output.trim() }; // Trim to remove trailing \n
   } catch (error) {
-    // Get error output from sys.stderr
-    const errOutput = await pyodide.runPythonAsync("sys.stdout.getvalue()");
-    return {
-      error: getFriendlyError(errOutput.trim() || error.message),
-      raw: errOutput.trim() || error.message,
-    };
+    if (error.message.includes('Pyodide failed to load')) {
+      return {
+        error: "❌ Koneksi internet lambat atau bermasalah. Coba refresh halaman ini dan tunggu sebentar.",
+        raw: error.message,
+      };
+    }
+
+    try {
+      // Get error output from sys.stderr if pyodide is available
+      const pyodide = await loadPyodideInstance();
+      const errOutput = await pyodide.runPythonAsync("sys.stdout.getvalue()");
+      return {
+        error: getFriendlyError(errOutput.trim() || error.message),
+        raw: errOutput.trim() || error.message,
+      };
+    } catch (secondError) {
+      return {
+        error: getFriendlyError(error.message),
+        raw: error.message,
+      };
+    }
   }
 }

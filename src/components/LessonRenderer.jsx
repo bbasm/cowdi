@@ -85,7 +85,14 @@ const LessonRenderer = ({ lessonNum }) => {
     return (
       <p className="text-red-500 text-center">Gagal memuat pelajaran 😢</p>
     );
-  if (!lesson) return <p className="text-center">Loading...</p>;
+  if (!lesson) return (
+    <div className="min-h-screen bg-[#FCF4EB] flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F98D08] mx-auto mb-4"></div>
+        <p className="text-[#F98D08] font-semibold">Memuat pelajaran...</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-[#FCF4EB] px-4 sm:px-8 md:px-16 lg:px-[100px] xl:px-[120px]">
