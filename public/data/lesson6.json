@@ -11,29 +11,29 @@
         ]
     },
     {
-      "type": "image",
-      "contentOrder": ["paragraphs", "littleParagraphs", "paragraphsAfterCode", "listItems"],
-      "subtitle": "🎡 Derajat Itu Kayak Setir Mobil",
-      "paragraphs": [
-        "Bayangin kura-kura kamu lagi nyetir mobil mainan.",
-        "Kalau mau belok dikit, setirnya diputer sedikit. Kalau mau belok banyak, setirnya diputer lebar banget."
-    ],
-    "littleParagraphMargin": {
-        "top": "pt-3"
-    },
-    "littleParagraphs": [
-        "Nah, derajat itu cara kita nunjukin seberapa jauh kura-kura belok."
-    ],
-    "paragraphsAfterCode": [
-      "Dan serunya, kura-kura bisa belok berapa pun derajatnya, dari 1°, 10°, 57°, sampai 360° semuanya bisa! Tinggal kita yang tentuin angkanya.",
-        "Contohnya:"
-    ],
-    "listItems": [
-        "90° ➜ Belok seperempat putaran, kayak belok di persimpangan jalan",
-        "180° ➜ Setengah putaran, alias muter balik.",
-        "270° ➜ Tiga perempat putaran, jadi kayak muter tapi nggak sampai penuh.",
-        "360° ➜ Putaran penuh, balik lagi ke arah semula."
-    ]
+        "type": "text",
+        "contentOrder": ["paragraphs", "littleParagraphs", "paragraphsAfterCode", "listItems"],
+        "subtitle": "🎡 Derajat Itu Kayak Setir Mobil",
+        "paragraphs": [
+            "Bayangin kura-kura kamu lagi nyetir mobil mainan.",
+            "Kalau mau belok dikit, setirnya diputer sedikit. Kalau mau belok banyak, setirnya diputer lebar banget."
+        ],
+        "littleParagraphMargin": {
+            "top": "pt-3"
+        },
+        "littleParagraphs": [
+            "Nah, derajat itu cara kita nunjukin seberapa jauh kura-kura belok."
+        ],
+        "paragraphsAfterCode": [
+            "Dan serunya, kura-kura bisa belok berapa pun derajatnya, dari 1°, 10°, 57°, sampai 360° semuanya bisa! Tinggal kita yang tentuin angkanya.",
+            "Contohnya:"
+        ],
+        "listItems": [
+            "90° ➜ Belok seperempat putaran, kayak belok di persimpangan jalan",
+            "180° ➜ Setengah putaran, alias muter balik.",
+            "270° ➜ Tiga perempat putaran, jadi kayak muter tapi nggak sampai penuh.",
+            "360° ➜ Putaran penuh, balik lagi ke arah semula."
+        ]
     },
     {
         "type": "text",

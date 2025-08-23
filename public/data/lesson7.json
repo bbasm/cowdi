@@ -141,8 +141,8 @@
 },
     {
   "type": "text",
-  "subtitle": "💪😎 Kamu Luar Biasa!",
-  "contentOrder": ["littleParagraphs", "paragraphs", "specialText"],
+  "subtitle": "🎉 Selamat! Kamu Sudah Jadi Programmer Sejati!",
+  "contentOrder": ["littleParagraphs", "paragraphs", "specialText", "paragraphsAfterCode"],
   "littleParagraphs": [
     "Wih, kamu udah sejauh ini! 🚀",
     "Dari cuma nyuruh kura-kura jalan lurus, sekarang kamu udah bikin bintang, roda, dan pola warna-warni kayak seniman digital."
@@ -151,11 +151,22 @@
     "top": "-mt-1"
   },
   "paragraphs": [
-    "Ingat, setiap bentuk keren dimulai dari satu ide kecil. 💡"
+    "Ingat, setiap bentuk keren dimulai dari satu ide kecil. 💡",
+    "Kamu sekarang sudah menguasai semua dasar-dasar programming dengan Python dan PyTurtle!"
   ],
   "specialText": [
+    "🎓 Apa yang sudah kamu pelajari:",
+    "✅ Variabel dan tipe data",
+    "✅ Loop dan function",
+    "✅ Menggambar dengan PyTurtle",
+    "✅ Sudut dan geometri",
+    "✅ Pola warna dan bentuk kompleks"
+  ],
+  "paragraphsAfterCode": [
     "Teruslah bereksperimen, gabungkan trik yang sudah kamu pelajari, dan jangan takut mencoba hal baru.",
-    "Pokoknya jangan takut gagal, karena tiap eksperimen itu langkah menuju karya masterpiece-mu! 🎨🔥"
+    "Pokoknya jangan takut gagal, karena tiap eksperimen itu langkah menuju karya masterpiece-mu! 🎨🔥",
+    "",
+    "🌟 Selamat! Kamu sudah menyelesaikan perjalanan belajar coding bersama CowDi dan si kura-kura ajaib! Kamu sekarang siap untuk menjelajahi dunia programming yang lebih luas! 🐢✨"
   ]
 }
 

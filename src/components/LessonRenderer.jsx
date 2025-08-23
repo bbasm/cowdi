@@ -18,7 +18,16 @@ const LessonRenderer = ({ lessonNum }) => {
     return isLessonRequirementsCompleted(lessonNum);
   };
   
+  // Check if this is the final lesson
+  const isFinalLesson = lessonNum === 7;
+  
   const handleNextLesson = () => {
+    if (isFinalLesson) {
+      // Show completion message for final lesson
+      alert(`🎉 Selamat! Kamu telah menyelesaikan semua pelajaran CowDi!\n\nKamu sudah menjadi programmer PyTurtle yang handal! Teruslah bereksperimen dan berkreasi dengan kode-mu! 🐢✨`);
+      return;
+    }
+    
     if (canProceed) {
       navigate(nextLesson);
     } else {
@@ -119,17 +128,19 @@ const LessonRenderer = ({ lessonNum }) => {
           onClick={handleNextLesson}
           className={`flex items-center justify-center gap-2 sm:gap-3 font-bold rounded-lg shadow-md px-4 sm:px-6 py-2 sm:py-3 text-base sm:text-lg w-full sm:w-auto ${
             canProceed 
-              ? 'bg-[#91CADB] text-white hover:bg-[#7FB8CD]' 
+              ? (isFinalLesson ? 'bg-[#F98D08] text-white hover:bg-[#E8790A]' : 'bg-[#91CADB] text-white hover:bg-[#7FB8CD]')
               : 'bg-gray-400 text-gray-200 cursor-not-allowed'
           }`}
           disabled={!canProceed}
         >
           <span>
-            {canProceed 
-              ? `Lanjut Modul ke-${lessonNum + 1}` 
-              : `Selesaikan tugas dulu`}
+            {!canProceed 
+              ? `Selesaikan tugas dulu`
+              : isFinalLesson 
+                ? `🎉 Selesai!`
+                : `Lanjut Modul ke-${lessonNum + 1}`}
           </span>
-          {canProceed && (
+          {canProceed && !isFinalLesson && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -143,6 +154,23 @@ const LessonRenderer = ({ lessonNum }) => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 d="M9 5l7 7-7 7"
+              />
+            </svg>
+          )}
+          {canProceed && isFinalLesson && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="white"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
           )}

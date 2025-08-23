@@ -9,7 +9,9 @@
       "Bash(find:*)",
       "Bash(mkdir:*)",
       "Bash(npm run preview:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }
