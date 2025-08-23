@@ -1,5 +1,6 @@
 let pyodide = null;
 let isReady = false;
+let loadingPromise = null;
 
 export function isTurtleReady() {
   return isReady;
@@ -7,10 +8,25 @@ export function isTurtleReady() {
 
 export async function loadTurtleInstance() {
   if (pyodide) return pyodide;
+  if (loadingPromise) return loadingPromise;
 
-  pyodide = await window.loadPyodide({
-    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/",
-  });
+  loadingPromise = (async () => {
+    try {
+      // First ensure the Pyodide script is loaded
+      if (typeof window.loadPyodideScript === 'function') {
+        await window.loadPyodideScript();
+      }
+      
+      // Wait a bit for the script to fully initialize
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      if (typeof window.loadPyodide !== 'function') {
+        throw new Error('Pyodide failed to load');
+      }
+
+      pyodide = await window.loadPyodide({
+        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/",
+      });
 
   // Install turtle support
   await pyodide.runPythonAsync(`
@@ -298,8 +314,16 @@ export async function loadTurtleInstance() {
     sys.stdout = sys.stderr = StringIO()
   `);
 
-  isReady = true;
-  return pyodide;
+      isReady = true;
+      return pyodide;
+    } catch (error) {
+      console.error('Failed to load Pyodide for turtle:', error);
+      loadingPromise = null;
+      throw error;
+    }
+  })();
+
+  return loadingPromise;
 }
 
 function getFriendlyError(message) {
@@ -347,9 +371,8 @@ function getFriendlyError(message) {
 }
 
 export async function runTurtle(code) {
-  const pyodide = await loadTurtleInstance();
-
   try {
+    const pyodide = await loadTurtleInstance();
     await pyodide.runPythonAsync(`
       import sys
       from io import StringIO
@@ -388,10 +411,26 @@ export async function runTurtle(code) {
       canvasData: canvasData
     };
   } catch (error) {
-    const errOutput = await pyodide.runPythonAsync("sys.stdout.getvalue()");
-    return {
-      error: getFriendlyError(errOutput.trim() || error.message),
-      raw: errOutput.trim() || error.message,
-    };
+    if (error.message.includes('Pyodide failed to load')) {
+      return {
+        error: "❌ Koneksi internet lambat atau bermasalah. Coba refresh halaman ini dan tunggu sebentar.",
+        raw: error.message,
+      };
+    }
+
+    try {
+      // Get error output from sys.stderr if pyodide is available
+      const pyodide = await loadTurtleInstance();
+      const errOutput = await pyodide.runPythonAsync("sys.stdout.getvalue()");
+      return {
+        error: getFriendlyError(errOutput.trim() || error.message),
+        raw: errOutput.trim() || error.message,
+      };
+    } catch (secondError) {
+      return {
+        error: getFriendlyError(error.message),
+        raw: error.message,
+      };
+    }
   }
 }
