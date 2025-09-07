@@ -29,8 +29,6 @@ const LessonRenderer = ({ lessonNum }) => {
     }
     
     if (canProceed) {
-      // Scroll to top immediately before navigation
-      window.scrollTo({ top: 0, behavior: 'instant' });
       navigate(nextLesson);
     } else {
       // Show warning with specific incomplete exercises
@@ -44,7 +42,8 @@ const LessonRenderer = ({ lessonNum }) => {
   };
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    // Ensure user starts at top of page
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     fetch(`/data/lesson${lessonNum}.json`)
       .then((res) => {
@@ -54,6 +53,14 @@ const LessonRenderer = ({ lessonNum }) => {
       .then((data) => {
         setLesson(data);
         setError(false);
+        
+        // After lesson loads, create smooth bottom-to-top animation
+        setTimeout(() => {
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 100);
+        }, 50);
       })
       .catch((err) => {
         console.error(err);
@@ -109,10 +116,7 @@ const LessonRenderer = ({ lessonNum }) => {
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-10">
         {lessonNum > 1 ? (
           <button
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'instant' });
-              navigate(prevLesson);
-            }}
+            onClick={() => navigate(prevLesson)}
             className="flex items-center justify-center gap-2 sm:gap-3 bg-[#91CADB] text-white font-bold rounded-lg shadow-md px-4 sm:px-6 py-2 sm:py-3 text-base sm:text-lg w-full sm:w-auto"
           >
             <svg

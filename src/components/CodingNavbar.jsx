@@ -67,8 +67,8 @@ const CodingNavbar = () => {
   // Handle chapter navigation
   const handleChapterClick = (chapterNum) => {
     if (canAccessLesson(chapterNum)) {
-      navigate(`/mulaicoding/${chapterNum}`);
       setIsSidebarOpen(false);
+      navigate(`/mulaicoding/${chapterNum}`);
     } else {
       // Find which lesson is blocking access
       const blockingLesson = chapterNum - 1;
