@@ -4,7 +4,7 @@
     {
       "type": "image",
       "subtitle": "👋 Halo, teman-teman!",
-      "image": "duck.png",
+      "image": "duck_vid.mp4",
       "imagePosition": "right",
       "imageSize": "w-65",
       "paragraphs": [

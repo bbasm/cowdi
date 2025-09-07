@@ -32,14 +32,13 @@ const BlockRenderer = ({ block, lessonNum }) => {
 
   // 👇 Smart responsive image size
   const getImageSize = (img) => {
-    const isSpecial = img === "duck.png" || img === "warning.png";
+    const isSpecial = img === "duck_vid.mp4" || img === "warning.png";
 
     return isSpecial
       ? "w-[180px] sm:w-[240px] md:w-[280px] lg:w-[320px] xl:w-[280px] 2xl:w-[280px]"
       : "w-[180px] sm:w-[240px] md:w-[280px] lg:w-[360px] xl:w-[420px]";
   };
 
-  // 👇 Handle each block content type
   const renderContent = (type) => {
     switch (type) {
       case "paragraphs":
@@ -151,12 +150,10 @@ const BlockRenderer = ({ block, lessonNum }) => {
 
   return (
     <div className="mb-16 px-4">
-      {/* Subtitle */}
       {subtitle && (
         <h2 className="text-2xl font-bold mb-4 text-[#3D83AC]">{subtitle}</h2>
       )}
 
-      {/* IMAGE + TEXT SIDE BY SIDE */}
       {image && (
         <div
           className={`flex flex-col md:flex-row ${
@@ -177,14 +174,12 @@ const BlockRenderer = ({ block, lessonNum }) => {
         </div>
       )}
 
-      {/* TEXT ONLY (NO IMAGE) */}
       {!image && beforeCode.length > 0 && (
         <div className="text-[#66BAEF] md:text-lg mb-6 space-y-4">
           {beforeCode.map((type) => renderContent(type))}
         </div>
       )}
 
-      {/* FULL WIDTH CONTENT (e.g. Code IDEs, Extra Text) */}
       {afterCode.length > 0 && (
         <div className="text-[#66BAEF] md:text-lg space-y-4">
           {afterCode.map((type) => renderContent(type))}

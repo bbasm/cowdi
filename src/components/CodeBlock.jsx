@@ -487,13 +487,13 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
       </div>
 
       {/* Editor */}
-      <div className="flex border rounded-b-lg overflow-hidden text-[16px] leading-[1.8] bg-white text-black">
-        <pre className="bg-white text-gray-400 px-4 py-3 text-right select-none font-source whitespace-pre">
+      <div className="flex border rounded-b-lg overflow-hidden text-sm sm:text-[16px] leading-[1.6] sm:leading-[1.8] bg-white text-black">
+        <pre className="bg-white text-gray-400 px-2 sm:px-4 py-3 text-right select-none font-source whitespace-pre">
           {getLineNumbers()}
         </pre>
         <textarea
           ref={textareaRef}
-          className="flex-1 p-3 font-source resize-none outline-none bg-white text-black"
+          className="flex-1 p-2 sm:p-3 font-source resize-none outline-none bg-white text-black"
           value={code}
           onChange={(e) => {
             setCode(e.target.value);
@@ -572,13 +572,13 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
       </div>
 
       {output && (
-        <div className="bg-white mt-4 p-3 rounded-md border border-gray-300 text-[16px] leading-6 text-black">
+        <div className="bg-white mt-4 p-2 sm:p-3 rounded-md border border-gray-300 leading-5 sm:leading-6 text-black">
           <pre
-            className={
+            className={`${
               output.startsWith("⏳")
                 ? "font-[Poppins] italic text-gray-600"
                 : "font-source"
-            }
+            } whitespace-pre-wrap break-words max-w-full overflow-x-auto text-xs sm:text-sm lg:text-base leading-tight sm:leading-relaxed`}
           >
             {output}
           </pre>
@@ -613,8 +613,8 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
       {(isLesson5ValidationExercise || hasRequirements) && validationResult && (
         <div className={`mt-4 p-3 rounded-md border ${validationResult.valid ? 'bg-green-50 border-green-300' : 'bg-yellow-50 border-yellow-300'}`}>
           <div className="flex items-center mb-2">
-            <span className="text-lg mr-2">{validationResult.valid ? '✅' : '📋'}</span>
-            <span className={`font-medium ${validationResult.valid ? 'text-green-800' : 'text-yellow-800'}`}>
+            <span className="text-base sm:text-lg mr-2">{validationResult.valid ? '✅' : '📋'}</span>
+            <span className={`font-medium text-sm sm:text-base ${validationResult.valid ? 'text-green-800' : 'text-yellow-800'}`}>
               {validationResult.valid ? 'Sempurna! Semua tugas selesai!' : 'Checklist Tugas:'}
             </span>
           </div>
@@ -663,7 +663,7 @@ const CodeBlock = ({ snippet, lessonNum, optionalMessage }) => {
 
       {/* Fix prompt */}
       {(mustFix && !fixed) || (isLesson5ValidationExercise && !fixed) || (hasRequirements && !fixed) ? (
-        <p className="text-yellow-500 mt-2 text-sm font-medium font-source">
+        <p className="text-yellow-500 mt-2 text-xs sm:text-sm lg:text-base font-medium font-source break-words">
           {optionalMessage ? optionalMessage : 
             (isLesson5ValidationExercise || hasRequirements)
               ? "Selesaikan semua tugas di atas untuk melanjutkan ➤"

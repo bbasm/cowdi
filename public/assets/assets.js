@@ -1,7 +1,7 @@
-import duck from './duck.png';
+import duck from './duck_vid.mp4';
 import warning from './warning.png';
 
 export const assets = {
-  "duck.png": duck,
+  "duck_vid.mp4": duck,
   "warning.png": warning,
 };

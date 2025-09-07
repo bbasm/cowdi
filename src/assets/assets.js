@@ -6,7 +6,7 @@ import tentang_img from "./tentang.png";
 import cursor from "./cursor.png";
 import footer_img from "./footer_img.png";
 import bg_wider from "./bg_wider.png";
-import bg_better from "./bg_better.png";
+import bg_better from "./footer_vid.MP4";
 // import warning from "./warning.png";
 
 import slide1 from "./slideshow/slide1.png";

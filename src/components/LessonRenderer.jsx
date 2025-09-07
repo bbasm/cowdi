@@ -29,6 +29,8 @@ const LessonRenderer = ({ lessonNum }) => {
     }
     
     if (canProceed) {
+      // Scroll to top immediately before navigation
+      window.scrollTo({ top: 0, behavior: 'instant' });
       navigate(nextLesson);
     } else {
       // Show warning with specific incomplete exercises
@@ -107,7 +109,10 @@ const LessonRenderer = ({ lessonNum }) => {
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-10">
         {lessonNum > 1 ? (
           <button
-            onClick={() => navigate(prevLesson)}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'instant' });
+              navigate(prevLesson);
+            }}
             className="flex items-center justify-center gap-2 sm:gap-3 bg-[#91CADB] text-white font-bold rounded-lg shadow-md px-4 sm:px-6 py-2 sm:py-3 text-base sm:text-lg w-full sm:w-auto"
           >
             <svg

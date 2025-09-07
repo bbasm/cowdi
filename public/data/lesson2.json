@@ -177,7 +177,7 @@
        {
       "type": "image",
       "subtitle": "🎉 Sip! Kamu Hebat!",
-      "image": "juara_mengingat.jpg",
+      "image": "juara_meningant_vid.mp4",
       "imagePosition": "right",
       "imageSize": "w-100",
       "contentOrder": ["image", "paragraphs", "listItems", "paragraphsAfterCode"],

@@ -13,15 +13,15 @@ export async function loadPyodideInstance() {
   loadingPromise = (async () => {
     try {
       // First ensure the Pyodide script is loaded
-      if (typeof window.loadPyodideScript === 'function') {
+      if (typeof window.loadPyodideScript === "function") {
         await window.loadPyodideScript();
       }
-      
+
       // Wait a bit for the script to fully initialize
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      if (typeof window.loadPyodide !== 'function') {
-        throw new Error('Pyodide failed to load');
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      if (typeof window.loadPyodide !== "function") {
+        throw new Error("Pyodide failed to load");
       }
 
       pyodide = await window.loadPyodide({
@@ -37,7 +37,7 @@ export async function loadPyodideInstance() {
       isReady = true;
       return pyodide;
     } catch (error) {
-      console.error('Failed to load Pyodide:', error);
+      console.error("Failed to load Pyodide:", error);
       loadingPromise = null;
       throw error;
     }
@@ -53,17 +53,26 @@ function getFriendlyError(message) {
       return "❌ Nama variabel tidak boleh dimulai dengan angka. Gunakan huruf dulu, baru boleh pakai angka.";
     }
 
-    // 🔹 2. Variable name with space
-    if (message.includes("invalid syntax") && message.includes(" ")) {
-      return "❌ Nama variabel tidak boleh ada spasi. Coba ganti dengan garis bawah (_) atau gabungkan katanya.";
+    // lesson 2 - empty variable assignment
+    if (
+      message.includes("invalid syntax") &&
+      (message.includes("=") || message.includes("unexpected EOF"))
+    ) {
+      return "❌ Variabel belum diberi nilai! Coba isi variabel dengan sesuatu.";
     }
 
-    // 🔹 3. General syntax fallback
-    return "❌ Ada yang salah dengan cara kamu menulis kode. Coba cek tanda kutip atau tanda baca lainnya.";
+    // lesson 1
+    if (message.includes("invalid syntax") && message.includes(" ")) {
+      return "❌ Python bingung! Sepertinya ada teks yang tidak diberi tanda kutip.";
+    }
+
+    // lesson 4
+    return "❌ Ada kesalahan penulisan! Coba periksa apakah kamu lupa tanda kurung?";
   }
 
   if (message.includes("NameError")) {
-    return "❌ Komputer bingung karena ada kata yang tidak dikenal. Mungkin kamu lupa menaruh tanda kutip?";
+    // lesson 1
+    return "❌ Python tidak mengenali kata ini. Apakah ini variabel atau teks?";
   }
 
   if (message.includes("IndentationError")) {
@@ -71,7 +80,15 @@ function getFriendlyError(message) {
   }
 
   if (message.includes("TypeError")) {
-    return "❌ Coba cek nama yang kamu pakai. Apakah kamu menimpa perintah penting?";
+    // lesson 3 - type mixing errors
+    if (
+      message.includes("can't multiply") ||
+      message.includes("unsupported operand") ||
+      message.includes("can only concatenate")
+    ) {
+      return "❌ Python tidak bisa menggabung teks dengan angka! Gunakanlah str() atau f-string.";
+    }
+    return "❌ Ada masalah dengan tipe data. Periksa apakah kamu menggunakan nama yang tepat.";
   }
 
   return "⚠️ Ups! Komputer tidak mengerti kodenya. Coba periksa kembali.";
@@ -95,9 +112,10 @@ export async function runPython(code) {
 
     return { output: output.trim() }; // Trim to remove trailing \n
   } catch (error) {
-    if (error.message.includes('Pyodide failed to load')) {
+    if (error.message.includes("Pyodide failed to load")) {
       return {
-        error: "❌ Koneksi internet lambat atau bermasalah. Coba refresh halaman ini dan tunggu sebentar.",
+        error:
+          "❌ Koneksi internet lambat atau bermasalah. Coba refresh halaman ini dan tunggu sebentar.",
         raw: error.message,
       };
     }
@@ -107,12 +125,12 @@ export async function runPython(code) {
       const pyodide = await loadPyodideInstance();
       const errOutput = await pyodide.runPythonAsync("sys.stdout.getvalue()");
       return {
-        error: getFriendlyError(errOutput.trim() || error.message),
+        error: getFriendlyError(errOutput.trim() || error.message, code),
         raw: errOutput.trim() || error.message,
       };
     } catch (secondError) {
       return {
-        error: getFriendlyError(error.message),
+        error: getFriendlyError(error.message, code),
         raw: error.message,
       };
     }

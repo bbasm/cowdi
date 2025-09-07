@@ -197,9 +197,12 @@
       ]
     },
     {
-  "type": "text",
+  "type": "image",
   "subtitle": "🏆 Didi Bangga Banget Nih!",
-  "contentOrder": ["paragraphs", "listItems", "paragraphsAfterCode"],
+  "image": "juara_meningant_vid.mp4",
+  "imagePosition": "right",
+  "imageSize": "w-50",
+  "contentOrder": ["image", "paragraphs", "listItems", "paragraphsAfterCode"],
   "paragraphs": ["Kamu barusan nguasain ilmu keren banget:"],
   "paragraphPadding": {
     "bottom": "mb-3"

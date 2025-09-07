@@ -167,9 +167,12 @@
       ]
     },
     {
-      "type": "text",
+      "type": "image",
       "subtitle": "🎉 Kamu Hebat!",
-      "contentOrder": ["littleParagraphs", "listItems"],
+      "image": "juara_meningant_vid.mp4",
+      "imagePosition": "right",
+      "imageSize": "w-140",
+      "contentOrder": ["image", "littleParagraphs", "listItems"],
       "littleParagraphs": ["Sekarang kamu udah bisa:"],
       "littleParagraphPadding": {
         "top": "pt-0",
