@@ -145,35 +145,6 @@
   }
 ]
     },
-        {
-      "type": "text",
-      "subtitle": "💡 Kenapa Ini Penting?",
-      "littleParagraphMargin": {
-        "bottom": "-mb-3"
-      },
-      "littleParagraphs": [
-        "Karena dengan menyimpan data:"
-      ],
-      "listItems": [
-        "Kamu bisa bikin program yang lebih panjang",
-        "Kamu bisa ubah isi tanpa nulis ulang semuanya",
-        "Kamu bikin komputer \ningat\n sesuatu"
-      ]
-    },
-    {
-      "type": "fix_code",
-      "subtitle": "🧪 Saatnya Coba Sendiri",
-      "paragraphs": [
-        "Isi nama dan umurmu, lalu jalankan kodenya!"
-      ],
-      "codeSnippets": [
-        {
-          "id": "python-hello-error-2-6",
-          "starterCode": "nama = \numur = \n\nprint(\"Namaku\", nama)\nprint(\"Aku berumur\", umur, \"tahun\")",
-          "mustFix": true
-        }
-      ]
-    },
        {
       "type": "image",
       "subtitle": "🎉 Sip! Kamu Hebat!",
